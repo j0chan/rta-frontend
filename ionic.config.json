@@ -1,0 +1,7 @@
+{
+  "name": "team201-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
