@@ -13,8 +13,8 @@ import { StorePage } from './store.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    StorePageRoutingModule
+    StorePageRoutingModule,
+    StorePage
   ],
-  declarations: [StorePage]
 })
 export class StorePageModule {}
