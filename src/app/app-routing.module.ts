@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core'
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
+import { ReviewsPage } from './pages/reviews/reviews.page'
 
 const routes: Routes = [
   {
@@ -10,7 +11,8 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'maps',
     loadChildren: () => import('./pages/maps/maps.module').then( m => m.MapsPageModule)
   },
@@ -18,7 +20,11 @@ const routes: Routes = [
     path: 'store',
     loadChildren: () => import('./pages/store/store.module').then( m => m.StorePageModule)
   },
-
+  {
+    path: 'reviews',
+    // loadChildren: () => import('./pages/reviews/reviews.module').then( m => m.ReviewsPageModule)
+    loadComponent: () => import('./pages/reviews/reviews.page').then(m => m.ReviewsPage)
+  },
 ];
 
 @NgModule({
