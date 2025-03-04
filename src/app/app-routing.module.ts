@@ -17,11 +17,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/maps/maps.module').then( m => m.MapsPageModule)
   },
   {
+    path: 'store',
+    loadChildren: () => import('./pages/store/store.module').then( m => m.StorePageModule)
+  },
+  {
     path: 'reviews',
     // loadChildren: () => import('./pages/reviews/reviews.module').then( m => m.ReviewsPageModule)
     loadComponent: () => import('./pages/reviews/reviews.page').then(m => m.ReviewsPage)
   },
-
 ];
 
 @NgModule({
