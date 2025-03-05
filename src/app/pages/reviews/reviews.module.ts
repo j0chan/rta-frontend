@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular'
 import { ReviewsPageRoutingModule } from './reviews-routing.module'
 
 import { ReviewsPage } from './reviews.page'
-import { ReviewsComponent } from 'src/app/components/reviews/reviews.component'
+import { ReviewListComponent } from 'src/app/pages/reviews/review-list/review-list.component'
 import { RouterModule } from '@angular/router'
 
 @NgModule({
@@ -16,12 +16,14 @@ import { RouterModule } from '@angular/router'
     FormsModule,
     IonicModule,
     ReviewsPageRoutingModule,
-    ReviewsPage,
-    ReviewsComponent,
     RouterModule.forChild([
       { path: '', component: ReviewsPage }
     ]),
   ],
-  declarations: []
+  declarations: [
+    ReviewsPage,
+    ReviewListComponent
+  ],
+  exports: [ReviewListComponent]
 })
-export class ReviewsPageModule {}
+export class ReviewsModule {}

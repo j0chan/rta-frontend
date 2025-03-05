@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { ReviewsComponent } from 'src/app/components/reviews/reviews.component'
+import { ReviewListComponent } from 'src/app/pages/reviews/review-list/review-list.component'
 
 @Component({
   selector: 'app-reviews-page',
-  template: '<app-reviews></app-reviews>',
+  templateUrl: './reviews.page.html',
   styleUrls: ['./reviews.page.scss'],
-  standalone: true,
-  imports: [ReviewsComponent]
+  standalone: false,
+  // imports: [ReviewsComponent]
 })
 export class ReviewsPage implements OnInit {
 
