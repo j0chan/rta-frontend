@@ -1,28 +1,30 @@
-window.onload = function () {
-    // API로 clientId 가져오기
-    fetch('/api/client-id')
-        .then(response => response.json())
-        .then(data => {
+document.addEventListener("DOMContentLoaded", function () {
+
+    // iframe이 동적으로 추가될 때까지 기다리기
+    let observer = new MutationObserver(() => {
+        const iframe = document.getElementById("map-iframe")
+        if (iframe) {
+            observer.disconnect() // iframe을 찾았으면 MutationObserver 해제
+        }
+    })
+
+    // body에 MutationObserver 적용
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    //API로 clientId 가져오기
+    fetch("http://localhost:3000/api/client-id")
+        .then((response) => response.json())
+        .then((data) => {
             // 네이버 지도 API 동적 로드
-            const script = document.createElement('script')
+            const script = document.createElement("script")
             script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${data.clientId}`
             script.onload = function () {
                 initMap()
             }
             document.body.appendChild(script)
         })
-        .catch(error => console.error('Error fetching client ID:', error))
-
-    // 엔터 키 입력 시 검색 실행
-    document.getElementById('search-input').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            searchPlaces()
-        }
-    })
-
-    // API가 로드된 후에만 검색 버튼 활성화
-    document.querySelector("button").disabled = false
-}
+        .catch((error) => console.error("Error fetching client ID:", error))
+})
 
 const mapConfig = {
     map: null,
@@ -63,7 +65,7 @@ function initMap() {
 
                 // 현재 위치 주변 검색
                 try {
-                    const response = await fetch(`/api/maps/nearby?lat=${lat}&lng=${lng}`)
+                    const response = await fetch(`http://localhost:3000/api/maps/nearby?lat=${lat}&lng=${lng}`)
                     const places = await response.json()
                     console.log(places) // API로부터 받은 데이터 출력
                     places.forEach(place => addPlaceMarker(place))
@@ -148,7 +150,7 @@ async function searchPlaces() {
     }
 
     try {
-        const response = await fetch(`/api/maps/search?query=${query}`)
+        const response = await fetch(`http://localhost:3000/api/maps/search?query=${query}`)
         const places = await response.json()
 
         if (places.error){
@@ -215,7 +217,7 @@ function clearMarkers() {
 // 공통 API 호출 함수
 async function placeDetails(query) {
     try {
-        const response = await fetch(`/api/maps/search?query=${encodeURIComponent(query)}`)
+        const response = await fetch(`http://localhost:3000/api/maps/search?query=${encodeURIComponent(query)}`)
         const data = await response.json()
         return data.length > 0 ? data[0] : {}
     } catch (error) {

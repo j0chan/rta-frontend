@@ -11,9 +11,8 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-  {
-    path: 'maps',
-    loadChildren: () => import('./pages/maps/maps.module').then( m => m.MapsPageModule)
+  { path: 'maps/nearby-stores',
+    loadChildren: () => import('./maps/nearby-stores/pages/nearby-stores.module').then(m => m.NearbyStoresPageModule)
   },
   {
     path: 'store',
@@ -23,7 +22,7 @@ const routes: Routes = [
     path: 'reviews',
     loadChildren: () => import('./pages/reviews/reviews.module').then( m => m.ReviewsModule)
   },
-];
+]
 
 @NgModule({
   imports: [
