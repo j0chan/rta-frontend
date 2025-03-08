@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ReviewsService } from 'src/app/services/reviews.service'
 
@@ -9,6 +9,7 @@ import { ReviewsService } from 'src/app/services/reviews.service'
   standalone: false,
 })
 export class ReviewComponent implements OnInit {
+  @Input() review!: { user_id: number; content: string }
 
   constructor(
     private reviewsService: ReviewsService,
