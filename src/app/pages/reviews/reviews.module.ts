@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 
-import { IonButton, IonicModule } from '@ionic/angular'
+import { IonicModule } from '@ionic/angular'
 
 import { ReviewsPageRoutingModule } from './reviews-routing.module'
 
@@ -26,6 +26,9 @@ import { ReviewComponent } from './review/review.component'
     ReviewListComponent,
     ReviewComponent,
   ],
-  exports: [ReviewListComponent]
+  exports: [
+    ReviewListComponent, 
+    ReviewComponent,
+  ]
 })
 export class ReviewsModule {}

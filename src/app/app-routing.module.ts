@@ -22,6 +22,11 @@ const routes: Routes = [
     path: 'reviews',
     loadChildren: () => import('./pages/reviews/reviews.module').then( m => m.ReviewsModule)
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminModule)
+  },
+
 ]
 
 @NgModule({

@@ -1,8 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
 import { ReadReply } from 'src/app/model/replies/read-reply.interface'
 import { ReadReview } from 'src/app/model/reviews/read-review.interface'
-import { ReviewsService } from 'src/app/services/reviews.service'
 
 @Component({
   selector: 'app-review',
@@ -14,10 +12,7 @@ export class ReviewComponent implements OnInit, OnChanges {
   @Input() review!: ReadReview
   reply?: ReadReply
 
-  constructor(
-    private reviewsService: ReviewsService,
-    private activedRoute: ActivatedRoute
-  ) {}
+  constructor() {}
 
   ngOnInit() {}
 
