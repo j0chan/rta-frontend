@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { ReadAllReviews } from 'src/app/model/reviews/read-all-reviews.interface'
+import { ReadReview } from 'src/app/model/reviews/read-review.interface'
 import { ReviewsService } from 'src/app/services/reviews.service'
 
 @Component({
@@ -10,7 +10,7 @@ import { ReviewsService } from 'src/app/services/reviews.service'
   standalone: false,
 })
 export class ReviewListComponent implements OnInit {
-  reviews: ReadAllReviews[] = []
+  reviews: ReadReview[] = []
 
   constructor(
     private reviewsService: ReviewsService,

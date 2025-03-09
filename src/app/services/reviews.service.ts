@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { ReadAllReviews } from '../model/reviews/read-all-reviews.interface'
+import { ReadReview } from '../model/reviews/read-review.interface'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 
 @Injectable({
@@ -12,8 +12,8 @@ export class ReviewsService {
 
   constructor(private http: HttpClient) { }
 
-  readAllReviews(): Observable<ApiResponseDTO<ReadAllReviews[]>> {
-    return this.http.get<ApiResponseDTO<ReadAllReviews[]>>(`${this.apiUrl}`)
+  readAllReviews(): Observable<ApiResponseDTO<ReadReview[]>> {
+    return this.http.get<ApiResponseDTO<ReadReview[]>>(`${this.apiUrl}`)
   }
 
   readReviewById() {
