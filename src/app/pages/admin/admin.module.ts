@@ -9,6 +9,7 @@ import { AdminPageRoutingModule } from './admin-routing.module'
 import { AdminPage } from './admin.page'
 import { RequestListComponent } from './request-list/request-list.component'
 import { ManagerRequestComponent } from './manager-request/manager-request.component'
+import { StoreRequestComponent } from './store-request/store-request.component'
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { ManagerRequestComponent } from './manager-request/manager-request.compo
   declarations: [
     AdminPage,
     RequestListComponent,
-    ManagerRequestComponent
+    ManagerRequestComponent,
+    StoreRequestComponent,
   ],
   exports: [
     RequestListComponent
