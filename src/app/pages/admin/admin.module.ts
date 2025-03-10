@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular'
 import { AdminPageRoutingModule } from './admin-routing.module'
 
 import { AdminPage } from './admin.page'
-import { ManagerRequestListComponent } from './manager-request-list/manager-request-list.component'
+import { RequestListComponent } from './request-list/request-list.component'
 import { ManagerRequestComponent } from './manager-request/manager-request.component'
 
 @NgModule({
@@ -19,11 +19,11 @@ import { ManagerRequestComponent } from './manager-request/manager-request.compo
   ],
   declarations: [
     AdminPage,
-    ManagerRequestListComponent,
+    RequestListComponent,
     ManagerRequestComponent
   ],
   exports: [
-    ManagerRequestListComponent
+    RequestListComponent
   ]
 })
 export class AdminModule {}
