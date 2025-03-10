@@ -16,15 +16,15 @@ const routes: Routes = [
   },
   {
     path: 'store',
-    loadChildren: () => import('./pages/store/store.module').then( m => m.StorePageModule)
+    loadChildren: () => import('./store/store.module').then( m => m.StorePageModule)
   },
   {
     path: 'reviews',
-    loadChildren: () => import('./pages/reviews/reviews.module').then( m => m.ReviewsModule)
+    loadChildren: () => import('./reviews/reviews.module').then( m => m.ReviewsModule)
   },
   {
     path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminModule)
   },
 
 ]

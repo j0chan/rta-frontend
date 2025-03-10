@@ -1,4 +1,5 @@
 <ion-list>
+  {{ getPageTitle() }}
   <ion-item *ngFor="let request of requests">
     <ion-label>
       <app-manager-request [request]="request"></app-manager-request>

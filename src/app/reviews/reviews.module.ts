@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular'
 import { ReviewsPageRoutingModule } from './reviews-routing.module'
 
 import { ReviewsPage } from './reviews.page'
-import { ReviewListComponent } from 'src/app/pages/reviews/review-list/review-list.component'
+import { ReviewListComponent } from 'src/app/reviews/review-list/review-list.component'
 import { RouterModule } from '@angular/router'
 import { ReviewComponent } from './review/review.component'
 

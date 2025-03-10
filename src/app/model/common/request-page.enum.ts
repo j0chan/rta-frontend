@@ -1,0 +1,4 @@
+export enum RequestPage {
+    MANAGER_REQUEST = "MANAGER_REQUEST",
+    STORE_REQUEST = "STORE_REQUEST"
+}

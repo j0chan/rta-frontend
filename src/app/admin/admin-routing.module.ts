@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { AdminPage } from './admin.page'
-import { ManagerRequestComponent } from './manager-request/manager-request.component';
+import { AdminPage } from './pages/admin/admin.page'
+import { ManagerRequestComponent } from './components/manager-request/manager-request.component';
 
 const routes: Routes = [
   {
