@@ -8,6 +8,8 @@ import { AppComponent } from './app.component'
 import { AppRoutingModule } from './app-routing.module'
 import { ReviewsModule } from './reviews/reviews.module'
 import { HttpClientModule } from '@angular/common/http'
+import { AdminModule } from './admin/admin.module'
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +19,8 @@ import { HttpClientModule } from '@angular/common/http'
     AppRoutingModule,
     HttpClientModule,
     ReviewsModule,
+    AdminModule,
+    FormsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

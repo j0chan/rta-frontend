@@ -16,6 +16,8 @@ export class ManagerRequestComponent implements OnInit {
   request_id: number | undefined
   status: RequestStatus | undefined
   remark: string = ''
+
+  public RequestStatus = RequestStatus
   
   constructor(
     private managerRequestsService: ManagerRequestsService,
