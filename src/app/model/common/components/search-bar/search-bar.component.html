@@ -1,0 +1,14 @@
+<!----------------------------------------------------
+* ion-searchbar를 사용하여 검색 입력을 받음
+- [(ngModel)]을 사용하여 양방향 데이터 바인딩 적용
+- (ionInput) 이벤트를 사용하여 사용자가 입력할 때 검색 실행
+- showCancelButton="focus" → 입력할 때 취소 버튼 표시
+- debounce="500" → 0.5초마다 입력된 값 검색 
+----------------------------------------------------->
+<ion-searchbar
+  [(ngModel)]="searchQuery" 
+  (ionInput)="search()"
+  placeholder="가게명 검색"
+  showCancelButton="focus"
+  debounce="500" 
+></ion-searchbar>

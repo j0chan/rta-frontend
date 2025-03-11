@@ -1,0 +1,21 @@
+ion-footer {
+    background-color: white;
+    border-top: 1px solid #ccc;
+    height: 70px;
+}
+
+ion-toolbar {
+    height: 100%; // 툴바가 footer 높이를 가득 채우도록 설정
+    display: flex;
+    align-items: center; // 아이콘 정렬
+}
+
+ion-icon {
+    color: #555;
+    font-size: 40px; // 아이콘 크기 조정
+    transition: color 0.3s;
+}
+
+ion-icon:hover {
+    color: #0078ff;
+}
