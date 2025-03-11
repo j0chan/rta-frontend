@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
 import { Router } from '@angular/router'
 import { RequestStatus } from 'src/app/model/common/request-status.enum'
 import { ReadManagerRequest } from 'src/app/model/manager-requests/read-manager-request.interface'
