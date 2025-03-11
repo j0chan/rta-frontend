@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular'
 import { NearbyStoresPageRoutingModule } from './nearby-stores-routing.module'
 import { NearbyStoresPage } from './nearby-stores.page'
 import { NearbyStoresComponent } from '../components/nearby-stores.component'
+import { CommonComponentsModule } from 'src/app/model/common/common.module'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NearbyStoresPageRoutingModule
+    NearbyStoresPageRoutingModule,
+    CommonComponentsModule
   ],
   declarations: [
     NearbyStoresPage,

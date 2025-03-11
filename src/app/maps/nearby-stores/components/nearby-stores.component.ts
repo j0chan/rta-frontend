@@ -12,4 +12,8 @@ export class NearbyStoresComponent implements OnInit {
 
   ngOnInit() {}
 
+  onSearch(query: string) {
+    console.log('검색어:', query);
+    // 검색 결과를 필터링 or API 호출
+  }
 }
