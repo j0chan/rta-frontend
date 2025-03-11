@@ -1,7 +1,6 @@
-let scriptLoaded = false // map API 로드 여부
+let scriptLoaded = false // 네이버 지도 API 로드 여부
 
 document.addEventListener("DOMContentLoaded", function () {
-
     // iframe이 동적으로 추가될 때까지 기다리기
     let observer = new MutationObserver(() => {
         const iframe = document.getElementById("map-iframe")
@@ -9,15 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (iframe && mapElement && !scriptLoaded) { // 이미 로드된 경우 실행 방지
             observer.disconnect() // iframe과 map 요소를 찾았으면 MutationObserver 해제
-            loadMapScript() // map API 로드
+            loadMapScript() // 네이버 지도 API 로드
         }
     })
 
     // body에 MutationObserver 적용
     observer.observe(document.body, { childList: true, subtree: true })
 
-     // 처음부터 #map이 존재하는 경우 즉시 실행
-     if (document.getElementById("map") && !scriptLoaded) {
+    // 처음부터 #map이 존재하는 경우 즉시 실행
+    if (document.getElementById("map") && !scriptLoaded) {
         loadMapScript()
     }
 })
@@ -56,13 +55,13 @@ function initMap() {
     // 현위치 가져오기
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            async function (position) {
-                let lat = position.coords.latitude  // 위도
+            function (position) {
+                let lat = position.coords.latitude // 위도
                 let lng = position.coords.longitude // 경도
                 let currentLocation = new naver.maps.LatLng(lat, lng)
 
                 // 지도 객체 생성 (현위치를 중심으로)
-                mapConfig.map = new naver.maps.Map('map', {
+                mapConfig.map = new naver.maps.Map("map", {
                     center: currentLocation,
                     zoom: 15
                 })
@@ -76,27 +75,16 @@ function initMap() {
                 })
 
                 // 현재 위치에 마커 추가
-                let marker = new naver.maps.Marker({
+                new naver.maps.Marker({
                     position: currentLocation,
                     map: mapConfig.map,
                     title: "현재 위치"
                 })
-
-                // 현재 위치 주변 검색
-                try {
-                    const response = await fetch(`http://localhost:3000/api/maps/nearby?lat=${lat}&lng=${lng}`)
-                    const places = await response.json()
-                    console.log(places) // API로부터 받은 데이터 출력
-                    places.forEach(place => addPlaceMarker(place))
-                } catch (error) {
-                    console.error("음식점 정보를 불러오지 못했습니다.", error)
-                }
             },
             function (error) {
                 console.error("위치 정보를 가져올 수 없습니다: ", error)
-
                 // 위치 정보를 가져오지 못한 경우, 기본 위치(서울)로 설정
-                mapConfig.map = new naver.maps.Map('map', {
+                mapConfig.map = new naver.maps.Map("map", {
                     center: new naver.maps.LatLng(37.5665, 126.9780),
                     zoom: 15
                 })
@@ -107,122 +95,62 @@ function initMap() {
     }
 }
 
+// 부모 창에서 가게 데이터 수신 및 지도에 표시
+window.addEventListener("message", function (event) {
+    addStoreMarkers(event.data)
+})
+
 // InfoWindow HTML
-function infoWindowContent(place) {
+function createInfoWindowContent(store) {
     return `
         <div class="custom-infowindow">
             <button onclick="closeInfoWindow()">❌</button>
-            <strong style="font-size: 18px; color: #333;">${place.name || place.title}</strong><br>
-            <a href="${place.link || '#'}" target="_blank" style="color: #007aff;">🔗 홈페이지 방문</a>
+            <strong style="font-size: 18px; color: #333;">${store.store_name}</strong><br>
             <hr>
-            <p>📌 카테고리: ${place.category || '정보 없음'}</p>
-            <p>🏢 주소: ${place.address}</p>
-            <p>🛣️ 도로명 주소: ${place.roadAddress || '정보 없음'}</p>
-            <p>📞 전화번호: ${place.telephone || '전화번호 없음'}</p>
-            <p>ℹ️ 설명: ${place.description || '설명 없음'}</p>
+            <p>📌 카테고리: ${store.category || '정보 없음'}</p>
+            <p>🏢 주소: ${store.address}</p>
+            <p>📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
+            <p>ℹ️ 설명: ${store.description || '설명 없음'}</p>
         </div>`;
 }
 
-// 음식점 마커 추가
-async function addPlaceMarker(place) {
-    const lat = place.lat / 1e7
-    const lng = place.lng / 1e7
-    const position = new naver.maps.LatLng(lat, lng)
-    const marker = new naver.maps.Marker({
-        position: position,
-        map: mapConfig.map,
-        title: place.name
+// 지도에 가게 마커 추가
+function addStoreMarkers(stores) {
+    if (!mapConfig.map) return
+
+    // 기존 마커 제거
+    clearMarkers()
+
+    stores.forEach(store => {
+        const lat = parseFloat(store.latitude) / 1e7
+        const lng = parseFloat(store.longitude) / 1e7
+
+        const position = new naver.maps.LatLng(lat, lng)
+        const marker = new naver.maps.Marker({
+            position: position,
+            map: mapConfig.map,
+            title: store.store_name
+        })
+
+        const infoWindow = new naver.maps.InfoWindow({
+            content: createInfoWindowContent(store),
+            disableAutoPan: false,
+            borderWidth: 0,
+            backgroundColor: "rgba(0,0,0,0)"
+        })
+
+        // 마커 클릭 시 정보창 표시
+        naver.maps.Event.addListener(marker, "click", function () {
+            if (mapConfig.activeInfoWindow) {
+                mapConfig.activeInfoWindow.close()
+            }
+            infoWindow.open(mapConfig.map, marker)
+            mapConfig.activeInfoWindow = infoWindow
+        })
+
+        mapConfig.markers.push(marker)
+        mapConfig.infoWindows.push(infoWindow)
     })
-
-     // 추가 정보 가져오기
-     const addData = await placeDetails(place.name)
-
-     const infoWindow = new naver.maps.InfoWindow({
-        content: infoWindowContent({ ...place, ...addData }),
-        disableAutoPan: false,
-        borderWidth: 0,
-        backgroundColor: "rgba(0,0,0,0)"
-    })
-
-    naver.maps.Event.addListener(marker, "click", function () {
-        if (mapConfig.activeInfoWindow) {
-            mapConfig.activeInfoWindow.close()
-        }
-        infoWindow.open(mapConfig.map, marker)
-        mapConfig.activeInfoWindow = infoWindow
-    })
-
-    mapConfig.markers.push(marker)
-    mapConfig.infoWindows.push(infoWindow)
-}
-
-// 장소 검색
-async function searchPlaces() {
-    const query = document.getElementById('search-input').value.trim()
-    if (!query) {
-        alert('검색어를 입력하세요.')
-        return
-    }
-    if (!mapConfig.map) {
-        alert("지도가 아직 로드되지 않았습니다. 잠시 후 다시 시도하세요.")
-        return
-    }
-
-    try {
-        const response = await fetch(`http://localhost:3000/api/maps/search?query=${query}`)
-        const places = await response.json()
-
-        if (places.error){
-            alert(places.message)
-            return
-        }
-
-        if (!Array.isArray(places) || places.length === 0) {
-            alert('검색 결과가 없습니다.')
-            return 
-        }
-
-        // 기존 마커 삭제
-        clearMarkers()
-
-        // 위치 정보가 없는 경우 해당 장소를 추가하지 않음
-        for (const place of places) {
-            if (!place.mapx || !place.mapy) continue
-
-            // 값을 string으로 나눠주기 때문에 숫자로 변환 후 계산 진행
-            const lat = parseFloat(place.mapy) / 1e7
-            const lng = parseFloat(place.mapx) / 1e7
-
-            const marker = new naver.maps.Marker({ // 마커 생성
-                position: new naver.maps.LatLng(lat, lng), // position으로 마커 위치 지정
-                map: mapConfig.map // 마커를 어디에 표시할지
-            })
-
-            const infoWindow = new naver.maps.InfoWindow({
-                content: infoWindowContent(place),
-                disableAutoPan: false,
-                borderWidth: 0,
-                backgroundColor: "rgba(0,0,0,0)"
-            })
-
-            // 마커 클릭 시 정보창 표시
-            naver.maps.Event.addListener(marker, "click", function () {
-                if (mapConfig.activeInfoWindow) mapConfig.activeInfoWindow.close()
-                infoWindow.open(mapConfig.map, marker)
-                mapConfig.activeInfoWindow = infoWindow
-            })
-
-            // 검색 결과를 마커, 정보창에 추가
-            mapConfig.markers.push(marker)
-            mapConfig.infoWindows.push(infoWindow)
-        }
-
-        // 검색 결과 중 첫 번째 장소로 지도 이동
-        mapConfig.map.setCenter(new naver.maps.LatLng(places[0].mapy / 1e7, places[0].mapx / 1e7))
-        mapConfig.map.setZoom(16)
-    } catch (error) {
-        console.error("검색 요청 실패:", error)
-    }
 }
 
 // 마커 초기화
@@ -231,18 +159,6 @@ function clearMarkers() {
     mapConfig.infoWindows.forEach(infoWindow => infoWindow.setMap(null))
     mapConfig.markers = []
     mapConfig.infoWindows = []
-}
-
-// 공통 API 호출 함수
-async function placeDetails(query) {
-    try {
-        const response = await fetch(`http://localhost:3000/api/maps/search?query=${encodeURIComponent(query)}`)
-        const data = await response.json()
-        return data.length > 0 ? data[0] : {}
-    } catch (error) {
-        console.error("추가 정보 가져오기 실패:", error)
-        return {}
-    }
 }
 
 // 닫기 버튼 클릭 시 InfoWindow 닫기
