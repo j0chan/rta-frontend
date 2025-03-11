@@ -12,7 +12,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'maps/nearby-stores',
-    loadChildren: () => import('./maps/nearby-stores/pages/nearby-stores.module').then(m => m.NearbyStoresPageModule)
+    loadChildren: () => import('./nearby-stores/nearby-stores.module').then(m => m.NearbyStoresPageModule)
   },
   {
     path: 'store',
