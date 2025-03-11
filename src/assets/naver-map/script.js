@@ -1,20 +1,39 @@
+let scriptLoaded = false // map API 로드 여부
+
 document.addEventListener("DOMContentLoaded", function () {
 
     // iframe이 동적으로 추가될 때까지 기다리기
     let observer = new MutationObserver(() => {
         const iframe = document.getElementById("map-iframe")
-        if (iframe) {
-            observer.disconnect() // iframe을 찾았으면 MutationObserver 해제
+        const mapElement = document.getElementById("map")
+
+        if (iframe && mapElement && !scriptLoaded) { // 이미 로드된 경우 실행 방지
+            observer.disconnect() // iframe과 map 요소를 찾았으면 MutationObserver 해제
+            loadMapScript() // map API 로드
         }
     })
 
     // body에 MutationObserver 적용
     observer.observe(document.body, { childList: true, subtree: true })
 
-    //API로 clientId 가져오기
-    fetch("http://localhost:3000/api/client-id")
+     // 처음부터 #map이 존재하는 경우 즉시 실행
+     if (document.getElementById("map") && !scriptLoaded) {
+        loadMapScript()
+    }
+})
+
+// 네이버 지도 API 로드 및 initMap 실행
+function loadMapScript() {
+    if (scriptLoaded) {
+        return // 중복 요청 방지
+    }
+
+    scriptLoaded = true // 중복 실행 방지
+
+    fetch("http://localhost:3000/api/maps/client-id")
         .then((response) => response.json())
         .then((data) => {
+
             // 네이버 지도 API 동적 로드
             const script = document.createElement("script")
             script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${data.clientId}`
@@ -24,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.appendChild(script)
         })
         .catch((error) => console.error("Error fetching client ID:", error))
-})
+}
 
 const mapConfig = {
     map: null,
