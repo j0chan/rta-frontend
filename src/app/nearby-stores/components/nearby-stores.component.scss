@@ -1,0 +1,13 @@
+.search-wrapper {
+    width: 100%; //부모 요소의 전체 너비
+    background: white;
+    position: relative;
+    z-index: 10; // iframe보다 위로 배치
+    padding: 0; // 불필요한 패딩 제거
+}
+
+iframe {
+    width: 100%;
+    height: calc(100vh - 60px); // 검색창 높이만큼 빼서 iframe 조정
+    border: none;
+}

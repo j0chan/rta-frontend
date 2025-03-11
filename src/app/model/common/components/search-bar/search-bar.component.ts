@@ -12,6 +12,6 @@ export class SearchBarComponent {
     @Output() searchEvent = new EventEmitter<string>()
 
     search() {
-        this.searchEvent.emit(this.searchQuery)
+        this.searchEvent.emit(this.searchQuery) // 입력된 검색어를 부모 컴포넌트로 전달
     }
 }

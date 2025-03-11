@@ -11,8 +11,8 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-  { path: 'maps/nearby-stores',
-    loadChildren: () => import('./maps/nearby-stores/pages/nearby-stores.module').then(m => m.NearbyStoresPageModule)
+  { path: 'nearby-stores',
+    loadChildren: () => import('./nearby-stores/nearby-stores.module').then(m => m.NearbyStoresPageModule)
   },
   {
     path: 'store',
