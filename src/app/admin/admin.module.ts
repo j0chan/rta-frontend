@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { AdminPageRoutingModule } from './admin-routing.module'
+import { AdminRoutingModule } from './admin-routing.module'
 
 import { AdminPage } from './pages/admin/admin.page'
 import { RequestListComponent } from './components/request-list/request-list.component'
@@ -18,7 +18,7 @@ import { ManagerRequestPage } from './pages/manager-request-page/manager-request
     CommonModule,
     FormsModule,
     IonicModule,
-    AdminPageRoutingModule
+    AdminRoutingModule
   ],
   declarations: [
     AdminPage,
