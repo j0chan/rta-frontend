@@ -3,8 +3,8 @@ import { RequestPage } from 'src/app/model/common/request-page.enum'
 
 @Component({
   selector: 'app-store-request-page',
-  templateUrl: './store-request-page.component.html',
-  styleUrls: ['./store-request-page.component.scss'],
+  templateUrl: './store-request-page.html',
+  styleUrls: ['./store-request-page.scss'],
   standalone: false
 })
 export class StoreRequestPage implements OnInit {
