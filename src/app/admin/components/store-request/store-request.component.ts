@@ -31,8 +31,6 @@ export class StoreRequestComponent implements OnInit {
   }
 
   async updateStoreRequest() {
-    console.log('update store request on')
-
     if (!this.request_id) { return }
     if (!this.status) { return }
 
@@ -43,7 +41,6 @@ export class StoreRequestComponent implements OnInit {
 
     this.storeRequestsService.updateStoreRequest(this.request_id, updateData).subscribe({
       next: response=> {
-        console.log('update store request service on')
         if (response.success) {
           this.router.navigate(['/'])
         } else {

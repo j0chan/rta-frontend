@@ -2,7 +2,12 @@
   {{ getPageTitle() }}
   <ion-item *ngFor="let request of requests">
     <ion-label>
-      <app-manager-request [request]="request"></app-manager-request>
+      <ng-container *ngIf="requestPage === 'STORE_REQUEST'; else managerRequest">
+        <app-store-request [request]="request"></app-store-request>
+      </ng-container>
+      <ng-template #managerRequest>
+        <app-manager-request [request]="request"></app-manager-request>
+      </ng-template>
     </ion-label>
   </ion-item>
 </ion-list>
