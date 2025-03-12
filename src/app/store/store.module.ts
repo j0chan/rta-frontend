@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { StorePageRoutingModule } from './store-routing.module';
-import { StorePage } from './pages/store.page';
+import { StorePage } from './pages/store-main/store.page';
+import { StoreInfoComponent } from './components/store-info/store-info.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { StorePage } from './pages/store.page';
   ],
   declarations: [
     StorePage,
+    StoreInfoComponent
   ]
 })
 export class StorePageModule {}
