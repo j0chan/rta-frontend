@@ -10,6 +10,7 @@ import { AdminPage } from './pages/admin/admin.page'
 import { RequestListComponent } from './components/request-list/request-list.component'
 import { ManagerRequestComponent } from './components/manager-request/manager-request.component'
 import { StoreRequestComponent } from './components/store-request/store-request.component'
+import { StoreRequestPage } from './pages/store-request-page/store-request-page.component'
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { StoreRequestComponent } from './components/store-request/store-request.
     RequestListComponent,
     ManagerRequestComponent,
     StoreRequestComponent,
+    StoreRequestPage,
   ],
   exports: [
     RequestListComponent
