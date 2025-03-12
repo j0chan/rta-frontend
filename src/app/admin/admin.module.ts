@@ -11,7 +11,7 @@ import { RequestListComponent } from './components/request-list/request-list.com
 import { ManagerRequestComponent } from './components/manager-request/manager-request.component'
 import { StoreRequestComponent } from './components/store-request/store-request.component'
 import { StoreRequestPage } from './pages/store-request-page/store-request-page.component'
-import { ManagerRequestPage } from './pages/manager-request-page/manager-request-page.component'
+import { ManagerRequestPage } from './pages/manager-request-page/manager-request-page'
 
 @NgModule({
   imports: [

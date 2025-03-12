@@ -18,10 +18,12 @@ export class AdminPage implements OnInit {
   }
 
   goStoreRequestsPage() {
+    console.log('go store request page')
     this.router.navigate(['store-request-page'], { relativeTo: this.route })
   }
 
   goManagerRequestsPage() {
+    console.log('go manager request page')
     this.router.navigate(['manager-request-page'], { relativeTo: this.route })
   }
 }
