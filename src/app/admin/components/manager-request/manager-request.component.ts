@@ -30,7 +30,7 @@ export class ManagerRequestComponent implements OnInit {
     }
    }
 
-  async updateRequest() {
+  async updateManagerRequest() {
     if (!this.request_id) { return }
     if (!this.status) { return }
 
@@ -44,14 +44,14 @@ export class ManagerRequestComponent implements OnInit {
         if (response.success) {
           this.router.navigate(['/'])
         } else {
-          console.error('approve request failed: ', response.message)
+          console.error('approve manager request failed: ', response.message)
         }
       },
       error: err => {
-        console.error('approve request error: ', err)
+        console.error('approve manager request error: ', err)
       },
       complete: () => {
-        console.log('approve request completed')
+        console.log('approve manager request completed')
       }
     })
   }

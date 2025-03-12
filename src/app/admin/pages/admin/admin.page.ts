@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -8,9 +9,21 @@ import { Component, OnInit } from '@angular/core'
 })
 export class AdminPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
   }
 
+  goStoreRequestsPage() {
+    console.log('go store request page')
+    this.router.navigate(['store-request-page'], { relativeTo: this.route })
+  }
+
+  goManagerRequestsPage() {
+    console.log('go manager request page')
+    this.router.navigate(['manager-request-page'], { relativeTo: this.route })
+  }
 }
