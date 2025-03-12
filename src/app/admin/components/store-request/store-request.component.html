@@ -4,6 +4,24 @@
     <p>가게 {{ request.store_name }}</p>
     <p>신청일 {{ request.created_at }}</p>
     <p>상태 {{ request.status }}</p>
-    <p>비고 {{ request.remark }}</p>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" color="success" (click)="status = RequestStatus.APPROVED">
+            승인
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" color="danger" (click)="status = RequestStatus.REJECTED">
+            거절
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-input label="비고" [(ngModel)]="remark"></ion-input>
+    
+    <ion-button (click)="updateRequest()">완료</ion-button>
   </div>
 </ion-label>
