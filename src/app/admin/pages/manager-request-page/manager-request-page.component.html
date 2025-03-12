@@ -11,11 +11,5 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-button expand="block" (click)="goStoreRequestsPage()"> 
-    점주 신청서
-  </ion-button>
-
-  <ion-button expand="block" (click)="goManagerRequestsPage()"> 
-    가게 신청서
-  </ion-button>
+  <app-request-list [requestPage]="RequestPage.MANAGER_REQUEST"></app-request-list>
 </ion-content>

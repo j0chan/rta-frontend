@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core'
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
+import { StoreRequestPage } from './admin/pages/store-request-page/store-request-page.component'
+import { ManagerRequestPage } from './admin/pages/manager-request-page/manager-request-page.component'
 
 const routes: Routes = [
   {

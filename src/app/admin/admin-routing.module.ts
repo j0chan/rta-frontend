@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
 import { AdminPage } from './pages/admin/admin.page'
-import { ManagerRequestComponent } from './components/manager-request/manager-request.component'
 import { StoreRequestPage } from './pages/store-request-page/store-request-page.component'
+import { ManagerRequestPage } from './pages/manager-request-page/manager-request-page.component'
 
 const routes: Routes = [
   {
@@ -11,8 +11,8 @@ const routes: Routes = [
     component: AdminPage
   },
   {
-    path: 'manage-request',
-    component: ManagerRequestComponent
+    path: 'manager-request-page',
+    component: ManagerRequestPage
   },
   {
     path: 'store-request-page',
