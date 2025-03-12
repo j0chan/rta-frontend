@@ -3,6 +3,7 @@ import { ReadManagerRequest } from '../model/manager-requests/read-manager-reque
 import { Observable } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 import { HttpClient } from '@angular/common/http'
+import { UpdateStoreRequest } from '../model/store-requests/update-store-request.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,11 @@ export class StoreRequestsService {
   constructor(private http: HttpClient) { }
 
   readAllStoreRequests(): Observable<ApiResponseDTO<ReadManagerRequest[]>> {
-      return this.http.get<ApiResponseDTO<ReadManagerRequest[]>>(`${this.apiUrl}`)
-    }
+    return this.http.get<ApiResponseDTO<ReadManagerRequest[]>>(`${this.apiUrl}`)
+  }
+
+  updateManagerRequest(request_id: number, updateStoreRequest: UpdateStoreRequest): Observable<ApiResponseDTO<void>> {
+    return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}${request_id}`, updateStoreRequest)
+  }
+
 }
