@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { StorePageRoutingModule } from './store-routing.module';
-import { StorePage } from './pages/store-main/store.page';
+import { StorePage } from './pages/store-main-page/store.page';
 import { StoreInfoComponent } from './components/store-info/store-info.component';
+import { MenuPage } from './pages/menu-page/menu.page';
+import { EventDetailPage } from './pages/event-detail-page/event-detail.page';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { StoreInfoComponent } from './components/store-info/store-info.component
   ],
   declarations: [
     StorePage,
-    StoreInfoComponent
+    StoreInfoComponent,
+    MenuPage,
+    EventDetailPage,
   ]
 })
 export class StorePageModule {}
