@@ -8,5 +8,5 @@ import { ReadStore } from 'src/app/model/stores/read-store.interface';
   standalone: false
 })
 export class StoreInfoComponent {
-  @Input() store!: ReadStore;
+  @Input() store!: ReadStore
 }

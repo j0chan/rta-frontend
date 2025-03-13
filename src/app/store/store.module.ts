@@ -11,6 +11,7 @@ import { MenuPage } from './pages/menu-page/menu.page';
 import { EventDetailPage } from './pages/event-detail-page/event-detail.page';
 import { EventListPage } from './pages/event-list-page/event-list.page';
 import { ReviewsModule } from '../reviews/reviews.module';
+import { EventComponent } from './components/event/event.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ReviewsModule } from '../reviews/reviews.module';
     MenuPage,
     EventDetailPage,
     EventListPage,
+    EventComponent,
   ]
 })
 export class StorePageModule {}

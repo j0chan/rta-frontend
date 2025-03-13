@@ -1,11 +1,10 @@
 <!-- 가게 정보 -->
-<ion-content *ngIf="store">
-  <ion-card>
-    <ion-card-content>
-      <p><strong>카테고리:</strong> {{ store.category }}</p>
-      <p><strong>주소:</strong> {{ store.address }}</p>
-      <p><strong>전화번호:</strong> {{ store.contact_number }}</p>
-      <p *ngIf="store.description">{{ store.description }}</p>
-    </ion-card-content>
-  </ion-card>
-</ion-content>
+<ion-card *ngIf="store">
+  <ion-card-content>
+    <h2><strong>가게 정보</strong></h2><br>
+    <p><strong>카테고리:</strong> {{ store.category }}</p>
+    <p><strong>주소:</strong> {{ store.address }}</p>
+    <p><strong>전화번호:</strong> {{ store.contact_number }}</p>
+    <p *ngIf="store.description">{{ store.description }}</p>
+  </ion-card-content>
+</ion-card>

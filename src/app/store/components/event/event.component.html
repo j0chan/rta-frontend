@@ -1,3 +1,11 @@
-<p>
-  event works!
-</p>
+<!-- 최신 이벤트 -->
+<ion-card *ngIf="event">
+  <ion-card-content>
+    <h2><strong>현재 진행 중인 이벤트</strong></h2><br>
+    <p><strong>이벤트 제목:</strong> {{ event.title }}</p>
+    <p><strong>상태:</strong> {{event.event_status}}</p>
+    <p><strong>설명:</strong> {{ event.description }}</p>
+    <p><strong>시작 날짜:</strong> {{ event.start_date | date }}</p>
+    <p><strong>종료 날짜:</strong> {{ event.end_date | date }}</p>
+  </ion-card-content>
+</ion-card>
