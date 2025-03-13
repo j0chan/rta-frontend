@@ -10,6 +10,7 @@ import { StoreInfoComponent } from './components/store-info/store-info.component
 import { MenuPage } from './pages/menu-page/menu.page';
 import { EventDetailPage } from './pages/event-detail-page/event-detail.page';
 import { EventListPage } from './pages/event-list-page/event-list.page';
+import { ReviewsModule } from '../reviews/reviews.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { EventListPage } from './pages/event-list-page/event-list.page';
     FormsModule,
     IonicModule,
     StorePageRoutingModule,
+    ReviewsModule
   ],
   declarations: [
     StorePage,

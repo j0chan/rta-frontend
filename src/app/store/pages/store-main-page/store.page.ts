@@ -19,7 +19,7 @@ export class StorePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    const storeId = Number(this.route.snapshot.paramMap.get('id'))
+    const storeId = Number(this.route.snapshot.paramMap.get('store_id'))
     if (storeId) {
       this.storeService.getStoreById(storeId).subscribe((response: ApiResponseDTO<Store>) => {
         this.store = response.data ?? null
