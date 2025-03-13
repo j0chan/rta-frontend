@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponseDTO } from '../model/common/api-response.interface';
-import { Store } from '../model/stores/read-store.interface';
+import { ReadStore } from '../model/stores/read-store.interface';
+import { ReadEvent } from '../model/events/read-event.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,11 @@ export class StoreService {
 
     constructor(private http: HttpClient) { }
 
-    getStoreById(id: number): Observable<ApiResponseDTO<Store>> {
-        return this.http.get<ApiResponseDTO<Store>>(`${this.apiUrl}/${id}`)
+    getStoreById(id: number): Observable<ApiResponseDTO<ReadStore>> {
+        return this.http.get<ApiResponseDTO<ReadStore>>(`${this.apiUrl}/${id}`)
+    }
+
+    getLastestEvent(store_id: number): Observable<ApiResponseDTO<ReadEvent>> {
+        return this.http.get<ApiResponseDTO<ReadEvent>>(`${this.apiUrl}/${store_id}/events/latest`)
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiResponseDTO } from 'src/app/model/common/api-response.interface';
-import { Store } from 'src/app/model/stores/read-store.interface';
+import { ReadStore } from 'src/app/model/stores/read-store.interface';
 import { StoreService } from 'src/app/services/stores.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { StoreService } from 'src/app/services/stores.service';
   standalone: false,
 })
 export class StorePage implements OnInit {
-  store: Store | null = null
+  store: ReadStore | null = null
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +21,7 @@ export class StorePage implements OnInit {
   ngOnInit() {
     const storeId = Number(this.route.snapshot.paramMap.get('store_id'))
     if (storeId) {
-      this.storeService.getStoreById(storeId).subscribe((response: ApiResponseDTO<Store>) => {
+      this.storeService.getStoreById(storeId).subscribe((response: ApiResponseDTO<ReadStore>) => {
         this.store = response.data ?? null
       })
     }

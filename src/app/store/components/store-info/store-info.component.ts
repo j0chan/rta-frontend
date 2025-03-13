@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Store } from 'src/app/model/stores/read-store.interface';
+import { ReadStore } from 'src/app/model/stores/read-store.interface';
 
 @Component({
   selector: 'app-store-info',
@@ -8,5 +8,5 @@ import { Store } from 'src/app/model/stores/read-store.interface';
   standalone: false
 })
 export class StoreInfoComponent {
-  @Input() store!: Store;
+  @Input() store!: ReadStore;
 }

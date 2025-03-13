@@ -1,4 +1,4 @@
-export interface Store {
+export interface ReadStore {
     store_id: number // ID
     store_name: string // 가게명
     category: string // 카테고리
