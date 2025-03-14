@@ -1,3 +1,32 @@
-<p>
-  menu-page works!
-</p>
+<!-- Store 페이지 최상단 가게 이름 렌더링 -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="store">{{ store.store_name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 메뉴 목록 출력 -->
+  <ng-container *ngIf="menus && menus.length > 0; else noMenu">
+    <ion-list>
+      <ion-item *ngFor="let menu of menus">
+        <ion-label>
+          <h2>{{ menu.menu_name }}</h2>
+          <p>{{ menu.description }}</p>
+          <p>가격: {{ menu.price | currency:'KRW' }}</p>
+          <p>ai 용기 요약: {{menu.ai_container}}</p>
+          <p>매니저 용기 요약: {{menu.manager_container}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <!-- 메뉴가 없는 경우 표시 -->
+  <ng-template #noMenu>
+    <ion-card>
+      <ion-card-content>
+        <p>등록된 메뉴가 없습니다.</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

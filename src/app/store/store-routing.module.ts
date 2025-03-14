@@ -13,7 +13,11 @@ const routes: Routes = [
   // },
   {
     path: ':store_id',
-    component: StorePage
+    component: StorePage,
+  },
+  {
+    path: ':store_id/menu',
+    component: MenuPage
   },
   {
     path: 'event-list',
@@ -23,10 +27,6 @@ const routes: Routes = [
     path: 'event-detail/:event_id',
     component: EventDetailPage
   },
-  {
-    path: 'menu',
-    component: MenuPage
-  }
 ];
 
 @NgModule({
