@@ -7,6 +7,10 @@ import { EventDetailPage } from './pages/event-detail-page/event-detail.page';
 import { MenuPage } from './pages/menu-page/menu.page';
 
 const routes: Routes = [
+  // //이거 하면 http://localhost:8100/store 페이지에 아무것도 안뜸
+  // {
+  //   path: '/', 
+  // },
   {
     path: ':store_id',
     component: StorePage

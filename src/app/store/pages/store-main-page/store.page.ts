@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponseDTO } from 'src/app/model/common/api-response.interface';
 import { ReadEvent } from 'src/app/model/events/read-event.interface';
 import { ReadStore } from 'src/app/model/stores/read-store.interface';
@@ -16,6 +16,7 @@ export class StorePage implements OnInit {
   event: ReadEvent | null = null
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private storeService: StoreService
   ) {}
@@ -38,5 +39,10 @@ export class StorePage implements OnInit {
         }
       })
     }
+  }
+
+  goMenuPage() {
+    console.log('go to menu page')
+    this.router.navigate(['/menu'], { relativeTo: this.route })
   }
 }

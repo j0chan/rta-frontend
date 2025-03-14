@@ -6,10 +6,17 @@
 </ion-header>
 
 <ion-content>
-  <!-- store-info 렌더링 -->
+  <!-- store-info -->
   <app-store-info *ngIf="store" [store]="store"></app-store-info>
 
-  <!-- latest event 렌더링 -->
+  <!-- latest event -->
   <app-event *ngIf="event" [event]="event"></app-event>
-</ion-content>
 
+  <!-- menu페이지로 이동하는 버튼 -->
+  <ion-button expand="block" (click)="goMenuPage()"> 
+    메뉴
+  </ion-button>
+
+  <!-- review-list -->
+  <app-review-list *ngIf="store"></app-review-list>
+</ion-content>
