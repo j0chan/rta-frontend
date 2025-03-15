@@ -12,8 +12,8 @@ import { StoresService } from 'src/app/services/stores.service';
   standalone: false
 })
 export class MenuPage implements OnInit {
-  store: ReadStore | null = null
-  menus: ReadMenu[] | null = null
+  store: ReadStore | undefined
+  menus: ReadMenu[] = []
 
   constructor(
     private route: ActivatedRoute,
@@ -25,7 +25,7 @@ export class MenuPage implements OnInit {
     if (store_id) {
       // 가게 정보 가져오기
       this.storesService.getStoreById(store_id).subscribe((response: ApiResponseDTO<ReadStore>) => {
-        this.store = response.data ?? null
+        this.store = response.data 
       })
 
       // 메뉴 정보 가져오기
