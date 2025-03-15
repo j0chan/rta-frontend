@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { ReadUser } from 'src/app/model/users/read-user.interface'
-import { UserRole } from 'src/app/model/users/user-role.enum'
+import { MyPageService } from 'src/app/services/my-page.service'
 
 @Component({
   selector: 'app-my-info',
@@ -9,20 +9,30 @@ import { UserRole } from 'src/app/model/users/user-role.enum'
   standalone: false,
 })
 export class MyInfoComponent implements OnInit {
-  user!: ReadUser
+  // 임시데이터. loggined user 구현되면 교체 예정
+  user_id: number = 1
+  user?: ReadUser
 
-  constructor() { }
+  constructor(
+    private myPageService: MyPageService,
+  ) { }
 
   ngOnInit() {
-    // 임시데이터. loggined user 구현되면 교체 예정
-    this.user = {
-      user_id: 1,
-      email: 'example@example.com',
-      nickname: '재은이',
-      phone_number: '010-1234-4567',
-      role: UserRole.USER,
-      created_at: new Date()
-    }
+    this.myPageService.readUserById(this.user_id).subscribe({
+      next: response => {
+        if (response.success) {
+          this.user = response.data ?? undefined
+        } else {
+          console.error(response.message)
+        }
+      },
+      error: err => {
+        console.error('Error fetching reviews: ', err)
+      },
+      complete: () => {
+        console.error('Fetching reviews request completed')
+      }
+    })
   }
 
 }

@@ -12,8 +12,8 @@ export class MyPageService {
   constructor(private http: HttpClient) { }
   private apiUrl = 'http://localhost:3000/api/users/'
 
-  readReviewById(user_id: number): Observable<ApiResponseDTO<ReadReview>> {
-    return this.http.get<ApiResponseDTO<ReadReview>>(`${this.apiUrl}${user_id}/reviews`)
+  readReviewsById(user_id: number): Observable<ApiResponseDTO<ReadReview[]>> {
+    return this.http.get<ApiResponseDTO<ReadReview[]>>(`${this.apiUrl}${user_id}/reviews`)
   }
 
   readUserById(user_id: number): Observable<ApiResponseDTO<ReadUser>> {
