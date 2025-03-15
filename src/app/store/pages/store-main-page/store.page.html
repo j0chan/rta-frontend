@@ -1,0 +1,22 @@
+<!-- Store 페이지 최상단 가게 이름 렌더링 -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="store">{{ store.store_name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- store-info -->
+  <app-store-info *ngIf="store" [store]="store"></app-store-info>
+
+  <!-- latest event -->
+  <app-event *ngIf="event" [event]="event"></app-event>
+
+  <!-- menu페이지로 이동하는 버튼 -->
+  <ion-button expand="block" (click)="goMenuPage()">
+    메뉴
+  </ion-button>
+
+  <!-- review-list -->
+  <app-reviews *ngIf="reviews" [reviews]="reviews"></app-reviews>
+</ion-content>
