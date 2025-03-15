@@ -14,6 +14,7 @@ export class MyInfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // 임시데이터. loggined user 구현되면 교체 예정
     this.user = {
       user_id: 1,
       email: 'example@example.com',
