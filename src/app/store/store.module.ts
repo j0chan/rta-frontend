@@ -10,8 +10,8 @@ import { StoreInfoComponent } from './components/store-info/store-info.component
 import { MenuPage } from './pages/menu-page/menu.page';
 import { EventDetailPage } from './pages/event-detail-page/event-detail.page';
 import { EventListPage } from './pages/event-list-page/event-list.page';
-import { ReviewsModule } from '../reviews/reviews.module';
 import { EventComponent } from './components/event/event.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
 
 
 @NgModule({
@@ -20,7 +20,6 @@ import { EventComponent } from './components/event/event.component';
     FormsModule,
     IonicModule,
     StorePageRoutingModule,
-    ReviewsModule
   ],
   declarations: [
     StorePage,
@@ -29,6 +28,7 @@ import { EventComponent } from './components/event/event.component';
     EventDetailPage,
     EventListPage,
     EventComponent,
+    ReviewsComponent
   ]
 })
-export class StorePageModule {}
+export class StorePageModule { }

@@ -13,10 +13,10 @@
   <app-event *ngIf="event" [event]="event"></app-event>
 
   <!-- menu페이지로 이동하는 버튼 -->
-  <ion-button expand="block" (click)="goMenuPage()"> 
+  <ion-button expand="block" (click)="goMenuPage()">
     메뉴
   </ion-button>
 
   <!-- review-list -->
-  <app-review-list *ngIf="store"></app-review-list>
+  <app-reviews *ngIf="reviews" [reviews]="reviews"></app-reviews>
 </ion-content>

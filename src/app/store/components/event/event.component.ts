@@ -9,5 +9,4 @@ import { ReadEvent } from 'src/app/model/events/read-event.interface';
 })
 export class EventComponent {
   @Input() event!: ReadEvent
-
 }
