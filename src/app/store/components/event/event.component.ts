@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ReadEvent } from 'src/app/model/events/read-event.interface';
+import { Component, Input } from '@angular/core'
+import { ReadEvent } from 'src/app/model/events/read-event.interface'
 
 @Component({
   selector: 'app-event',

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResponseDTO } from 'src/app/model/common/api-response.interface';
-import { ReadEvent } from 'src/app/model/events/read-event.interface';
-import { ReadReview } from 'src/app/model/reviews/read-review.interface';
-import { ReadStore } from 'src/app/model/stores/read-store.interface';
-import { StoresService } from 'src/app/services/stores.service';
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { ApiResponseDTO } from 'src/app/model/common/api-response.interface'
+import { ReadEvent } from 'src/app/model/events/read-event.interface'
+import { ReadReview } from 'src/app/model/reviews/read-review.interface'
+import { ReadStore } from 'src/app/model/stores/read-store.interface'
+import { StoresService } from 'src/app/services/stores.service'
 
 @Component({
   selector: 'app-store',
