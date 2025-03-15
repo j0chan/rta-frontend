@@ -33,14 +33,34 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
 
   // 검색
   onSearch(query: string) {
-    if (!query.trim()) {
-      this.filteredStores = this.stores // 검색어 없으면 전체 목록 표시
-    } else {
-      this.filteredStores = this.stores.filter(store =>
-        store.store_name.toLowerCase().includes(query.toLowerCase())
-      )
+    const searchQuery = query.trim().toLowerCase() // 검색어 소문자로 변환
+  
+    if (!searchQuery) {
+      return
     }
-    this.sendStoresToMap() // 필터링된 데이터를 지도에 update
+  
+    // 가게 이름을 먼저 검색해서 store_id를 찾는다
+    const foundStore = this.stores.find(store => 
+      store.store_name.toLowerCase().includes(searchQuery)
+    )
+  
+    if (!foundStore) {
+      this.filteredStores = []
+      return
+    }
+  
+    const storeId = foundStore.store_id
+  
+    // store_id로 상세 정보 조회
+    this.storesService.getStoreById(storeId).subscribe(
+      (data) => {
+        this.filteredStores = data ? [data] : []
+        this.sendStoresToMap()
+      },
+      (error) => {
+        this.filteredStores = []
+      }
+    )
   }
 
   // map iframe에 가게 데이터를 전달
