@@ -15,8 +15,4 @@ export class ReviewsService {
   readAllReviews(): Observable<ApiResponseDTO<ReadReview[]>> {
     return this.http.get<ApiResponseDTO<ReadReview[]>>(`${this.apiUrl}`)
   }
-
-  readReviewById() {
-
-  }
 }
