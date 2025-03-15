@@ -9,6 +9,7 @@ import { MyPageRoutingModule } from './my-page-routing.module'
 import { MyPagePage } from './pages/my-page/my-page.page'
 import { MyReviewsPage } from './pages/my-reviews-page/my-reviews.page'
 import { ReviewsModule } from '../reviews/reviews.module'
+import { MyInfoComponent } from './components/my-info/my-info.component'
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ReviewsModule } from '../reviews/reviews.module'
   declarations: [
     MyPagePage,
     MyReviewsPage,
+    MyInfoComponent,
   ]
 })
 export class MyPageModule {}
