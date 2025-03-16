@@ -5,7 +5,7 @@
     <p><strong>이벤트 제목:</strong> {{ event.title }}</p>
     <p><strong>상태:</strong> {{event.event_status}}</p>
     <p><strong>설명:</strong> {{ event.description }}</p>
-    <p><strong>시작 날짜:</strong> {{ event.start_date | date }}</p>
-    <p><strong>종료 날짜:</strong> {{ event.end_date | date }}</p>
+    <p><strong>시작 날짜:</strong> {{ event.start_date | date: 'yyyy년 MM월 dd일' }}</p>
+    <p><strong>종료 날짜:</strong> {{ event.end_date | date: 'yyyy년 MM월 dd일' }}</p>
   </ion-card-content>
 </ion-card>
