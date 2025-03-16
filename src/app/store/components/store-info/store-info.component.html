@@ -1,6 +1,6 @@
 <!-- 가게 정보 -->
 <ion-card *ngIf="store">
-  <ion-card-content>
+  <ion-card-content (click)="goStoreDetailPage()">
     <h2><strong>가게 정보</strong></h2><br>
     <p><strong>카테고리:</strong> {{ store.category }}</p>
     <p><strong>주소:</strong> {{ store.address }}</p>
@@ -8,3 +8,5 @@
     <p *ngIf="store.description">{{ store.description }}</p>
   </ion-card-content>
 </ion-card>
+
+<p>지도</p>
