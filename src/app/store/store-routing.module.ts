@@ -27,7 +27,7 @@ const routes: Routes = [
     path: ':store_id/store-detail',
     component: StoreDetailPage
   }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
