@@ -15,8 +15,8 @@ export class NearbyStoresService {
   constructor(private http: HttpClient) {}
 
   // 모든 가게 조회
-  getAllStores(): Observable<Store[]> {
-    return this.http.get<ApiResponseDTO<Store[]>>(`${this.apiUrl}`).pipe(
+  getAllStores(): Observable<ReadStore[]> {
+    return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.apiUrl}`).pipe(
         map(response => {
             return response.data ?? [] // API 응답에서 data만 반환, data가 undefined이면 빈 배열 반환
         })
@@ -24,9 +24,9 @@ export class NearbyStoresService {
   }
 
   // 특정 가게 조회
-  getStoreById(store_id: number): Observable<Store> {
-    return this.http.get<ApiResponseDTO<Store>>(`${this.apiUrl}${store_id}`).pipe(
-      map(response => response.data ?? {} as Store)
+  getStoreById(store_id: number): Observable<ReadStore> {
+    return this.http.get<ApiResponseDTO<ReadStore>>(`${this.apiUrl}${store_id}`).pipe(
+      map(response => response.data ?? {} as ReadStore)
     )
   }
 }
