@@ -150,6 +150,8 @@ function addStoreMarkers(stores) {
 
         mapConfig.markers.push(marker)
         mapConfig.infoWindows.push(infoWindow)
+        mapConfig.map.setCenter(position)
+        mapConfig.map.setZoom(17)
     })
 }
 

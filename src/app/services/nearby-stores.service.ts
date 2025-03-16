@@ -25,6 +25,8 @@ export class NearbyStoresService {
 
   // 특정 가게 조회
   getStoreById(store_id: number): Observable<Store> {
-    return this.http.get<Store>(`${this.apiUrl}${store_id}`)
+    return this.http.get<ApiResponseDTO<Store>>(`${this.apiUrl}${store_id}`).pipe(
+      map(response => response.data ?? {} as Store)
+    )
   }
 }
