@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ApiResponseDTO } from '../model/common/api-response.interface';
-import { Observable } from 'rxjs';
-import { ReadManagerRequest } from '../model/manager-requests/read-manager-request.interface';
-import { UpdateManagerRequest } from '../model/manager-requests/update-manager-request.interface';
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { ApiResponseDTO } from '../model/common/api-response.interface'
+import { Observable } from 'rxjs'
+import { ReadManagerRequest } from '../model/manager-requests/read-manager-request.interface'
+import { UpdateManagerRequest } from '../model/manager-requests/update-manager-request.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +20,5 @@ export class ManagerRequestsService {
   updateManagerRequest(request_id: number, updateManagerRequest: UpdateManagerRequest): Observable<ApiResponseDTO<void>> {
     return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}${request_id}`, updateManagerRequest)
   }
-  
+
 }
