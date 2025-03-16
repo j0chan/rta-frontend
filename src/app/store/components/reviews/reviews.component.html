@@ -1,0 +1,10 @@
+<ion-list>
+  <ion-item *ngFor="let review of reviews">
+    <ion-label>
+      <h2>{{ review.user_name }}</h2>
+      <p>{{ review.content }}</p>
+      <p>{{ review.date | date: 'yyyy년 MM월 dd일' }}</p>
+      <p *ngIf="review.isModified">(수정됨)</p>
+    </ion-label>
+  </ion-item>
+</ion-list>

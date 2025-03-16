@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
-import { Store } from 'src/app/model/stores/read-store.interface'
+import { ReadStore } from 'src/app/model/stores/read-store.interface'
 import { NearbyStoresService } from 'src/app/services/nearby-stores.service'
 
 @Component({
@@ -9,14 +9,14 @@ import { NearbyStoresService } from 'src/app/services/nearby-stores.service'
   standalone: false
 })
 export class NearbyStoresComponent implements OnInit, AfterViewInit {
-  stores: Store[] = []
-  filteredStores: Store[] = []
+  stores: ReadStore[] = []
+  filteredStores: ReadStore[] = []
 
   constructor(private storesService: NearbyStoresService) {}
 
   ngOnInit() {
     this.storesService.getAllStores().subscribe(
-      (data: Store[]) => {
+      (data: ReadStore[]) => {
         this.stores = data
         this.filteredStores = data // 초기에는 모든 가게 표시
         this.sendStoresToMap(false)
