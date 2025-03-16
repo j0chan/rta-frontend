@@ -57,4 +57,9 @@ export class StorePage implements OnInit {
     this.router.navigate([`menu`], { relativeTo: this.route })
     console.log('go menu page')
   }
+
+  goEventListPage() {
+    this.router.navigate([`event-list`], {relativeTo: this.route})
+    console.log('go event-list page')
+  }
 }

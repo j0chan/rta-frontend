@@ -20,7 +20,7 @@ const routes: Routes = [
     component: MenuPage
   },
   {
-    path: 'event-list',
+    path: ':store_id/event-list',
     component: EventListPage
   },
   {

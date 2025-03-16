@@ -30,4 +30,8 @@ export class StoresService {
     getReviewsByStoreId(store_id: number): Observable<ApiResponseDTO<ReadReview[]>> {
         return this.http.get<ApiResponseDTO<ReadReview[]>>(`${this.apiUrl}/${store_id}/reviews`)
     }
+
+    getAllEventsByStore(store_id: number): Observable<ApiResponseDTO<ReadEvent[]>> {
+        return this.http.get<ApiResponseDTO<ReadEvent[]>>(`${this.apiUrl}/${store_id}/events`)
+    }
 }

@@ -12,6 +12,10 @@
   <!-- latest event -->
   <app-event *ngIf="event" [event]="event"></app-event>
 
+  <ion-button expand="block" (click)="goEventListPage()">
+    이벤트 목록
+  </ion-button>
+
   <!-- menu페이지로 이동하는 버튼 -->
   <ion-button expand="block" (click)="goMenuPage()">
     메뉴
