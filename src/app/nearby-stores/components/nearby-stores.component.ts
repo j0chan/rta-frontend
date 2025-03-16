@@ -19,7 +19,7 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
       (data: Store[]) => {
         this.stores = data
         this.filteredStores = data // 초기에는 모든 가게 표시
-        this.sendStoresToMap()
+        this.sendStoresToMap(false)
       },
       (error) => console.error('가게 데이터 로딩 실패:', error)
     )
@@ -27,7 +27,7 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.sendStoresToMap()
+      this.sendStoresToMap(false)
     }, 1000)
   }
 
@@ -55,7 +55,7 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
     this.storesService.getStoreById(storeId).subscribe(
       (data) => {
         this.filteredStores = data ? [data] : []
-        this.sendStoresToMap()
+        this.sendStoresToMap(true)
       },
       (error) => {
         this.filteredStores = []
@@ -64,10 +64,10 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
   }
 
   // map iframe에 가게 데이터를 전달
-  sendStoresToMap() {
+  sendStoresToMap(isSearchPerformed: boolean) {
     const iframe = document.getElementById('map-iframe') as HTMLIFrameElement
     if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage(this.filteredStores, '*')
+      iframe.contentWindow.postMessage({ stores: this.filteredStores, isSearchPerformed }, '*')
     }
   }
 }

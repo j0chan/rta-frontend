@@ -115,13 +115,13 @@ function createInfoWindowContent(store) {
 }
 
 // 지도에 가게 마커 추가
-function addStoreMarkers(stores) {
+function addStoreMarkers(data) {
     if (!mapConfig.map) return
 
     // 기존 마커 제거
     clearMarkers()
 
-    stores.forEach(store => {
+    data.stores.forEach(store => {
         const lat = parseFloat(store.latitude) / 1e7
         const lng = parseFloat(store.longitude) / 1e7
 
@@ -150,8 +150,12 @@ function addStoreMarkers(stores) {
 
         mapConfig.markers.push(marker)
         mapConfig.infoWindows.push(infoWindow)
-        mapConfig.map.setCenter(position)
-        mapConfig.map.setZoom(17)
+
+        if(data.isSearchPerformed){ // 검색인 경우에만 화면 이동
+            mapConfig.map.setCenter(position)
+            mapConfig.map.setZoom(17)
+        }
+        
     })
 }
 
