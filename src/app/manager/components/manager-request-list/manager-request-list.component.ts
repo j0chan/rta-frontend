@@ -5,6 +5,7 @@ import { UsersService } from 'src/app/services/users.service'
 @Component({
   selector: 'app-manager-request-list',
   templateUrl: './manager-request-list.component.html',
+  standalone: false,
 })
 export class ManagerRequestListComponent implements OnInit {
   requests: ReadManagerRequest[] = []
