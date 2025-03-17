@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router'
 @Component({
   selector: 'app-manager',
   templateUrl: './manager.page.html',
-  styleUrls: ['./manager.page.scss'],
   standalone: false,
 })
 export class ManagerPage implements OnInit {

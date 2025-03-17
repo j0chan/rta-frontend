@@ -5,7 +5,6 @@ import { ReadReview } from 'src/app/model/reviews/read-review.interface'
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
-  styleUrls: ['./review.component.scss'],
   standalone: false,
 })
 export class ReviewComponent implements OnInit, OnChanges {
