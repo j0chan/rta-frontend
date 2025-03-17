@@ -1,4 +1,4 @@
-<ion-list>
+<ion-list *ngIf="reviews && reviews.length > 0; else noReview">
   <ion-item *ngFor="let review of reviews">
     <ion-label>
       <h2>{{ review.user_name }}</h2>
@@ -8,3 +8,12 @@
     </ion-label>
   </ion-item>
 </ion-list>
+
+<!-- 등록된 리뷰 없는 경우 표시 -->
+<ng-template #noReview>
+  <ion-card>
+    <ion-card-content>
+      <p>첫번째 리뷰를 작성해주세요!</p>
+    </ion-card-content>
+  </ion-card>
+</ng-template>

@@ -8,10 +8,11 @@ import { StorePageRoutingModule } from './store-routing.module'
 import { StorePage } from './pages/store-main-page/store.page'
 import { StoreInfoComponent } from './components/store-info/store-info.component'
 import { MenuPage } from './pages/menu-page/menu.page'
-import { EventDetailPage } from './pages/event-detail-page/event-detail.page'
 import { EventListPage } from './pages/event-list-page/event-list.page'
 import { EventComponent } from './components/event/event.component'
 import { ReviewsComponent } from './components/reviews/reviews.component'
+import { StoreDetailPage } from './pages/store-detail-page/store-detail-page'
+import { StoreHeaderComponent } from './components/store-header/store-header.component'
 
 
 @NgModule({
@@ -25,10 +26,11 @@ import { ReviewsComponent } from './components/reviews/reviews.component'
     StorePage,
     StoreInfoComponent,
     MenuPage,
-    EventDetailPage,
     EventListPage,
     EventComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    StoreDetailPage,
+    StoreHeaderComponent
   ]
 })
 export class StorePageModule { }

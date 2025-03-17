@@ -1,3 +1,29 @@
-<p>
-  event-list works!
-</p>
+<!-- Store header -->
+<app-store-header *ngIf="store" [store]="store"></app-store-header>
+
+<!-- 메뉴 목록 출력 -->
+<ion-content>
+  <ng-container *ngIf="events && events.length > 0; else noEvent">
+    <ion-list>
+      <ion-item *ngFor="let event of events">
+        <ion-label>
+          <h2>{{ event.title }}</h2>
+          <p>{{ event.description }}</p>
+          <p>시작일: {{ event.start_date | date: 'yyyy년 MM월 dd일' }}</p>
+          <p>종료일: {{event.end_date | date: 'yyyy년 MM월 dd일' }}</p>
+          <p>상태: {{event.event_status}}</p>
+          <p>작성일: {{event.created_at | date: 'yyyy년 MM월 dd일' }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <!-- 메뉴가 없는 경우 표시 -->
+  <ng-template #noEvent>
+    <ion-card>
+      <ion-card-content>
+        <p>등록된 메뉴가 없습니다.</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

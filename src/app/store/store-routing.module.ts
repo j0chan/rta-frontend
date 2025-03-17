@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { StorePage } from './pages/store-main-page/store.page'
 import { EventListPage } from './pages/event-list-page/event-list.page'
-import { EventDetailPage } from './pages/event-detail-page/event-detail.page'
 import { MenuPage } from './pages/menu-page/menu.page'
+import { StoreDetailPage } from './pages/store-detail-page/store-detail-page'
 
 const routes: Routes = [
   // //이거 하면 http://localhost:8100/store 페이지에 아무것도 안뜸
@@ -20,14 +20,14 @@ const routes: Routes = [
     component: MenuPage
   },
   {
-    path: 'event-list',
+    path: ':store_id/event-list',
     component: EventListPage
   },
   {
-    path: 'event-detail/:event_id',
-    component: EventDetailPage
-  },
-];
+    path: ':store_id/store-detail',
+    component: StoreDetailPage
+  }
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
