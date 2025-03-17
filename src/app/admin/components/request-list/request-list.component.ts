@@ -8,7 +8,6 @@ import { StoreRequestsService } from 'src/app/services/store-requests.service'
 @Component({
   selector: 'app-request-list',
   templateUrl: './request-list.component.html',
-  styleUrls: ['./request-list.component.scss'],
   standalone: false,
 })
 export class RequestListComponent implements OnInit {

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.page.html',
-  styleUrls: ['./admin.page.scss'],
   standalone: false,
 })
 export class AdminPage implements OnInit {
