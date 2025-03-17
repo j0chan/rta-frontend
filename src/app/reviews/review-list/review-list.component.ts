@@ -6,7 +6,6 @@ import { ReviewsService } from 'src/app/services/reviews.service'
 @Component({
   selector: 'app-review-list',
   templateUrl: './review-list.component.html',
-  styleUrls: ['./review-list.component.scss'],
   standalone: false,
 })
 export class ReviewListComponent implements OnInit {

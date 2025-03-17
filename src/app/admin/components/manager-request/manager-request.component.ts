@@ -8,7 +8,6 @@ import { ManagerRequestsService } from 'src/app/services/manager-requests.servic
 @Component({
   selector: 'app-manager-request',
   templateUrl: './manager-request.component.html',
-  styleUrls: ['./manager-request.component.scss'],
   standalone: false,
 })
 export class ManagerRequestComponent implements OnInit {
