@@ -9,6 +9,7 @@ import { ManagerRoutingModule } from './manager-routing.module'
 import { ManagerPage } from './pages/manager/manager.page'
 import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page'
 import { ManagerRequestComponent } from './components/manager-request/manager-request.component'
+import { ManagerRequestListComponent } from './components/manager-request-list/manager-request-list.component'
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ManagerRequestComponent } from './components/manager-request/manager-re
     ManagerPage,
     MyManagerRequestsPage,
     ManagerRequestComponent,
+    ManagerRequestListComponent,
   ]
 })
 export class ManagerModule {}
