@@ -1,3 +1,9 @@
-<p>
-  manager-request-list works!
-</p>
+<ion-list>
+  <ion-item *ngFor="let request of requests">
+    <ion-label>
+      <ng-container>
+        <app-store-request [request]="request"></app-store-request>
+      </ng-container>
+    </ion-label>
+  </ion-item>
+</ion-list>
