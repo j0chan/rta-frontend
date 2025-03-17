@@ -1,4 +1,4 @@
-import { RequestStatus } from "../../shared/common/request-status.enum"
+import { RequestStatus } from "../common/request-status.enum"
 
 export interface ReadManagerRequest {
     request_id: number
