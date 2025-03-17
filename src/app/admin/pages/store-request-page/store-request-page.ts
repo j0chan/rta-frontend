@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { RequestPage } from 'src/app/model/common/request-page.enum'
+import { RequestPage } from 'src/app/shared/model/common/request-page.enum'
 
 @Component({
   selector: 'app-store-request-page',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { ReadStore } from 'src/app/model/stores/read-store.interface'
+import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 
 @Injectable({

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
-import { ReadManagerRequest } from '../model/manager-requests/read-manager-request.interface'
 import { HttpClient } from '@angular/common/http'
+import { ReadManagerRequest } from '../model/manager-requests/read-manager-request.interface'
 
 @Injectable({
   providedIn: 'root'

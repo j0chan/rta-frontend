@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { ReadManagerRequest } from 'src/app/model/manager-requests/read-manager-request.interface'
-import { UsersService } from 'src/app/services/users.service'
+import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
+import { UsersService } from 'src/app/shared/services/users.service'
 
 @Component({
   selector: 'app-manager-request-list',

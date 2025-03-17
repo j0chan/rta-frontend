@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ReadStore } from 'src/app/model/stores/read-store.interface'
+import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 
 @Component({
   selector: 'app-store-header',

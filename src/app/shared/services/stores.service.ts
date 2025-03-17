@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 import { ReadStore } from '../model/stores/read-store.interface'
-import { ReadEvent } from '../model/events/read-event.interface'
 import { ReadMenu } from '../model/menus/read-menu.interface'
 import { ReadReview } from '../model/reviews/read-review.interface'
+import { ReadEvent } from '../model/events/read-event.interface'
 
 @Injectable({
     providedIn: 'root'

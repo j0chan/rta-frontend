@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
 import { Router } from '@angular/router'
-import { RequestStatus } from 'src/app/model/common/request-status.enum'
-import { ReadManagerRequest } from 'src/app/model/manager-requests/read-manager-request.interface'
-import { UpdateManagerRequest } from 'src/app/model/manager-requests/update-manager-request.interface'
-import { ManagerRequestsService } from 'src/app/services/manager-requests.service'
+import { RequestStatus } from 'src/app/shared/model/common/request-status.enum'
+import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
+import { UpdateManagerRequest } from 'src/app/shared/model/manager-requests/update-manager-request.interface'
+import { ManagerRequestsService } from 'src/app/shared/services/manager-requests.service'
 
 @Component({
   selector: 'app-manager-request',
