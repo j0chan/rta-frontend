@@ -1,9 +1,9 @@
-import { StoresService } from 'src/app/services/stores.service'
+import { StoresService } from 'src/app/shared/services/stores.service'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ReadEvent } from 'src/app/model/events/read-event.interface'
-import { ReadStore } from 'src/app/model/stores/read-store.interface'
-import { ApiResponseDTO } from 'src/app/model/common/api-response.interface'
+import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
+import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 
 @Component({
   selector: 'app-event-list',

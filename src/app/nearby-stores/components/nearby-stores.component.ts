@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
-import { ReadStore } from 'src/app/model/stores/read-store.interface'
-import { NearbyStoresService } from 'src/app/services/nearby-stores.service'
+import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
+import { NearbyStoresService } from 'src/app/shared/services/nearby-stores.service'
 
 @Component({
   selector: 'app-nearby-stores',

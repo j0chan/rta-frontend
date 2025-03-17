@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ReadUser } from 'src/app/model/users/read-user.interface'
-import { MyPageService } from 'src/app/services/my-page.service'
+import { ReadUser } from 'src/app/shared/model/users/read-user.interface'
+import { MyPageService } from 'src/app/shared/services/my-page.service'
 
 @Component({
   selector: 'app-my-info',

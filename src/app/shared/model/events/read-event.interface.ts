@@ -1,4 +1,4 @@
-import { EventStatus } from "../common/event-status.enum"
+import { EventStatus } from "../../shared/common/event-status.enum"
 
 export interface ReadEvent {
     event_id: number

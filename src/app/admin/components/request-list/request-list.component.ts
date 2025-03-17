@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { RequestPage } from 'src/app/model/common/request-page.enum'
-import { ReadManagerRequest } from 'src/app/model/manager-requests/read-manager-request.interface'
-import { ReadStoreRequest } from 'src/app/model/store-requests/read-store-request.interface'
-import { ManagerRequestsService } from 'src/app/services/manager-requests.service'
-import { StoreRequestsService } from 'src/app/services/store-requests.service'
+import { RequestPage } from 'src/app/shared/model/common/request-page.enum'
+import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
+import { ReadStoreRequest } from 'src/app/shared/model/store-requests/read-store-request.interface'
+import { ManagerRequestsService } from 'src/app/shared/services/manager-requests.service'
+import { StoreRequestsService } from 'src/app/shared/services/store-requests.service'
 
 @Component({
   selector: 'app-request-list',

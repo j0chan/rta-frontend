@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core'
-import { ReadReply } from 'src/app/model/replies/read-reply.interface'
-import { ReadReview } from 'src/app/model/reviews/read-review.interface'
+import { ReadReply } from 'src/app/shared/model/replies/read-reply.interface'
+import { ReadReview } from 'src/app/shared/model/reviews/read-review.interface'
 
 @Component({
   selector: 'app-review',

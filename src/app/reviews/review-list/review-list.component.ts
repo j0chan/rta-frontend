@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { ReadReview } from 'src/app/model/reviews/read-review.interface'
-import { ReviewsService } from 'src/app/services/reviews.service'
+import { ReadReview } from 'src/app/shared/model/reviews/read-review.interface'
+import { ReviewsService } from 'src/app/shared/services/reviews.service'
 
 @Component({
   selector: 'app-review-list',

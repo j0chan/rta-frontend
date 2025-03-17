@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { RequestStatus } from 'src/app/model/common/request-status.enum'
-import { ReadStoreRequest } from 'src/app/model/store-requests/read-store-request.interface'
-import { UpdateStoreRequest } from 'src/app/model/store-requests/update-store-request.interface'
-import { StoreRequestsService } from 'src/app/services/store-requests.service'
+import { RequestStatus } from 'src/app/shared/model/common/request-status.enum'
+import { ReadStoreRequest } from 'src/app/shared/model/store-requests/read-store-request.interface'
+import { UpdateStoreRequest } from 'src/app/shared/model/store-requests/update-store-request.interface'
+import { StoreRequestsService } from 'src/app/shared/services/store-requests.service'
 
 @Component({
   selector: 'app-store-request',

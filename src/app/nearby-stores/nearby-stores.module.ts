@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular'
 import { NearbyStoresPageRoutingModule } from './nearby-stores-routing.module'
 import { NearbyStoresPage } from './pages/nearby-stores.page'
 import { NearbyStoresComponent } from './components/nearby-stores.component'
-import { CommonComponentsModule } from 'src/app/model/common/common.module'
+import { CommonComponentsModule } from 'src/app/shared/module/common.module'
 
 @NgModule({
   imports: [
