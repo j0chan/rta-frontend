@@ -1,3 +1,15 @@
-<p>
-  my-manager-request works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>나의 점주신청서 목록</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">나의 점주신청서 목록</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <app-manager-request-list></app-manager-request-list>
+</ion-content>

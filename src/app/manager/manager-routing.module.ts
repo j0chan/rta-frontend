@@ -10,7 +10,7 @@ const routes: Routes = [
     component: ManagerPage
   },
   {
-    path: '/my-manager-requests',
+    path: 'my-manager-requests',
     component: MyManagerRequestsPage
   },
 ];
