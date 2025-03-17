@@ -13,6 +13,10 @@ export class ManagerRequestsService {
 
   constructor(private http: HttpClient) { }
 
+  createManagerRequest(createManagerRequest: CreateManagerRequestDTO): Observable<ApiResponseDTO<void>> {
+    return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}`, createManagerRequest)
+  }
+
   readAllManagerRequests(): Observable<ApiResponseDTO<ReadManagerRequest[]>> {
     return this.http.get<ApiResponseDTO<ReadManagerRequest[]>>(`${this.apiUrl}`)
   }

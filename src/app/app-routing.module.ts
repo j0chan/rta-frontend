@@ -31,6 +31,11 @@ const routes: Routes = [
     path: 'my-page',
     loadChildren: () => import('./my-page/my-page.module').then(m => m.MyPageModule)
   },
+  {
+    path: 'manager',
+    loadChildren: () => import('./manager/manager.module').then( m => m.ManagerModule)
+  },
+
 
 ]
 

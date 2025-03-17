@@ -7,8 +7,7 @@
 ----------------------------------------------------->
 <ion-searchbar
   [(ngModel)]="searchQuery" 
-  (ionInput)="search()"
+  (keydown.enter)="search()"
   placeholder="가게명 검색"
   showCancelButton="focus"
-  debounce="500" 
 ></ion-searchbar>

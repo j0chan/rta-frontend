@@ -5,7 +5,6 @@ import { MyPageService } from 'src/app/services/my-page.service'
 @Component({
   selector: 'app-my-info',
   templateUrl: './my-info.component.html',
-  styleUrls: ['./my-info.component.scss'],
   standalone: false,
 })
 export class MyInfoComponent implements OnInit {

@@ -1,0 +1,9 @@
+<ion-list>
+  <ion-item *ngFor="let request of requests">
+    <ion-label>
+      <ng-container>
+        <app-manager-request [request]="request"></app-manager-request>
+      </ng-container>
+    </ion-label>
+  </ion-item>
+</ion-list>
