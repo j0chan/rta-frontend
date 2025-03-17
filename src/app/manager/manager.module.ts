@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ManagerRoutingModule } from './manager-routing.module';
 
 import { ManagerPage } from './pages/manager/manager.page'
+import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { ManagerPage } from './pages/manager/manager.page'
     IonicModule,
     ManagerRoutingModule
   ],
-  declarations: [ManagerPage]
+  declarations: [
+    ManagerPage,
+    MyManagerRequestsPage,
+  ]
 })
 export class ManagerModule {}
