@@ -6,13 +6,15 @@ import { FooterMenuComponent } from '../components/footer-menu/footer-menu.compo
 import { IonicModule } from '@ionic/angular'
 import { EventStatusPipe } from '../pipes/event-status.pipe'
 import { CategoryPipe } from '../pipes/category.pipe'
+import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
 
 @NgModule({
   declarations: [
     SearchBarComponent,
     FooterMenuComponent,
     EventStatusPipe,
-    CategoryPipe
+    CategoryPipe,
+    KoreanDatePipe,
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { CategoryPipe } from '../pipes/category.pipe'
     SearchBarComponent,
     FooterMenuComponent,
     EventStatusPipe,
-    CategoryPipe
+    CategoryPipe,
+    KoreanDatePipe,
   ]
 })
 export class SharedModule {}

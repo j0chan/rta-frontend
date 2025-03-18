@@ -9,10 +9,10 @@
         <ion-label>
           <h2>{{ event.title }}</h2>
           <p>{{ event.description }}</p>
-          <p>시작일: {{ event.start_date | date: 'yyyy년 MM월 dd일' }}</p>
-          <p>종료일: {{event.end_date | date: 'yyyy년 MM월 dd일' }}</p>
-          <p>상태: {{event.event_status}}</p>
-          <p>작성일: {{event.created_at | date: 'yyyy년 MM월 dd일' }}</p>
+          <p>시작일: {{ event.start_date | koreanDate }}</p>
+          <p>종료일: {{event.end_date | koreanDate }}</p>
+          <p>상태: {{event.event_status | eventStatusPipe}}</p>
+          <p>작성일: {{event.created_at | koreanDate }}</p>
         </ion-label>
       </ion-item>
     </ion-list>
