@@ -5,12 +5,14 @@ import { SearchBarComponent } from '../components/search-bar/search-bar.componen
 import { FooterMenuComponent } from '../components/footer-menu/footer-menu.component'
 import { IonicModule } from '@ionic/angular'
 import { EventStatusPipe } from '../pipes/event-status.pipe'
+import { CategoryPipe } from '../pipes/category.pipe'
 
 @NgModule({
   declarations: [
     SearchBarComponent,
     FooterMenuComponent,
-    EventStatusPipe
+    EventStatusPipe,
+    CategoryPipe
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { EventStatusPipe } from '../pipes/event-status.pipe'
   exports: [
     SearchBarComponent,
     FooterMenuComponent,
-    EventStatusPipe
+    EventStatusPipe,
+    CategoryPipe
   ]
 })
 export class SharedModule {}
