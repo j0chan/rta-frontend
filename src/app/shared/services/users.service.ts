@@ -15,4 +15,9 @@ export class UsersService {
   readMyManagerRequests(user_id: number): Observable<ApiResponseDTO<ReadManagerRequest[]>> {
     return this.http.get<ApiResponseDTO<ReadManagerRequest[]>>(`${this.apiUrl}${user_id}/manager-requests`)
   }
+
+  // 이메일 중복 검사
+  readEmailExists(email: string): Observable<ApiResponseDTO<boolean>> {
+    return this.http.get<ApiResponseDTO<boolean>>(`${this.apiUrl}check-email?email=${email}`)
+  }
 }

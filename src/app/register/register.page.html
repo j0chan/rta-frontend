@@ -7,26 +7,43 @@
 <ion-content>
   <form (ngSubmit)="onSubmit()">
     <ion-list>
+      <!-- 이메일 -->
       <ion-item>
         <ion-label position="floating">이메일</ion-label>
-        <ion-input type="email" [(ngModel)]="form.email" name="email" required></ion-input>
+        <ion-input 
+          type="email" 
+          [(ngModel)]="form.email" 
+          name="email" 
+          required 
+          [disabled]="isEmailChecked"
+          (ngModelChange)="onEmailChange()">
+        </ion-input>
+        <ion-button 
+          (click)="duplicateCheck()" 
+          [disabled]="isEmailChecked">
+          중복 확인
+        </ion-button>
       </ion-item>
 
+      <!-- 비밀번호 -->
       <ion-item>
         <ion-label position="floating">비밀번호</ion-label>
         <ion-input type="password" [(ngModel)]="form.password" name="password" required></ion-input>
       </ion-item>
 
+      <!-- 닉네임 -->
       <ion-item>
         <ion-label position="floating">닉네임</ion-label>
         <ion-input type="text" [(ngModel)]="form.nickname" name="nickname" required></ion-input>
       </ion-item>
 
+      <!-- 전화번호 -->
       <ion-item>
         <ion-label position="floating">전화번호</ion-label>
         <ion-input type="tel" [(ngModel)]="form.phone_number" name="phone_number" required></ion-input>
       </ion-item>
 
+      <!-- 역할 -->
       <ion-item>
         <ion-label>역할</ion-label>
         <ion-select [(ngModel)]="form.role" name="role">
@@ -37,6 +54,9 @@
       </ion-item>
     </ion-list>
 
-    <ion-button expand="full" type="submit">회원가입</ion-button>
+    <!-- 회원가입 버튼 -->
+    <ion-button expand="full" type="submit" [disabled]="!(isEmailChecked && isEmailUsable)">
+      회원가입
+    </ion-button>
   </form>
 </ion-content>
