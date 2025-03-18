@@ -3,8 +3,8 @@
   <div>
     <p>신청자 {{ request.user_name }}</p>
     <p>가게 {{ request.store_name }}</p>
-    <p>신청일 {{ request.created_at }}</p>
-    <p>상태 {{ request.status }}</p>
+    <p>신청일 {{ request.created_at | koreanDate }}</p>
+    <p>상태 {{ request.status | requestStatusPipe }}</p>
     
     <ion-grid>
       <ion-row>

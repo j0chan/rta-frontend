@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular'
 import { EventStatusPipe } from '../pipes/event-status.pipe'
 import { CategoryPipe } from '../pipes/category.pipe'
 import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
+import { RequestStatusPipe } from '../pipes/request-status.pipe'
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
     EventStatusPipe,
     CategoryPipe,
     KoreanDatePipe,
+    RequestStatusPipe,
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
     EventStatusPipe,
     CategoryPipe,
     KoreanDatePipe,
+    RequestStatusPipe,
   ]
 })
 export class SharedModule { }
