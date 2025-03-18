@@ -11,6 +11,8 @@
     </ion-toolbar>
   </ion-header>
 
+  <p>{{ this.store_name }}</p>
+
   <ion-textarea placeholder="포장 경험을 알려주세요" [(ngModel)]="reviewText" [clearOnEdit]="true"></ion-textarea>
 
 <ion-button expand="full" (click)="submit()">작성 완료</ion-button>

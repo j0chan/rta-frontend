@@ -61,4 +61,9 @@ export class StorePage implements OnInit {
     this.router.navigate([`event-list`], { relativeTo: this.route })
     console.log('go event-list page')
   }
+
+  goWriteReviewPage() {
+    this.router.navigate([`write-review`], { relativeTo: this.route, queryParams: { store_id: this.store?.store_id } })
+    console.log('go write-review page')
+  }
 }
