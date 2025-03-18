@@ -33,10 +33,12 @@ const routes: Routes = [
   },
   {
     path: 'manager',
-    loadChildren: () => import('./manager/manager.module').then( m => m.ManagerModule)
+    loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule)
   },
-
-
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+  }
 ]
 
 @NgModule({
