@@ -1,3 +1,42 @@
-<p>
-  register works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>회원가입</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">이메일</ion-label>
+        <ion-input type="email" [(ngModel)]="form.email" name="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">비밀번호</ion-label>
+        <ion-input type="password" [(ngModel)]="form.password" name="password" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">닉네임</ion-label>
+        <ion-input type="text" [(ngModel)]="form.nickname" name="nickname" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">전화번호</ion-label>
+        <ion-input type="tel" [(ngModel)]="form.phone_number" name="phone_number" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>역할</ion-label>
+        <ion-select [(ngModel)]="form.role" name="role">
+          <ion-select-option value="USER">사용자</ion-select-option>
+          <ion-select-option value="MANAGER">가게 매니저</ion-select-option>
+          <ion-select-option value="ADMIN">관리자</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="full" type="submit">회원가입</ion-button>
+  </form>
+</ion-content>
