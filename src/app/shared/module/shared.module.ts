@@ -20,4 +20,4 @@ import { IonicModule } from '@ionic/angular'
     FooterMenuComponent
   ]
 })
-export class CommonComponentsModule {}
+export class SharedModule {}
