@@ -10,6 +10,7 @@ import { ReviewsModule } from './reviews/reviews.module'
 import { HttpClientModule } from '@angular/common/http'
 import { AdminModule } from './admin/admin.module'
 import { FormsModule } from '@angular/forms'
+import { SharedModule } from './shared/module/shared.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms'
     ReviewsModule,
     AdminModule,
     FormsModule,
+    SharedModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

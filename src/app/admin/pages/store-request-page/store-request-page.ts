@@ -11,6 +11,6 @@ export class StoreRequestPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

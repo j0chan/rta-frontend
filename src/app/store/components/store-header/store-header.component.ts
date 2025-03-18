@@ -4,7 +4,6 @@ import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 @Component({
   selector: 'app-store-header',
   templateUrl: './store-header.component.html',
-  styleUrls: ['./store-header.component.scss'],
   standalone: false
 })
 export class StoreHeaderComponent {

@@ -21,8 +21,8 @@ import { ReviewComponent } from './review/review.component'
     ReviewComponent,
   ],
   exports: [
-    ReviewListComponent, 
+    ReviewListComponent,
     ReviewComponent,
   ]
 })
-export class ReviewsModule {}
+export class ReviewsModule { }

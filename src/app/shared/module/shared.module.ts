@@ -4,11 +4,19 @@ import { FormsModule } from '@angular/forms'
 import { SearchBarComponent } from '../components/search-bar/search-bar.component'
 import { FooterMenuComponent } from '../components/footer-menu/footer-menu.component'
 import { IonicModule } from '@ionic/angular'
+import { EventStatusPipe } from '../pipes/event-status.pipe'
+import { CategoryPipe } from '../pipes/category.pipe'
+import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
+import { RequestStatusPipe } from '../pipes/request-status.pipe'
 
 @NgModule({
   declarations: [
     SearchBarComponent,
-    FooterMenuComponent 
+    FooterMenuComponent,
+    EventStatusPipe,
+    CategoryPipe,
+    KoreanDatePipe,
+    RequestStatusPipe,
   ],
   imports: [
     CommonModule,
@@ -17,7 +25,11 @@ import { IonicModule } from '@ionic/angular'
   ],
   exports: [
     SearchBarComponent,
-    FooterMenuComponent
+    FooterMenuComponent,
+    EventStatusPipe,
+    CategoryPipe,
+    KoreanDatePipe,
+    RequestStatusPipe,
   ]
 })
-export class CommonComponentsModule {}
+export class SharedModule { }

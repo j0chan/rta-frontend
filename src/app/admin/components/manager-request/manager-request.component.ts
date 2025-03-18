@@ -17,7 +17,7 @@ export class ManagerRequestComponent implements OnInit {
   remark: string = ''
 
   public RequestStatus = RequestStatus
-  
+
   constructor(
     private managerRequestsService: ManagerRequestsService,
     private router: Router,
@@ -27,7 +27,7 @@ export class ManagerRequestComponent implements OnInit {
     if (this.request) {
       this.request_id = this.request.request_id
     }
-   }
+  }
 
   async updateManagerRequest() {
     if (!this.request_id) { return }
@@ -39,7 +39,7 @@ export class ManagerRequestComponent implements OnInit {
     }
 
     this.managerRequestsService.updateManagerRequest(this.request_id, updateData).subscribe({
-      next: response=> {
+      next: response => {
         if (response.success) {
           this.router.navigate(['/'])
         } else {

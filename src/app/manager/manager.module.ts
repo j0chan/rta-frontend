@@ -25,4 +25,4 @@ import { ManagerRequestListComponent } from './components/manager-request-list/m
     ManagerRequestListComponent,
   ]
 })
-export class ManagerModule {}
+export class ManagerModule { }

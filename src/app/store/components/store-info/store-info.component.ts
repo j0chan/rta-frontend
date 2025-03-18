@@ -5,7 +5,6 @@ import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 @Component({
   selector: 'app-store-info',
   templateUrl: './store-info.component.html',
-  styleUrls: ['./store-info.component.scss'],
   standalone: false
 })
 export class StoreInfoComponent {

@@ -9,7 +9,6 @@ import { StoresService } from 'src/app/shared/services/stores.service'
 @Component({
   selector: 'app-store',
   templateUrl: './store.page.html',
-  styleUrls: ['./store.page.scss'],
   standalone: false,
 })
 export class StorePage implements OnInit {

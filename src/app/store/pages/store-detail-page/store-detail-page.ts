@@ -7,7 +7,6 @@ import { StoresService } from 'src/app/shared/services/stores.service'
 @Component({
   selector: 'app-store-detail-page',
   templateUrl: './store-detail-page.html',
-  styleUrls: ['./store-detail-page.scss'],
   standalone: false
 })
 export class StoreDetailPage implements OnInit {
@@ -28,5 +27,4 @@ export class StoreDetailPage implements OnInit {
       })
     }
   }
-
 }

@@ -6,4 +6,4 @@ import { Component } from '@angular/core'
   styleUrls: ['./footer-menu.component.scss'],
   standalone: false
 })
-export class FooterMenuComponent {}
+export class FooterMenuComponent { }
