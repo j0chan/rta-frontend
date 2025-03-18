@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CreateUser } from '../shared/model/auth/create-user.interface';
-import { UserRole } from '../shared/model/users/user-role.enum';
-import { AuthService } from '../shared/services/auth.service';
-import { UsersService } from '../shared/services/users.service';
+import { Component } from '@angular/core'
+import { CreateUser } from '../shared/model/auth/create-user.interface'
+import { UserRole } from '../shared/model/users/user-role.enum'
+import { AuthService } from '../shared/services/auth.service'
+import { UsersService } from '../shared/services/users.service'
 
 @Component({
   selector: 'app-register',
@@ -28,8 +28,8 @@ export class RegisterPage {
 
   // 이메일 변경 시 중복 검사 상태 초기화
   onEmailChange() {
-    this.isEmailChecked = false;
-    this.isEmailUsable = false;
+    this.isEmailChecked = false
+    this.isEmailUsable = false
   }
 
   // 중복 검사 버튼 클릭 시

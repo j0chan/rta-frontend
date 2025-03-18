@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CreateUser } from '../model/auth/create-user.interface';
-import { Observable } from 'rxjs';
-import { ApiResponseDTO } from '../model/common/api-response.interface';
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { CreateUser } from '../model/auth/create-user.interface'
+import { Observable } from 'rxjs'
+import { ApiResponseDTO } from '../model/common/api-response.interface'
 
 @Injectable({
   providedIn: 'root'
