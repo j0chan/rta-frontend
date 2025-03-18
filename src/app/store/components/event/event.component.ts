@@ -4,7 +4,6 @@ import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.scss'],
   standalone: false,
 })
 export class EventComponent {

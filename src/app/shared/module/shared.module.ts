@@ -29,4 +29,4 @@ import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
     KoreanDatePipe,
   ]
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -12,7 +12,7 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
   stores: ReadStore[] = []
   filteredStores: ReadStore[] = []
 
-  constructor(private storesService: NearbyStoresService) {}
+  constructor(private storesService: NearbyStoresService) { }
 
   ngOnInit() {
     this.storesService.getAllStores().subscribe(
@@ -34,23 +34,23 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
   // 검색
   onSearch(query: string) {
     const searchQuery = query.trim().toLowerCase() // 검색어 소문자로 변환
-  
+
     if (!searchQuery) {
       return
     }
-  
+
     // 가게 이름을 먼저 검색해서 store_id를 찾는다
-    const foundStore = this.stores.find(store => 
+    const foundStore = this.stores.find(store =>
       store.store_name.toLowerCase().includes(searchQuery)
     )
-  
+
     if (!foundStore) {
       this.filteredStores = []
       return
     }
-  
+
     const storeId = foundStore.store_id
-  
+
     // store_id로 상세 정보 조회
     this.storesService.getStoreById(storeId).subscribe(
       (data) => {

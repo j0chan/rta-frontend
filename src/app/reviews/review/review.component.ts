@@ -11,9 +11,9 @@ export class ReviewComponent implements OnInit, OnChanges {
   @Input() review!: ReadReview
   reply?: ReadReply
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['review']?.currentValue) {

@@ -8,7 +8,6 @@ import { StoresService } from 'src/app/shared/services/stores.service'
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
-  styleUrls: ['./menu.page.scss'],
   standalone: false
 })
 export class MenuPage implements OnInit {

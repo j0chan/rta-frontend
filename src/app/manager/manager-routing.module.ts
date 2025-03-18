@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
 import { ManagerPage } from './pages/manager/manager.page'
-import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page';
+import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page'
 
 const routes: Routes = [
   {
@@ -19,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ManagerRoutingModule {}
+export class ManagerRoutingModule { }

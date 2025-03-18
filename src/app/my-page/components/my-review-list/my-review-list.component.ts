@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ReadReview } from 'src/app/shared/model/reviews/read-review.interface';
-import { MyPageService } from 'src/app/shared/services/my-page.service';
+import { Component, OnInit } from '@angular/core'
+import { ReadReview } from 'src/app/shared/model/reviews/read-review.interface'
+import { MyPageService } from 'src/app/shared/services/my-page.service'
 
 @Component({
   selector: 'app-my-review-list',

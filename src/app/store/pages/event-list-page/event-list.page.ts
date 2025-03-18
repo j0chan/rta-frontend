@@ -8,7 +8,6 @@ import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.page.html',
-  styleUrls: ['./event-list.page.scss'],
   standalone: false
 })
 export class EventListPage implements OnInit {

@@ -32,4 +32,4 @@ import { ManagerRequestPage } from './pages/manager-request-page/manager-request
     RequestListComponent
   ]
 })
-export class AdminModule {}
+export class AdminModule { }

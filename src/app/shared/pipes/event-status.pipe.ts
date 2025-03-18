@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { EventStatus } from "../model/events/event-status.enum";
+import { Pipe, PipeTransform } from "@angular/core"
+import { EventStatus } from "../model/events/event-status.enum"
 
 @Pipe({
     name: "eventStatusPipe",

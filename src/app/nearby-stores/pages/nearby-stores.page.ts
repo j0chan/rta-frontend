@@ -9,8 +9,8 @@ import { Component, OnInit } from '@angular/core'
 
 export class NearbyStoresPage implements OnInit {
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

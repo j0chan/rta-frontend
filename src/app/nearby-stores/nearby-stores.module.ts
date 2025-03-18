@@ -22,4 +22,4 @@ import { SharedModule } from '../shared/module/shared.module'
     NearbyStoresComponent
   ]
 })
-export class NearbyStoresPageModule {}
+export class NearbyStoresPageModule { }
