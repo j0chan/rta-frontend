@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms'
 import { SearchBarComponent } from '../components/search-bar/search-bar.component'
 import { FooterMenuComponent } from '../components/footer-menu/footer-menu.component'
 import { IonicModule } from '@ionic/angular'
+import { EventStatusPipe } from '../pipes/event-status.pipe'
 
 @NgModule({
   declarations: [
     SearchBarComponent,
-    FooterMenuComponent 
+    FooterMenuComponent,
+    EventStatusPipe
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { IonicModule } from '@ionic/angular'
   ],
   exports: [
     SearchBarComponent,
-    FooterMenuComponent
+    FooterMenuComponent,
+    EventStatusPipe
   ]
 })
 export class SharedModule {}
