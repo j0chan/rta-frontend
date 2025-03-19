@@ -12,7 +12,7 @@ import { StoresService } from 'src/app/shared/services/stores.service'
   standalone: false,
 })
 export class WriteReviewPage implements OnInit {
-  store_id: number | null = null
+  private store_id!: number
   store_name: string = 'No store'
   content: string = ''
 

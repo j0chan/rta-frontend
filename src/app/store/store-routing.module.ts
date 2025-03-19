@@ -29,7 +29,7 @@ const routes: Routes = [
     component: StoreDetailPage
   },
   {
-    path: ':stire_id/write-review',
+    path: ':store_id/write-review',
     component: WriteReviewPage
   },
 ]
