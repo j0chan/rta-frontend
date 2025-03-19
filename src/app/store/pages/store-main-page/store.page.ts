@@ -13,7 +13,7 @@ import { StoresService } from 'src/app/shared/services/stores.service'
   standalone: false,
 })
 export class StorePage implements OnInit {
-  private store_id!: number
+  private store_id: number | null = null
   store: ReadStore | null = null
   event: ReadEvent | null = null
   reviews: ReadReview[] = []
@@ -29,27 +29,28 @@ export class StorePage implements OnInit {
   ngOnInit() {
     this.store_id = Number(this.route.snapshot.paramMap.get('store_id'))
     if (this.store_id) {
-      // 가게 정보 가져오기
+      // 가게 정보, 최신 이벤트, 가게 리뷰 가져오기
       this.loadStoreInfo(this.store_id)
-
-      // 최신 이벤트 가져오기
       this.loadStoreEvents(this.store_id)
-    
-      // 해당 가게 리뷰 가져오기
       this.loadStoreReviews(this.store_id)
     }
 
+    // 리뷰 작성하고 다시 스토어 페이지로 돌아왔을 때 리뷰 데이터를 다시 불러와줍니다
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd))
-      .subscribe(() => { this.loadStoreReviews(this.store_id)
+      .subscribe(() => { 
+        if (this.store_id) { this.loadStoreReviews(this.store_id) }
       })
   }
 
+  // routerSubscription 사용 시 데이터 누수 때문에 구독 해지해줘야 함
   ngOnDestroy() {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe()
     }
   }
+
+  /* 데이터 불러오기 */
 
   loadStoreInfo(store_id: number) {
     this.storesService.getStoreById(store_id).subscribe((response: ApiResponseDTO<ReadStore>) => {
@@ -79,6 +80,7 @@ export class StorePage implements OnInit {
     })
   }
 
+  /* 페이지 이동 */
 
   goMenuPage() {
     this.router.navigate([`menu`], { relativeTo: this.route })
