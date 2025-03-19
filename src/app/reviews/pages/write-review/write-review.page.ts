@@ -1,3 +1,4 @@
+import { Location } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
@@ -19,7 +20,7 @@ export class WriteReviewPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private storesService: StoresService,
-
+    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -38,7 +39,7 @@ export class WriteReviewPage implements OnInit {
     // `queryParams`에서 store_id 가져오기
     this.route.queryParams.subscribe(params => {
       if (params['store_id']) {
-        this.store_id = +params['store_id']; // 문자열을 숫자로 변환
+        this.store_id = +params['store_id'] // 문자열을 숫자로 변환
         console.log('store_id from queryParams:', this.store_id)
       }
     })
@@ -66,7 +67,7 @@ export class WriteReviewPage implements OnInit {
     this.storesService.createReview(this.store_id, createReview).subscribe({
       next: response => {
         if (response.success) {
-          this.router.navigate([`store/${this.store_id}`])
+          this.location.back()
         } else {
           console.error('create review failed: ', response.message)
         }
