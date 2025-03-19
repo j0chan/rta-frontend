@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { NearbyStoresService } from 'src/app/shared/services/nearby-stores.service'
+import { ModalController } from '@ionic/angular'
+import { StoreRequestComponent } from 'src/app/admin/components/store-request/store-request.component'
 
 @Component({
   selector: 'app-nearby-stores',
@@ -11,11 +13,15 @@ import { NearbyStoresService } from 'src/app/shared/services/nearby-stores.servi
 export class NearbyStoresComponent implements OnInit, AfterViewInit {
   stores: ReadStore[] = []
   filteredStores: ReadStore[] = []
+  searchQuery: string = ''
 
-  constructor(private storesService: NearbyStoresService) {}
+  constructor(
+    private nearbyStoresService: NearbyStoresService,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
-    this.storesService.getAllStores().subscribe(
+    this.nearbyStoresService.getAllStores().subscribe(
       (data: ReadStore[]) => {
         this.stores = data
         this.filteredStores = data // 초기에는 모든 가게 표시
@@ -33,15 +39,16 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
 
   // 검색
   onSearch(query: string) {
-    const searchQuery = query.trim().toLowerCase() // 검색어 소문자로 변환
+    this.searchQuery = query.trim().toLowerCase() // 검색어 저장 (+ 소문자 변환)
   
-    if (!searchQuery) {
+    if (!this.searchQuery) {
+      this.filteredStores = []
       return
     }
   
     // 가게 이름을 먼저 검색해서 store_id를 찾는다
     const foundStore = this.stores.find(store => 
-      store.store_name.toLowerCase().includes(searchQuery)
+      store.store_name.toLowerCase().includes(this.searchQuery)
     )
   
     if (!foundStore) {
@@ -52,15 +59,25 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
     const storeId = foundStore.store_id
   
     // store_id로 상세 정보 조회
-    this.storesService.getStoreById(storeId).subscribe(
+    this.nearbyStoresService.getStoreById(storeId).subscribe(
       (data) => {
         this.filteredStores = data ? [data] : []
         this.sendStoresToMap(true)
       },
-      (error) => {
+      () => {
         this.filteredStores = []
       }
     )
+  }
+
+  // 가게 등록 폼 모달 열기
+  async openStoreRequestForm() {
+    const modal = await this.modalController.create({
+      component: StoreRequestComponent,
+      componentProps: { storeName: this.searchQuery }
+    })
+
+    await modal.present()
   }
 
   // map iframe에 가게 데이터를 전달
