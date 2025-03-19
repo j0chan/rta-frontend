@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
+import { CreateReview } from 'src/app/shared/model/reviews/create-review.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { StoresService } from 'src/app/shared/services/stores.service'
 
@@ -12,7 +13,7 @@ import { StoresService } from 'src/app/shared/services/stores.service'
 export class WriteReviewPage implements OnInit {
   store_id: number | null = null
   store_name: string = 'No store'
-  reviewText: string = ''
+  content: string = ''
 
   constructor(
     private router: Router,
@@ -27,8 +28,10 @@ export class WriteReviewPage implements OnInit {
   }
 
   submit() {
-    console.log('입력한 리뷰: ', this.reviewText)
+    this.createReview()
+    console.log('입력한 리뷰: ', this.content)
   }
+
 
   getStoreId() {
     const navigation = this.router.getCurrentNavigation()
@@ -42,13 +45,38 @@ export class WriteReviewPage implements OnInit {
   }
 
   getStoreName() {
-    if (this.store_id) {
-      this.storesService.getStoreById(this.store_id).subscribe((response: ApiResponseDTO<ReadStore>) => {
-        const store = response.data ?? null
-        if (store) {
-          this.store_name = store.store_name
-        }
-      })
+    if (!this.store_id) { return }
+
+    this.storesService.getStoreById(this.store_id).subscribe((response: ApiResponseDTO<ReadStore>) => {
+      const store = response.data ?? null
+      if (store) {
+        this.store_name = store.store_name
+      }
+    })
+  }
+
+  createReview() {
+    if (!this.store_id) { return }
+    
+    const createReview: CreateReview = {
+      user_id: 1, // 임시 아이디
+      content: this.content
     }
+
+    this.storesService.createReview(this.store_id, createReview).subscribe({
+      next: response => {
+        if (response.success) {
+          this.router.navigate([`store/${this.store_id}`])
+        } else {
+          console.error('create review failed: ', response.message)
+        }
+      },
+      error: err => {
+        console.error('create review error: ', err)
+      },
+      complete: () => {
+        console.log('create review completed')
+      }
+    })
   }
 }

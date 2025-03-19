@@ -6,6 +6,7 @@ import { ReadStore } from '../model/stores/read-store.interface'
 import { ReadMenu } from '../model/menus/read-menu.interface'
 import { ReadReview } from '../model/reviews/read-review.interface'
 import { ReadEvent } from '../model/events/read-event.interface'
+import { CreateReview } from '../model/reviews/create-review.interface'
 
 @Injectable({
     providedIn: 'root'
@@ -33,5 +34,9 @@ export class StoresService {
 
     getAllEventsByStore(store_id: number): Observable<ApiResponseDTO<ReadEvent[]>> {
         return this.http.get<ApiResponseDTO<ReadEvent[]>>(`${this.apiUrl}${store_id}/events`)
+    }
+
+    createReview(store_id: number, createReview: CreateReview): Observable<ApiResponseDTO<void>> {
+        return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/reviews`, createReview)
     }
 }
