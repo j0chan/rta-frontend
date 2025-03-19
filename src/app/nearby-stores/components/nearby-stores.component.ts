@@ -1,8 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
+import { Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { NearbyStoresService } from 'src/app/shared/services/nearby-stores.service'
-import { ModalController } from '@ionic/angular'
-import { StoreRequestComponent } from 'src/app/admin/components/store-request/store-request.component'
 
 @Component({
   selector: 'app-nearby-stores',
@@ -10,14 +9,16 @@ import { StoreRequestComponent } from 'src/app/admin/components/store-request/st
   styleUrls: ['./nearby-stores.component.scss'],
   standalone: false
 })
+
 export class NearbyStoresComponent implements OnInit, AfterViewInit {
   stores: ReadStore[] = []
   filteredStores: ReadStore[] = []
   searchQuery: string = ''
+  alertVisible: boolean = true
 
   constructor(
     private nearbyStoresService: NearbyStoresService,
-    private modalController: ModalController
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -70,14 +71,15 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
     )
   }
 
-  // 가게 등록 폼 모달 열기
-  async openStoreRequestForm() {
-    const modal = await this.modalController.create({
-      component: StoreRequestComponent,
-      componentProps: { storeName: this.searchQuery }
-    })
-
-    await modal.present()
+  // 가게 등록 페이지로 이동
+  openStoreRequestForm() {
+    // 현재 활성화된 요소를 HTMLElement로 변환 후 blur() 실행
+    const activeElement = document.activeElement as HTMLElement
+    if (activeElement) {
+      activeElement.blur() // focus 해제 후 페이지 이동
+    }
+    this.alertVisible = false // alert 숨기기
+    this.router.navigate(['/store/create-store-request'])
   }
 
   // map iframe에 가게 데이터를 전달

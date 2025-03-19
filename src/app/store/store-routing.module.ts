@@ -5,12 +5,23 @@ import { StorePage } from './pages/store-main-page/store.page'
 import { EventListPage } from './pages/event-list-page/event-list.page'
 import { MenuPage } from './pages/menu-page/menu.page'
 import { StoreDetailPage } from './pages/store-detail-page/store-detail-page'
+import { CreateStoreRequestPage } from './pages/create-store-request.page/create-store-request.page'
 
 const routes: Routes = [
   // //이거 하면 http://localhost:8100/store 페이지에 아무것도 안뜸
   // {
   //   path: '/', 
   // },
+
+  // * 라우트 경로 매칭 문제
+  // 라우팅은 위에서 아래로 차례대로 검사하기 때문에
+  
+  // 고정 경로를 먼저 선언하고
+  {
+    path: 'create-store-request', 
+    component: CreateStoreRequestPage 
+  },
+  // 그 후 동적 경로를 선언한다.
   {
     path: ':store_id',
     component: StorePage,

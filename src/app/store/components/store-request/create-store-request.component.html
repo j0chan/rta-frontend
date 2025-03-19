@@ -1,0 +1,27 @@
+<ion-list>
+  <ion-item>
+    <ion-label position="floating">가게 이름</ion-label>
+    <ion-input [(ngModel)]="storeRequest.store_name"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">주소</ion-label>
+    <ion-input [(ngModel)]="storeRequest.address"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">연락처</ion-label>
+    <ion-input [(ngModel)]="storeRequest.phone"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">카테고리</ion-label>
+    <ion-input [(ngModel)]="storeRequest.category"></ion-input>
+  </ion-item>
+</ion-list>
+
+<!-- 버튼 컨테이너 -->
+<div class="button-container">
+  <ion-button expand="full" color="primary" (click)="submitRequest()">등록하기</ion-button>
+  <ion-button expand="full" color="light" (click)="goBack()">취소</ion-button>
+</div>

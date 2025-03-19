@@ -4,6 +4,7 @@ import { ApiResponseDTO } from '../model/common/api-response.interface'
 import { HttpClient } from '@angular/common/http'
 import { UpdateStoreRequest } from '../model/store-requests/update-store-request.interface'
 import { ReadStoreRequest } from '../model/store-requests/read-store-request.interface'
+import { CreateStoreRequest } from '../model/store-requests/create-store-request.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class StoreRequestsService {
 
   updateStoreRequest(request_id: number, updateStoreRequest: UpdateStoreRequest): Observable<ApiResponseDTO<void>> {
     return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}${request_id}`, updateStoreRequest)
+  }
+
+  createStoreRequest(createStoreRequest: CreateStoreRequest): Observable<ApiResponseDTO<void>> {
+    return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}`, createStoreRequest)
   }
 
 }
