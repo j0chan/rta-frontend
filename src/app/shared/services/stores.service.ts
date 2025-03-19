@@ -34,4 +34,8 @@ export class StoresService {
     getAllEventsByStore(store_id: number): Observable<ApiResponseDTO<ReadEvent[]>> {
         return this.http.get<ApiResponseDTO<ReadEvent[]>>(`${this.apiUrl}${store_id}/events`)
     }
+
+    getAllStores(): Observable<ApiResponseDTO<ReadStore[]>> {
+        return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.apiUrl}`);
+    }
 }

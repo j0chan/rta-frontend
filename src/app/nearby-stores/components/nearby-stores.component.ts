@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
-import { NearbyStoresService } from 'src/app/shared/services/nearby-stores.service'
+import { StoresService } from 'src/app/shared/services/stores.service'
 
 @Component({
   selector: 'app-nearby-stores',
@@ -17,13 +17,14 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
   alertVisible: boolean = true
 
   constructor(
-    private nearbyStoresService: NearbyStoresService,
+    private storesService: StoresService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.nearbyStoresService.getAllStores().subscribe(
-      (data: ReadStore[]) => {
+    this.storesService.getAllStores().subscribe(
+      (response) => {
+        const data = response.data ?? []
         this.stores = data
         this.filteredStores = data // 초기에는 모든 가게 표시
         this.sendStoresToMap(false)
@@ -60,12 +61,14 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
     const storeId = foundStore.store_id
   
     // store_id로 상세 정보 조회
-    this.nearbyStoresService.getStoreById(storeId).subscribe(
-      (data) => {
-        this.filteredStores = data ? [data] : []
+    this.storesService.getStoreById(storeId).subscribe(
+      (response) => {
+        const storeData = response.data
+        this.filteredStores = storeData ? [storeData] : []
         this.sendStoresToMap(true)
       },
-      () => {
+      (error) => {
+        console.error('가게 상세정보 로딩 실패:', error)
         this.filteredStores = []
       }
     )
