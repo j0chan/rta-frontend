@@ -12,7 +12,7 @@ import { StoresService } from 'src/app/shared/services/stores.service'
   standalone: false,
 })
 export class WriteReviewPage implements OnInit {
-  private store_id!: number
+  private store_id: number | null = null
   store_name: string = 'No store'
   content: string = ''
 
@@ -36,12 +36,10 @@ export class WriteReviewPage implements OnInit {
 
   getStoreId() {
     const navigation = this.router.getCurrentNavigation()
-    // `queryParams`에서 store_id 가져오기
-    this.route.queryParams.subscribe(params => {
-      if (params['store_id']) {
-        this.store_id = +params['store_id'] // 문자열을 숫자로 변환
-        console.log('store_id from queryParams:', this.store_id)
-      }
+    // 라우트 파라미터에서 store_id 가져오기
+    this.route.paramMap.subscribe(params => {
+      this.store_id = Number(params.get('store_id')) || null
+      console.log('store_id from route params: ', this.store_id)
     })
   }
 

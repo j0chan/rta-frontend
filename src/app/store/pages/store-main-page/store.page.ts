@@ -91,7 +91,7 @@ export class StorePage implements OnInit {
   }
 
   goWriteReviewPage() {
-    this.router.navigate([`write-review`], { relativeTo: this.route, queryParams: { store_id: this.store?.store_id } })
+    this.router.navigate([`write-review`], { relativeTo: this.route })
     console.log('go write-review page')
   }
 }
