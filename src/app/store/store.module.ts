@@ -14,6 +14,7 @@ import { ReviewsComponent } from './components/reviews/reviews.component'
 import { StoreDetailPage } from './pages/store-detail-page/store-detail-page'
 import { StoreHeaderComponent } from './components/store-header/store-header.component'
 import { SharedModule } from '../shared/module/shared.module'
+import { ReviewsModule } from '../reviews/reviews.module'
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SharedModule } from '../shared/module/shared.module'
     FormsModule,
     IonicModule,
     StorePageRoutingModule,
-    SharedModule
+    SharedModule,
+    ReviewsModule,
   ],
   declarations: [
     StorePage,

@@ -6,8 +6,9 @@ import { IonicModule } from '@ionic/angular'
 
 import { ReviewsPageRoutingModule } from './reviews-routing.module'
 
-import { ReviewListComponent } from 'src/app/reviews/review-list/review-list.component'
-import { ReviewComponent } from './review/review.component'
+import { ReviewListComponent } from 'src/app/reviews/components/review-list/review-list.component'
+import { ReviewComponent } from './components/review/review.component'
+import { WriteReviewPage } from './pages/write-review/write-review.page'
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ReviewComponent } from './review/review.component'
   declarations: [
     ReviewListComponent,
     ReviewComponent,
+    WriteReviewPage,
   ],
   exports: [
     ReviewListComponent,
