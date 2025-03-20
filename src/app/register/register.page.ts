@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { CreateUserDTO } from '../shared/model/auth/create-user.interface'
 import { UserRole } from '../shared/model/users/user-role.enum'
 import { AuthService } from '../shared/services/auth.service'
@@ -10,7 +10,15 @@ import { Router } from '@angular/router'
   templateUrl: './register.page.html',
   standalone: false,
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit {
+  // 로그인 상태면 (token 보유 시) 자동으로 home으로 이동
+  ngOnInit() {
+    const token = localStorage.getItem('accessToken')
+    if (token) {
+      this.router.navigate(['/home'])
+    }
+  }
+
   form: CreateUserDTO = {
     email: '',
     password: '',
