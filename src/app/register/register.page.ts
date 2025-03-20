@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { CreateUser } from '../shared/model/auth/create-user.interface'
+import { CreateUserDTO } from '../shared/model/auth/create-user.interface'
 import { UserRole } from '../shared/model/users/user-role.enum'
 import { AuthService } from '../shared/services/auth.service'
 import { UsersService } from '../shared/services/users.service'
@@ -10,7 +10,7 @@ import { UsersService } from '../shared/services/users.service'
   standalone: false,
 })
 export class RegisterPage {
-  form: CreateUser = {
+  form: CreateUserDTO = {
     email: '',
     password: '',
     nickname: '',

@@ -1,6 +1,6 @@
 import { UserRole } from "../users/user-role.enum"
 
-export interface CreateUser {
+export interface CreateUserDTO {
     email: string
     password: string
     nickname: string
