@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router'
   standalone: false,
 })
 export class HomePage {
+  // 로그인 상태 관찰
+  isLoggedIn$ = this.authService.isLoggedIn$
 
   constructor(
     private authService: AuthService,

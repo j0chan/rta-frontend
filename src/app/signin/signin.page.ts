@@ -9,12 +9,13 @@ import { Router } from '@angular/router'
   standalone: false
 })
 export class SigninPage implements OnInit {
-  // 로그인 상태면 (token 보유 시) 자동으로 home으로 이동
+  // 로그인 상태를 구독, 로그인상태 시 자동으로 홈으로 이동
   ngOnInit() {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      this.router.navigate(['/home'])
-    }
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      if(isLoggedIn) {
+        this.router.navigate(['/home'])
+      }
+    })
   }
 
   form: SignInDTO = {
