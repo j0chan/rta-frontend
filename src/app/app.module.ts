@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouteReuseStrategy } from '@angular/router'
@@ -21,14 +21,14 @@ import { SharedModule } from './shared/module/shared.module'
     ReviewsModule,
     AdminModule,
     FormsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
     },
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi())
   ],
   bootstrap: [AppComponent],
 })

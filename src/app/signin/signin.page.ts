@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { SignInDTO } from '../shared/model/auth/singin.interface'
 import { AuthService } from '../shared/services/auth.service'
 import { Router } from '@angular/router'
@@ -8,8 +8,15 @@ import { Router } from '@angular/router'
   templateUrl: './signin.page.html',
   standalone: false
 })
-export class SigninPage {
-  registerPageUrl = 'http://localhost:8100/register'
+export class SigninPage implements OnInit {
+  // 로그인 상태를 구독, 로그인상태 시 자동으로 홈으로 이동
+  ngOnInit() {
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      if(isLoggedIn) {
+        this.router.navigate(['/home'])
+      }
+    })
+  }
 
   form: SignInDTO = {
     email: '',

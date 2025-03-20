@@ -8,6 +8,8 @@ import { EventStatusPipe } from '../pipes/event-status.pipe'
 import { CategoryPipe } from '../pipes/category.pipe'
 import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
 import { RequestStatusPipe } from '../pipes/request-status.pipe'
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { AuthInterceptor } from '../interceptors/auth.interceptor'
 
 @NgModule({
   declarations: [
@@ -30,6 +32,13 @@ import { RequestStatusPipe } from '../pipes/request-status.pipe'
     CategoryPipe,
     KoreanDatePipe,
     RequestStatusPipe,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ]
 })
 export class SharedModule { }
