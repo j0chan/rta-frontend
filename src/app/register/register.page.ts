@@ -3,6 +3,7 @@ import { CreateUserDTO } from '../shared/model/auth/create-user.interface'
 import { UserRole } from '../shared/model/users/user-role.enum'
 import { AuthService } from '../shared/services/auth.service'
 import { UsersService } from '../shared/services/users.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,8 @@ export class RegisterPage {
 
   constructor(
     private authService: AuthService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private router: Router
   ) { }
 
   // 이메일 변경 시 중복 검사 상태 초기화
@@ -81,6 +83,7 @@ export class RegisterPage {
       next: (response) => {
         console.log(response)
         alert('회원가입 완료')
+        this.router.navigate(['/signin'])
       },
       error: (err) => {
         console.error('회원가입 오류: ', err)

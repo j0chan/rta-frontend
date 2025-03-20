@@ -9,7 +9,7 @@ import { Router } from '@angular/router'
   standalone: false
 })
 export class SigninPage {
-  homePageUrl = 'http://localhost:8100/'
+  registerPageUrl = 'http://localhost:8100/register'
 
   form: SignInDTO = {
     email: '',
@@ -18,7 +18,7 @@ export class SigninPage {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) { }
 
   onSubmit() {
@@ -34,5 +34,10 @@ export class SigninPage {
         alert('로그인 실패')
       }
     })
+  }
+
+  goRegisterPage() {
+    console.log('go register page')
+    this.router.navigate(['/register'])
   }
 }
