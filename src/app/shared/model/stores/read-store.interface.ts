@@ -2,6 +2,7 @@ import { Category } from "./category.enum"
 
 export interface ReadStore {
     store_id: number // ID
+    user_id: number // 매니저 ID
     store_name: string // 가게명
     category: Category // 카테고리
     address: string // 주소
