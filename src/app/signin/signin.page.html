@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>로그인</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <ion-list>
+      <!-- 이메일 -->
+      <ion-item>
+        <ion-label position="floating">이메일</ion-label>
+        <ion-input type="email" [(ngModel)]="form.email" name="email"></ion-input>
+      </ion-item>
+
+      <!-- 비밀번호 -->
+      <ion-item>
+        <ion-label position="floating">비밀번호</ion-label>
+        <ion-input type="password" [(ngModel)]="form.password" name="password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <!-- 로그인 버튼 -->
+    <ion-button expand="full" type="submit">
+      로그인
+    </ion-button>
+  </form>
+</ion-content>
