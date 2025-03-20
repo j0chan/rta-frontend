@@ -24,11 +24,12 @@ import { SharedModule } from './shared/module/shared.module'
     SharedModule
   ],
   providers: [
-    { provide: RouteReuseStrategy,
-      useClass: IonicRouteStrategy 
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
     },
     provideHttpClient(),
-    ],
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
