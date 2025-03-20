@@ -39,4 +39,8 @@ export class StoresService {
     createReview(store_id: number, createReview: CreateReview): Observable<ApiResponseDTO<void>> {
         return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/reviews`, createReview)
     }
+
+    getAllStoresByUserId(user_id: number): Observable<ApiResponseDTO<ReadStore[]>> {
+        return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.apiUrl}user/${user_id}`)
+    }
 }
