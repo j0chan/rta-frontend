@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { CreateUser } from '../model/auth/create-user.interface'
+import { CreateUserDTO } from '../model/auth/create-user.interface'
 import { Observable } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
+import { SignInDTO } from '../model/auth/singin.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  createUser(createUser: CreateUser): Observable<ApiResponseDTO<void>> {
-    return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}signup`, createUser)
+  createUser(createUserDTO: CreateUserDTO): Observable<ApiResponseDTO<void>> {
+    return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}signup`, createUserDTO)
+  }
+
+  signIn(signInDTO: SignInDTO): Observable<ApiResponseDTO<void>> {
+    return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}signin`, signInDTO)
   }
 }
