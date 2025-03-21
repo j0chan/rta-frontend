@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>write-review</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">write-review</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <p>{{ this.store_name }}에 리뷰 남기기</p>
+
+  <ion-textarea placeholder="포장 경험을 알려주세요" [(ngModel)]="content" [clearOnEdit]="true"></ion-textarea>
+
+<ion-button expand="full" (click)="submit()">작성 완료</ion-button>
+
+</ion-content>

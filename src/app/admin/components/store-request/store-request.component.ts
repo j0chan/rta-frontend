@@ -23,7 +23,7 @@ export class StoreRequestComponent implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit( ) {
+  ngOnInit() {
     if (this.request) {
       this.request_id = this.request.request_id
     }
@@ -39,7 +39,7 @@ export class StoreRequestComponent implements OnInit {
     }
 
     this.storeRequestsService.updateStoreRequest(this.request_id, updateData).subscribe({
-      next: response=> {
+      next: response => {
         if (response.success) {
           this.router.navigate(['/'])
         } else {

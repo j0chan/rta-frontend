@@ -10,6 +10,7 @@ import { ManagerPage } from './pages/manager/manager.page'
 import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page'
 import { ManagerRequestComponent } from './components/manager-request/manager-request.component'
 import { ManagerRequestListComponent } from './components/manager-request-list/manager-request-list.component'
+import { MyStoresPage } from './pages/my-stores/my-stores.page'
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { ManagerRequestListComponent } from './components/manager-request-list/m
     MyManagerRequestsPage,
     ManagerRequestComponent,
     ManagerRequestListComponent,
+    MyStoresPage
   ]
 })
-export class ManagerModule {}
+export class ManagerModule { }

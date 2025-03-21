@@ -11,6 +11,6 @@ export class ManagerRequestPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

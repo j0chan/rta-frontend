@@ -3,13 +3,17 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    path: '',
+    redirectTo: 'signin',
+    pathMatch: 'full'
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'signin',
+    loadChildren: () => import('./signin/signin.module').then(m => m.SigninPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'nearby-stores',
@@ -33,9 +37,12 @@ const routes: Routes = [
   },
   {
     path: 'manager',
-    loadChildren: () => import('./manager/manager.module').then( m => m.ManagerModule)
+    loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule)
   },
-
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+  },
 
 ]
 

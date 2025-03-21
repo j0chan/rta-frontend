@@ -27,4 +27,4 @@ import { MyReviewListComponent } from './components/my-review-list/my-review-lis
     MyReviewListComponent,
   ]
 })
-export class MyPageModule {}
+export class MyPageModule { }

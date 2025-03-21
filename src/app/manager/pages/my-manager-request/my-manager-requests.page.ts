@@ -9,6 +9,6 @@ export class MyManagerRequestsPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

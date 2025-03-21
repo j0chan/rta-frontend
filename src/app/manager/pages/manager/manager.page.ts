@@ -20,4 +20,9 @@ export class ManagerPage implements OnInit {
     console.log('go my manager requests page')
     this.router.navigate(['my-manager-requests'], { relativeTo: this.route })
   }
+
+  goMyStoresPage() {
+    console.log('go my stores page')
+    this.router.navigate(['my-stores'], { relativeTo: this.route })
+  }
 }

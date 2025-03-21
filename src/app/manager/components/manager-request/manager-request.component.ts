@@ -6,11 +6,11 @@ import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-m
   templateUrl: './manager-request.component.html',
   standalone: false,
 })
-export class ManagerRequestComponent  implements OnInit {
+export class ManagerRequestComponent implements OnInit {
   @Input() request!: ReadManagerRequest
-  
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }
