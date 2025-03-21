@@ -13,9 +13,10 @@ import { EventComponent } from './components/event/event.component'
 import { ReviewsComponent } from './components/reviews/reviews.component'
 import { StoreDetailPage } from './pages/store-detail-page/store-detail-page'
 import { StoreHeaderComponent } from './components/store-header/store-header.component'
+import { CreateStoreRequestPage } from './pages/create-store-request.page/create-store-request.page'
+import { CreateStoreRequestComponent } from './components/store-request/create-store-request.component'
 import { SharedModule } from '../shared/module/shared.module'
 import { ReviewsModule } from '../reviews/reviews.module'
-
 
 @NgModule({
   imports: [
@@ -34,7 +35,9 @@ import { ReviewsModule } from '../reviews/reviews.module'
     EventComponent,
     ReviewsComponent,
     StoreDetailPage,
-    StoreHeaderComponent
+    StoreHeaderComponent,
+    CreateStoreRequestPage,
+    CreateStoreRequestComponent
   ]
 })
 export class StorePageModule { }

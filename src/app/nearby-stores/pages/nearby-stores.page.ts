@@ -7,10 +7,4 @@ import { Component, OnInit } from '@angular/core'
   standalone: false
 })
 
-export class NearbyStoresPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() { }
-
-}
+export class NearbyStoresPage {}

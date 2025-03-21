@@ -40,6 +40,10 @@ export class StoresService {
         return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/reviews`, createReview)
     }
 
+    getAllStores(): Observable<ApiResponseDTO<ReadStore[]>> {
+        return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.apiUrl}`)
+    }
+
     getAllStoresByUserId(user_id: number): Observable<ApiResponseDTO<ReadStore[]>> {
         return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.apiUrl}user/${user_id}`)
     }
