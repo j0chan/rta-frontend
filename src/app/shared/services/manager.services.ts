@@ -13,11 +13,11 @@ export class ManagerService {
 
   constructor(private http: HttpClient) { }
 
-  createEvent(createEvent: CreateEvent): Observable<ApiResponseDTO<void>> {
+  createEvent(store_id: number, createEvent: CreateEvent): Observable<ApiResponseDTO<void>> {
     return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}`, createEvent)
   }
 
-  updateEvent(updateEvent: UpdateEvent): Observable<ApiResponseDTO<void>> {
+  updateEvent(event_id: number, updateEvent: UpdateEvent): Observable<ApiResponseDTO<void>> {
     return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}`, updateEvent)
   }
 }
