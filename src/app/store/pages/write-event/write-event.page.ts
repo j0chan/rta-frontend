@@ -5,11 +5,11 @@ import { CreateEvent } from 'src/app/shared/model/events/create-event.interface'
 import { ManagerService } from 'src/app/shared/services/manager.services'
 
 @Component({
-  selector: 'app-create-event',
-  templateUrl: './create-event.page.html',
+  selector: 'app-write-event',
+  templateUrl: './write-event.page.html',
   standalone: false,
 })
-export class CreateEventPage implements OnInit {
+export class WriteEventPage implements OnInit {
   @Input() store_id!: number
   title: string = ''
   description: string = ''
