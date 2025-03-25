@@ -1,6 +1,9 @@
 <!-- Store header -->
 <app-store-header *ngIf="store" [store]="store"></app-store-header>
 
+<!-- (매니저) 이벤트 작성 페이지로 이동-->
+<button (click)="goWriteEvent()">새로운 이벤트 작성</button>
+
 <!-- 메뉴 목록 출력 -->
 <ion-content>
   <ng-container *ngIf="events && events.length > 0; else noEvent">

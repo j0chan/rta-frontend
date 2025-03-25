@@ -2,7 +2,7 @@ import { Location } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CreateEvent } from 'src/app/shared/model/events/create-event.interface'
-import { ManagerService } from 'src/app/shared/services/manager.services'
+import { EventService } from 'src/app/shared/services/event.services'
 
 @Component({
   selector: 'app-write-event',
@@ -10,7 +10,7 @@ import { ManagerService } from 'src/app/shared/services/manager.services'
   standalone: false,
 })
 export class WriteEventPage implements OnInit {
-  @Input() store_id!: number
+  store_id!: number
   title: string = ''
   description: string = ''
   start_date: Date = new Date()
@@ -19,11 +19,13 @@ export class WriteEventPage implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private managerService: ManagerService,
+    private eventService: EventService,
     private location: Location,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store_id = Number(this.route.snapshot.paramMap.get('store_id'))
+  }
 
   createEvent() {
     const createEvent: CreateEvent = {
@@ -33,7 +35,7 @@ export class WriteEventPage implements OnInit {
       end_date: this.end_date
     }
 
-    this.managerService.createEvent(this.store_id, createEvent).subscribe({
+    this.eventService.createEvent(this.store_id, createEvent).subscribe({
       next: response => {
         if (response.success) {
           this.location.back()
