@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
   },
+  {
+    path: 'favorite',
+    loadChildren: () => import('./favorite/favorite.module').then(m => m.FavoritePageModule)
+  }
 
 ]
 
