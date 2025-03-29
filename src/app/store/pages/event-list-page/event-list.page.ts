@@ -42,4 +42,9 @@ export class EventListPage implements OnInit {
     this.router.navigate([`/store/${this.store_id}/write-event`])
     console.log('go write-event page')
   }
+
+  goEditEvent(event_id: number) {
+    this.router.navigate([`/store/${this.store_id}/event/${event_id}/edit-event`])
+    console.log('go edit-event page')
+  }
 }

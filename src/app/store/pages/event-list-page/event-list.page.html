@@ -11,12 +11,14 @@
       <ion-item *ngFor="let event of events">
         <ion-label>
           <h2>{{ event.title }}</h2>
-          <p>{{ event.description }}</p>
+          <p>아이디: {{ event.event_id }}</p>
+          <p>설명: {{ event.description }}</p>
           <p>시작일: {{ event.start_date | koreanDate }}</p>
           <p>종료일: {{ event.end_date | koreanDate }}</p>
           <p>상태: {{ event.event_status | eventStatusPipe }}</p>
           <p>작성일: {{ event.created_at | koreanDate }}</p>
         </ion-label>
+        <ion-button (click)="goEditEvent(event.event_id)">수정</ion-button>
       </ion-item>
     </ion-list>
   </ng-container>
