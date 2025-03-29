@@ -4,6 +4,7 @@ import { CreateEvent } from '../model/events/create-event.interface'
 import { Observable } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 import { UpdateEvent } from '../model/events/update-event.interface'
+import { ReadEvent } from '../model/events/read-event.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,11 @@ export class EventService {
     return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events`, createEvent)
   }
 
-  updateEvent(event_id: number, updateEvent: UpdateEvent): Observable<ApiResponseDTO<void>> {
-    return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}`, updateEvent)
+  getEventById(store_id: number, event_id: number): Observable<ApiResponseDTO<ReadEvent>> {
+    return this.http.get<ApiResponseDTO<ReadEvent>>(`${this.apiUrl}${store_id}/events/${event_id}`)
+  }
+
+  updateEvent(store_id: number, event_id: number,  updateEvent: UpdateEvent): Observable<ApiResponseDTO<void>> {
+    return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`, updateEvent)
   }
 }
