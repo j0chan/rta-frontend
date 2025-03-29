@@ -9,4 +9,5 @@ export interface ReadEvent {
     end_date: Date
     event_status: EventStatus
     created_at: Date
+    is_canceled: boolean
 }

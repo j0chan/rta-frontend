@@ -36,7 +36,7 @@ export class EditEventPage implements OnInit {
       this.event_id = Number(this.route.snapshot.paramMap.get('event_id'))
       this.store_id = Number(this.route.snapshot.paramMap.get('store_id'))
     }
-
+    
     this.loadEvent()
   }
 
@@ -44,7 +44,15 @@ export class EditEventPage implements OnInit {
     if (this.event_id) {
       this.eventService.getEventById(this.store_id, this.event_id).subscribe({
         next: (response: ApiResponseDTO<ReadEvent>) => {
-          this.event = response.data ?? null
+          this.event = response.data || null
+
+          if (this.event) {
+            this.title = this.event.title || ''
+            this.description = this.event.description || ''
+            this.start_date = new Date(this.event.start_date)
+            this.end_date = this.event.end_date
+            this.is_canceled = this.event.is_canceled
+          }
         },
         error: (err) => {
           console.error('Failed to Retriving Event ', err)
