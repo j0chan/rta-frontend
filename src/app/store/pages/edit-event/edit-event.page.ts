@@ -89,4 +89,22 @@ export class EditEventPage implements OnInit {
       }
     })
   }
+
+  deleteEvent() {
+    this.eventService.deleteEvent(this.store_id, this.event_id).subscribe({
+      next: response => {
+        if (response.success) {
+          this.location.back()
+        } else {
+          console.error('delete event failed: ', response.message)
+        }
+      },
+      error: err => {
+        console.error('delete event error: ', err)
+      },
+      complete: () => {
+        console.log('delete event completed')
+      }
+    })
+  }
 }

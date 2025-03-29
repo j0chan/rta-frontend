@@ -22,7 +22,11 @@ export class EventService {
     return this.http.get<ApiResponseDTO<ReadEvent>>(`${this.apiUrl}${store_id}/events/${event_id}`)
   }
 
-  updateEvent(store_id: number, event_id: number,  updateEvent: UpdateEvent): Observable<ApiResponseDTO<void>> {
+  updateEvent(store_id: number, event_id: number, updateEvent: UpdateEvent): Observable<ApiResponseDTO<void>> {
     return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`, updateEvent)
+  }
+
+  deleteEvent(store_id: number, event_id: number): Observable<ApiResponseDTO<void>> {
+    return this.http.delete<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`)
   }
 }
