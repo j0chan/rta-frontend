@@ -1,9 +1,10 @@
 import { StoresService } from 'src/app/shared/services/stores.service'
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
+import { filter, Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-event-list',
@@ -11,10 +12,12 @@ import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
   standalone: false
 })
 export class EventListPage implements OnInit {
-  private store_id: number | null = null
+  private store_id!: number
 
   store: ReadStore | undefined
   events: ReadEvent[] = []
+
+  private routerSubscription!: Subscription
 
   constructor(
     private router: Router,
@@ -24,17 +27,25 @@ export class EventListPage implements OnInit {
 
   ngOnInit() {
     this.store_id = Number(this.route.snapshot.paramMap.get('store_id'))
-    if (this.store_id) {
-      // 해당 가게 모든 이벤트 가져오기
-      this.storesService.getAllEventsByStore(this.store_id).subscribe({
-        next: (response: ApiResponseDTO<ReadEvent[]>) => {
-          this.events = response.data ?? []
-        },
-        error: (err) => {
-          console.error('Failed to Retriving Events', err)
-        }
-      })
-    }
+
+    // 해당 가게 모든 이벤트 가져오기
+    this.loadEvents()
+
+    // 이벤트 수정, 삭제하고 다시 이벤트 리스트 페이지로 돌아왔을 때 이벤트 데이터를 다시 불러옵니다
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd))
+      .subscribe(() => { this.loadEvents() })
+  }
+
+  loadEvents() {
+    this.storesService.getAllEventsByStore(this.store_id).subscribe({
+      next: (response: ApiResponseDTO<ReadEvent[]>) => {
+        this.events = response.data ?? []
+      },
+      error: (err) => {
+        console.error('Failed to Retriving Events', err)
+      }
+    })
   }
 
   /* 페이지 이동 */
