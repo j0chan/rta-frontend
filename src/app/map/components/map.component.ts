@@ -1,36 +1,55 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
-import { StoresService } from 'src/app/shared/services/stores.service'
+import { MapsService } from 'src/app/shared/services/maps.service'
 
 @Component({
-  selector: 'app-nearby-stores',
-  templateUrl: './nearby-stores.component.html',
-  styleUrls: ['./nearby-stores.component.scss'],
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.scss'],
   standalone: false
 })
 
-export class NearbyStoresComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit {
   stores: ReadStore[] = []
   filteredStores: ReadStore[] = []
   searchQuery: string = ''
   alertVisible: boolean = true
 
   constructor(
-    private storesService: StoresService,
+    private mapsService: MapsService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.storesService.getAllStores().subscribe(
-      (response) => {
-        const data = response.data ?? []
-        this.stores = data
-        this.filteredStores = data // 초기에는 모든 가게 표시
-        this.sendStoresToMap(false)
-      },
-      (error) => console.error('가게 데이터 로딩 실패:', error)
-    )
+    // 현재 위치 기반 가게 불러오기
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          console.log(lat);
+          console.log(lng);
+  
+          this.mapsService.readStoreByCurrentLocation(lat, lng).subscribe(
+            (stores) => {
+              this.stores = stores;
+              this.filteredStores = stores;
+              this.sendStoresToMap(false);
+            },
+            (error) => {
+              console.error('위치 기반 가게 불러오기 실패:', error)
+            }
+          );
+        },
+        (error) => {
+          console.error('위치 정보 가져오기 실패:', error)
+        }
+      );
+    } else {
+      console.error('브라우저가 위치 정보를 지원하지 않습니다.')
+    }
   }
 
   ngAfterViewInit() {
@@ -61,9 +80,8 @@ export class NearbyStoresComponent implements OnInit, AfterViewInit {
     const storeId = foundStore.store_id
   
     // store_id로 상세 정보 조회
-    this.storesService.getStoreById(storeId).subscribe(
-      (response) => {
-        const storeData = response.data
+    this.mapsService.readStoreById(storeId).subscribe(
+      (storeData) => {
         this.filteredStores = storeData ? [storeData] : []
         this.sendStoresToMap(true)
       },

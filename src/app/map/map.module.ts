@@ -4,22 +4,22 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { NearbyStoresPageRoutingModule } from './nearby-stores-routing.module'
-import { NearbyStoresPage } from './pages/nearby-stores.page'
-import { NearbyStoresComponent } from './components/nearby-stores.component'
 import { SharedModule } from '../shared/module/shared.module'
+import { MapPage } from './pages/map.page'
+import { MapComponent } from './components/map.component'
+import { MapRoutingModule } from './map-routing.module'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NearbyStoresPageRoutingModule,
+    MapRoutingModule,
     SharedModule
   ],
   declarations: [
-    NearbyStoresPage,
-    NearbyStoresComponent
+    MapPage,
+    MapComponent
   ]
 })
-export class NearbyStoresPageModule { }
+export class MapPageModule { }
