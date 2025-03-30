@@ -7,6 +7,8 @@ import { MenuPage } from './pages/menu-page/menu.page'
 import { StoreDetailPage } from './pages/store-detail-page/store-detail-page'
 import { CreateStoreRequestPage } from './pages/create-store-request.page/create-store-request.page'
 import { WriteReviewPage } from '../reviews/pages/write-review/write-review.page'
+import { WriteEventPage } from './pages/write-event/write-event.page'
+import { EditEventPage } from './pages/edit-event/edit-event.page'
 
 const routes: Routes = [
   // //이거 하면 http://localhost:8100/store 페이지에 아무것도 안뜸
@@ -42,6 +44,14 @@ const routes: Routes = [
   {
     path: ':store_id/write-review',
     component: WriteReviewPage
+  },
+  {
+    path: ':store_id/write-event',
+    component: WriteEventPage
+  },
+  {
+    path: ':store_id/event/:event_id/edit-event',
+    component: EditEventPage
   },
 ]
 

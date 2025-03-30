@@ -17,6 +17,8 @@ import { CreateStoreRequestPage } from './pages/create-store-request.page/create
 import { CreateStoreRequestComponent } from './components/store-request/create-store-request.component'
 import { SharedModule } from '../shared/module/shared.module'
 import { ReviewsModule } from '../reviews/reviews.module'
+import { EditEventPage } from './pages/edit-event/edit-event.page'
+import { WriteEventPage } from './pages/write-event/write-event.page'
 
 @NgModule({
   imports: [
@@ -37,7 +39,9 @@ import { ReviewsModule } from '../reviews/reviews.module'
     StoreDetailPage,
     StoreHeaderComponent,
     CreateStoreRequestPage,
-    CreateStoreRequestComponent
+    CreateStoreRequestComponent,
+    WriteEventPage,
+    EditEventPage,
   ]
 })
 export class StorePageModule { }

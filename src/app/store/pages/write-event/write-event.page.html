@@ -1,0 +1,27 @@
+<div class="container">
+  <h2>이벤트 생성</h2>
+  
+  <form (ngSubmit)="createEvent()">
+    <!-- 제목 입력 -->
+    <label for="title">제목</label>
+    <input id="title" type="text" [(ngModel)]="title" name="title" required />
+
+    <!-- 설명 입력 -->
+    <label for="description">설명</label>
+    <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
+
+    <!-- 시작 날짜 -->
+    <label for="start_date">시작 날짜</label>
+    <input id="start_date" type="datetime-local" [(ngModel)]="start_date" name="start_date" required />
+
+    <!-- 종료 날짜 -->
+    <label for="end_date">종료 날짜</label>
+    <input id="end_date" type="datetime-local" [(ngModel)]="end_date" name="end_date" required />
+
+    <!-- 버튼 영역 -->
+    <div class="button-group">
+      <button type="submit" (click)="createEvent()">이벤트 생성</button>
+      <!-- <button type="button" (click)="location.back()">취소</button> -->
+    </div>
+  </form>
+</div>
