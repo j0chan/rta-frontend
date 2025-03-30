@@ -88,7 +88,7 @@ export class CreateStoreRequestComponent {
 
       await this.storeRequestsService.createStoreRequest(this.storeRequest)
       alert('가게 신청이 완료되었습니다.')
-      this.router.navigate(['/nearby-store'])
+      this.router.navigate(['/map'])
     } catch (error) {
       alert('신청 중 오류가 발생했습니다.')
     }

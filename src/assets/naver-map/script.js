@@ -29,7 +29,13 @@ function loadMapScript() {
 
     scriptLoaded = true // 중복 실행 방지
 
-    fetch("http://localhost:3000/api/maps/client-id")
+    const token = localStorage.getItem('accessToken')
+
+    fetch("http://localhost:3000/api/maps/client-id", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
         .then((response) => response.json())
         .then((data) => {
 
@@ -122,8 +128,8 @@ function addStoreMarkers(data) {
     clearMarkers()
 
     data.stores.forEach(store => {
-        const lat = parseFloat(store.latitude) / 1e7
-        const lng = parseFloat(store.longitude) / 1e7
+        const lat = parseFloat(store.lat)
+        const lng = parseFloat(store.lng)
 
         const position = new naver.maps.LatLng(lat, lng)
         const marker = new naver.maps.Marker({

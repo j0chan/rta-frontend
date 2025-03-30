@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
+import { MapPage } from './pages/map.page'
 
-import { NearbyStoresPage } from './pages/nearby-stores.page'
 
 
 const routes: Routes = [
   {
     path: '',
-    component: NearbyStoresPage
+    component: MapPage
   }
 ]
 
@@ -16,4 +16,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 
-export class NearbyStoresPageRoutingModule { }
+export class MapRoutingModule { }
