@@ -75,7 +75,7 @@ export class CreateStoreRequestComponent {
 
   selectStore(store: ReadStore) {
     this.storeRequest.store_name = store.store_name
-    this.storeRequest.category = store.category
+    this.storeRequest.category = store.category.category_name
     this.storeRequest.address = store.address
     this.storeRequest.contact_number  = store.contact_number 
     this.searchResults = []  // 검색 결과 목록 닫기
