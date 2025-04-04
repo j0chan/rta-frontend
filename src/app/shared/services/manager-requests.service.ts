@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 import { Observable } from 'rxjs'
-import { CreateManagerRequestDTO } from '../model/manager-requests/create-manager-request.interface'
+import { CreateManagerRequest } from '../model/manager-requests/create-manager-request.interface'
 import { ReadManagerRequest } from '../model/manager-requests/read-manager-request.interface'
 import { UpdateManagerRequest } from '../model/manager-requests/update-manager-request.interface'
 
@@ -14,7 +14,7 @@ export class ManagerRequestsService {
 
   constructor(private http: HttpClient) { }
 
-  createManagerRequest(createManagerRequest: CreateManagerRequestDTO): Observable<ApiResponseDTO<void>> {
+  createManagerRequest(createManagerRequest: CreateManagerRequest): Observable<ApiResponseDTO<void>> {
     return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}`, createManagerRequest)
   }
 
