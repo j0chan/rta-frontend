@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { ManagerPage } from './pages/manager/manager.page'
 import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page'
-import { MyStoresPage } from './pages/my-stores/my-stores.page';
+import { MyStoresPage } from './pages/my-stores/my-stores.page'
 
 const routes: Routes = [
   {
