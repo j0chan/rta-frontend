@@ -10,4 +10,20 @@
       <ion-title size="large">search</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <textarea id="keyword" [(ngModel)]="keyword" name="keyword" required></textarea>
+  <ion-button expand="block" (click)="searchByKeyword()">검색</ion-button>
+
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let store of searchedStores">
+        <ion-label>
+          <h2>{{ store.store_name }}</h2>
+          <p>{{ store.address }}</p>
+          <p>{{ store.description }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
 </ion-content>
