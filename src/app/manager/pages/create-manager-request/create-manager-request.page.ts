@@ -24,9 +24,7 @@ export class CreateManagerRequestPage  implements OnInit {
 
   submitManagerRequest() {
     const createManagerRequest: CreateManagerRequest = {
-      user_id: this.user_id,
       store_id: this.store_id
-
     }
 
     this.managerReqestsService.createManagerRequest(createManagerRequest).subscribe({

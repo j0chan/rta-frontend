@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
+import { MyPageService } from 'src/app/shared/services/my-page.service'
 import { StoresService } from 'src/app/shared/services/stores.service'
 
 @Component({
@@ -10,15 +11,13 @@ import { StoresService } from 'src/app/shared/services/stores.service'
 })
 export class MyStoresPage implements OnInit {
   stores: ReadStore[] = []
-  // 임시 user_id
-  user_id: number = 1
 
   constructor(
-    private storesService: StoresService
+    private myPageService: MyPageService,
   ) { }
 
   ngOnInit() {
-    this.storesService.getAllStoresByUserId(this.user_id).subscribe({
+    this.myPageService.getMyStores().subscribe({
       next: (response: ApiResponseDTO<ReadStore[]>) => {
         this.stores = response.data ?? []
       },

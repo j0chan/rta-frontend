@@ -58,7 +58,6 @@ export class WriteReviewPage implements OnInit {
     if (!this.store_id) { return }
     
     const createReview: CreateReview = {
-      user_id: 1, // 임시 아이디
       content: this.content
     }
 

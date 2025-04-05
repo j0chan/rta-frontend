@@ -8,8 +8,6 @@ import { MyPageService } from 'src/app/shared/services/my-page.service'
   standalone: false,
 })
 export class MyReviewListComponent implements OnInit {
-  // 임시 데이터. 나중에 logginedUser 구현 시 교체 예정
-  user_id: number = 1
   reviews: ReadReview[] = []
 
   constructor(
@@ -21,7 +19,7 @@ export class MyReviewListComponent implements OnInit {
   }
 
   loadMyReviews() {
-    this.myPageService.readReviewsById(this.user_id).subscribe({
+    this.myPageService.getMyReviews().subscribe({
       next: response => {
         if (response.success) {
           this.reviews = response.data || []
