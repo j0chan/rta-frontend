@@ -15,6 +15,8 @@ export class WriteReviewPage implements OnInit {
   private store_id: number | null = null
   store_name: string = 'No store'
   content: string = ''
+  selectedFiles: File[] = []
+  previewUrls: string[] = []
 
   constructor(
     private router: Router,
@@ -33,6 +35,16 @@ export class WriteReviewPage implements OnInit {
     console.log('입력한 리뷰: ', this.content)
   }
 
+  onFileSelected(event: Event): void {
+    const target = event.target as HTMLInputElement
+    if (target.files) {
+      this.selectedFiles = Array.from(target.files)
+
+      this.previewUrls = this.selectedFiles.map(file =>
+        URL.createObjectURL(file)
+      )
+    }
+  }
 
   getStoreId() {
     const navigation = this.router.getCurrentNavigation()
@@ -56,16 +68,28 @@ export class WriteReviewPage implements OnInit {
 
   createReview() {
     if (!this.store_id) { return }
-    
+
     const createReview: CreateReview = {
-      user_id: 1, // 임시 아이디
       content: this.content
     }
 
     this.storesService.createReview(this.store_id, createReview).subscribe({
-      next: response => {
-        if (response.success) {
-          this.location.back()
+      next: (response) => {
+        if (response.success && response.data?.review_id) {
+          const review_id = response.data.review_id
+
+          if (this.selectedFiles.length > 0) {
+            this.selectedFiles.forEach(file => {
+              this.storesService.uploadReviewImage(review_id, file).subscribe({
+                next: () => console.log('이미지 업로드 완료'),
+                error: err => console.error('이미지 업로드 실패: ', err)
+              })
+            })
+          }
+
+          this.router.navigate(['/store', this.store_id], {
+            state: { refresh: true },
+          })
         } else {
           console.error('create review failed: ', response.message)
         }

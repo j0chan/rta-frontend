@@ -9,4 +9,5 @@ export interface ReadReview {
     reply?: ReadReply
     date: Date
     isModified: Boolean
+    image_urls: string[]
 }

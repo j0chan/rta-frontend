@@ -38,7 +38,7 @@ export class StorePage implements OnInit {
     // 리뷰 작성하고 다시 스토어 페이지로 돌아왔을 때 리뷰 데이터를 다시 불러와줍니다
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd))
-      .subscribe(() => { 
+      .subscribe(() => {
         if (this.store_id) { this.loadStoreReviews(this.store_id) }
       })
   }
