@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
 import { UpdateEvent } from 'src/app/shared/model/events/update-event.interface'
-import { EventService } from 'src/app/shared/services/event.services'
+import { EventsService } from 'src/app/shared/services/events.services'
 
 @Component({
   selector: 'app-edit-event',
@@ -24,7 +24,7 @@ export class EditEventPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private eventService: EventService,
+    private eventsService: EventsService,
     private location: Location,
   ) { }
 
@@ -42,7 +42,7 @@ export class EditEventPage implements OnInit {
 
   loadEvent() {
     if (this.event_id) {
-      this.eventService.getEventById(this.store_id, this.event_id).subscribe({
+      this.eventsService.getEventById(this.store_id, this.event_id).subscribe({
         next: (response: ApiResponseDTO<ReadEvent>) => {
           this.event = response.data || null
 
@@ -73,7 +73,7 @@ export class EditEventPage implements OnInit {
       is_canceled: this.is_canceled
     }
 
-    this.eventService.updateEvent(this.store_id, this.event_id, updateEvent).subscribe({
+    this.eventsService.updateEvent(this.store_id, this.event_id, updateEvent).subscribe({
       next: response => {
         if (response.success) {
           this.location.back()
@@ -91,7 +91,7 @@ export class EditEventPage implements OnInit {
   }
 
   deleteEvent() {
-    this.eventService.deleteEvent(this.store_id, this.event_id).subscribe({
+    this.eventsService.deleteEvent(this.store_id, this.event_id).subscribe({
       next: response => {
         if (response.success) {
           this.location.back()
