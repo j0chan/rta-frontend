@@ -1,4 +1,5 @@
 let scriptLoaded = false // 네이버 지도 API 로드 여부
+let pendingStoreData = null // 지도(mapConfig.map)가 초기화되기 전에 postMessage로 받은 데이터를 임시로 저장
 
 document.addEventListener("DOMContentLoaded", function () {
     // iframe이 동적으로 추가될 때까지 기다리기
@@ -58,51 +59,33 @@ const mapConfig = {
 }
 
 function initMap() {
-    // 현위치 가져오기
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                let lat = position.coords.latitude // 위도
-                let lng = position.coords.longitude // 경도
-                let currentLocation = new naver.maps.LatLng(lat, lng)
+    // 기본 지도 생성 (서울 기준)
+    mapConfig.map = new naver.maps.Map("map", {
+        center: new naver.maps.LatLng(37.5665, 126.9780),
+        zoom: 15
+    })
 
-                // 지도 객체 생성 (현위치를 중심으로)
-                mapConfig.map = new naver.maps.Map("map", {
-                    center: currentLocation,
-                    zoom: 15
-                })
+    // 지도 클릭 시 모든 InfoWindow 닫기
+    naver.maps.Event.addListener(mapConfig.map, "click", function () {
+        if (mapConfig.activeInfoWindow) {
+            mapConfig.activeInfoWindow.close()
+            mapConfig.activeInfoWindow = null
+        }
+    })
 
-                // 지도 클릭 시 모든 InfoWindow 닫기
-                naver.maps.Event.addListener(mapConfig.map, "click", function () {
-                    if (mapConfig.activeInfoWindow) {
-                        mapConfig.activeInfoWindow.close()
-                        mapConfig.activeInfoWindow = null
-                    }
-                })
-
-                // 현재 위치에 마커 추가
-                new naver.maps.Marker({
-                    position: currentLocation,
-                    map: mapConfig.map,
-                    title: "현재 위치"
-                })
-            },
-            function (error) {
-                console.error("위치 정보를 가져올 수 없습니다: ", error)
-                // 위치 정보를 가져오지 못한 경우, 기본 위치(서울)로 설정
-                mapConfig.map = new naver.maps.Map("map", {
-                    center: new naver.maps.LatLng(37.5665, 126.9780),
-                    zoom: 15
-                })
-            }
-        )
-    } else {
-        alert("위치 정보를 지원하지 않는 브라우저입니다.")
+    if (pendingStoreData) {
+        addStoreMarkers(pendingStoreData)
+        pendingStoreData = null
     }
 }
 
 // 부모 창에서 가게 데이터 수신 및 지도에 표시
 window.addEventListener("message", function (event) {
+    if (!mapConfig.map) {
+        console.warn("지도 객체가 아직 없음. 메시지를 저장합니다.")
+        pendingStoreData = event.data
+        return
+    }
     addStoreMarkers(event.data)
 })
 
@@ -122,10 +105,28 @@ function createInfoWindowContent(store) {
 
 // 지도에 가게 마커 추가
 function addStoreMarkers(data) {
-    if (!mapConfig.map) return
+    if (!mapConfig.map) {
+        console.warn("❗ 지도가 아직 초기화되지 않았습니다.")
+        return
+    }
 
     // 기존 마커 제거
     clearMarkers()
+
+    // 현재 위치 마커 추가
+    if (data.currentLocation) {
+        const lat = parseFloat(data.currentLocation.lat)
+        const lng = parseFloat(data.currentLocation.lng)
+        const currentPosition = new naver.maps.LatLng(lat, lng)
+
+        new naver.maps.Marker({
+            position: currentPosition,
+            map: mapConfig.map,
+            title: "현재 위치"
+        })
+
+        mapConfig.map.setCenter(currentPosition)
+    }
 
     data.stores.forEach(store => {
         const lat = parseFloat(store.lat)

@@ -15,6 +15,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   filteredStores: ReadStore[] = []
   searchQuery: string = ''
   alertVisible: boolean = true
+  currentLat: number | null = null
+  currentLng: number | null = null
 
   constructor(
     private mapsService: MapsService,
@@ -26,27 +28,34 @@ export class MapComponent implements OnInit, AfterViewInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
+          const lat = position.coords.latitude
+          const lng = position.coords.longitude
+          this.currentLat = lat
+          this.currentLng = lng
 
-          console.log(lat);
-          console.log(lng);
+          console.log(lat)
+          console.log(lng)
   
           this.mapsService.readStoreByCurrentLocation(lat, lng).subscribe(
             (stores) => {
-              this.stores = stores;
-              this.filteredStores = stores;
-              this.sendStoresToMap(false);
+              this.stores = stores
+              this.filteredStores = stores
+              this.sendStoresToMap(false, { lat, lng })
             },
             (error) => {
               console.error('위치 기반 가게 불러오기 실패:', error)
             }
-          );
+          )
         },
         (error) => {
           console.error('위치 정보 가져오기 실패:', error)
+        },
+        {
+          enableHighAccuracy: true, // 고정밀 위치 요청
+          timeout: 10000, // 10초 안에 위치 못 받으면 실패 처리
+          maximumAge: 0 // 이전 위치 캐시 사용 금지 (항상 새 위치 요청)
         }
-      );
+      )
     } else {
       console.error('브라우저가 위치 정보를 지원하지 않습니다.')
     }
@@ -54,7 +63,12 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.sendStoresToMap(false)
+      if (this.currentLat !== null && this.currentLng !== null) {
+        this.sendStoresToMap(false, {
+          lat: this.currentLat,
+          lng: this.currentLng
+        })
+      }
     }, 1000)
   }
 
@@ -83,7 +97,11 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.mapsService.readStoreById(storeId).subscribe(
       (storeData) => {
         this.filteredStores = storeData ? [storeData] : []
-        this.sendStoresToMap(true)
+
+        this.sendStoresToMap(true, {
+          lat: this.currentLat ?? 37.5665, // 기본값: 서울
+          lng: this.currentLng ?? 126.9780
+        })
       },
       (error) => {
         console.error('가게 상세정보 로딩 실패:', error)
@@ -104,10 +122,15 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   // map iframe에 가게 데이터를 전달
-  sendStoresToMap(isSearchPerformed: boolean) {
+  sendStoresToMap(isSearchPerformed: boolean, currentLocation?: { lat: number, lng: number }) {
     const iframe = document.getElementById('map-iframe') as HTMLIFrameElement
+
     if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage({ stores: this.filteredStores, isSearchPerformed }, '*')
+      iframe.contentWindow.postMessage({
+        stores: this.filteredStores,
+        isSearchPerformed,
+        currentLocation
+      }, '*')
     }
   }
 }
