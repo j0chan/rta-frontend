@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { CreateReview } from 'src/app/shared/model/reviews/create-review.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
+import { ReviewsService } from 'src/app/shared/services/reviews.service'
 import { StoresService } from 'src/app/shared/services/stores.service'
 
 @Component({
@@ -22,6 +23,7 @@ export class WriteReviewPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private storesService: StoresService,
+    private reviewsService: ReviewsService,
     private location: Location,
   ) { }
 
@@ -73,14 +75,14 @@ export class WriteReviewPage implements OnInit {
       content: this.content
     }
 
-    this.storesService.createReview(this.store_id, createReview).subscribe({
+    this.reviewsService.createReview(this.store_id, createReview).subscribe({
       next: (response) => {
         if (response.success && response.data?.review_id) {
           const review_id = response.data.review_id
 
           if (this.selectedFiles.length > 0) {
             this.selectedFiles.forEach(file => {
-              this.storesService.uploadReviewImage(review_id, file).subscribe({
+              this.reviewsService.uploadReviewImage(review_id, file).subscribe({
                 next: () => console.log('이미지 업로드 완료'),
                 error: err => console.error('이미지 업로드 실패: ', err)
               })
