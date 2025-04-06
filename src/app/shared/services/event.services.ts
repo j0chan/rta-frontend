@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { CreateEvent } from '../model/events/create-event.interface'
 import { Observable } from 'rxjs'
@@ -14,8 +14,15 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
+  private getAuthHeaders(): HttpHeaders {
+      console.log('access Token: ', localStorage.getItem('accessToken'))
+  
+      const token = localStorage.getItem('accessToken')
+      return new HttpHeaders().set('Authorization', `Bearer ${token ?? ''}`)
+    }
+
   createEvent(store_id: number, createEvent: CreateEvent): Observable<ApiResponseDTO<void>> {
-    return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events`, createEvent)
+    return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events`, createEvent, { headers: this.getAuthHeaders()})
   }
 
   getEventById(store_id: number, event_id: number): Observable<ApiResponseDTO<ReadEvent>> {
@@ -23,10 +30,10 @@ export class EventService {
   }
 
   updateEvent(store_id: number, event_id: number, updateEvent: UpdateEvent): Observable<ApiResponseDTO<void>> {
-    return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`, updateEvent)
+    return this.http.put<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`, updateEvent, { headers: this.getAuthHeaders()})
   }
 
   deleteEvent(store_id: number, event_id: number): Observable<ApiResponseDTO<void>> {
-    return this.http.delete<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`)
+    return this.http.delete<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`, { headers: this.getAuthHeaders()})
   }
 }
