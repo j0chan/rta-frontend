@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { MapsService } from 'src/app/shared/services/maps.service'
@@ -9,14 +9,17 @@ import { MapsService } from 'src/app/shared/services/maps.service'
   styleUrls: ['./map.component.scss'],
   standalone: false
 })
-
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   stores: ReadStore[] = []
   filteredStores: ReadStore[] = []
   searchQuery: string = ''
   alertVisible: boolean = true
   currentLat: number | null = null
   currentLng: number | null = null
+  previousLat: number | null = null
+  previousLng: number | null = null
+  watchId: number | null = null
+  // isTracking: boolean = false // 실시간 추적 상태
 
   constructor(
     private mapsService: MapsService,
@@ -24,38 +27,16 @@ export class MapComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    // 현재 위치 기반 가게 불러오기
     if (navigator.geolocation) {
+      // 최초 1회 위치 요청
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const lat = position.coords.latitude
-          const lng = position.coords.longitude
-          const accuracy = position.coords.accuracy // 정확도 값 (미터 단위)
-
-          console.log('위치:', lat, lng)
-          console.log('위치 정확도:', accuracy + 'm')
-
-          // 정확도 기준 판단 (예: 150m 이상은 경고)
-          if (accuracy > 150) {
-            alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
-          }
-
-          this.currentLat = lat
-          this.currentLng = lng
-
-          console.log(lat)
-          console.log(lng)
-  
-          this.mapsService.readStoreByCurrentLocation(lat, lng).subscribe(
-            (stores) => {
-              this.stores = stores
-              this.filteredStores = stores
-              this.sendStoresToMap(false, { lat, lng })
-            },
-            (error) => {
-              console.error('위치 기반 가게 불러오기 실패:', error)
-            }
+          this.handlePositionChange(
+            position.coords.latitude,
+            position.coords.longitude,
+            position.coords.accuracy // 정확도 값 (미터 단위)
           )
+
         },
         (error) => {
           console.error('위치 정보 가져오기 실패:', error)
@@ -64,6 +45,32 @@ export class MapComponent implements OnInit, AfterViewInit {
           enableHighAccuracy: true, // 고정밀 위치 요청
           timeout: 10000, // 10초 안에 위치 못 받으면 실패 처리
           maximumAge: 0 // 이전 위치 캐시 사용 금지 (항상 새 위치 요청)
+        }
+      )
+
+      // 실시간 위치 추적 (토글 없이 항상 활성화)
+      this.watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const newLat = position.coords.latitude
+          const newLng = position.coords.longitude
+          const accuracy = position.coords.accuracy
+
+          console.log(`[실시간 위치] lat: ${newLat}, lng: ${newLng}, accuracy: ${accuracy}m`) // 지우지 말것
+
+          if (this.previousLat !== null && this.previousLng !== null) {
+            const movedDistance = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
+            if (movedDistance < 1) return // 1m 이상 이동한 경우에 다시 요청
+          }
+
+          this.handlePositionChange(newLat, newLng, accuracy)
+        },
+        (error) => {
+          console.error('위치 추적 실패:', error)
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
         }
       )
     } else {
@@ -82,27 +89,124 @@ export class MapComponent implements OnInit, AfterViewInit {
     }, 1000)
   }
 
+  ngOnDestroy() {
+    if (this.watchId !== null) {
+      navigator.geolocation.clearWatch(this.watchId)
+    }
+  }
+
+  // 위치 추적 시작
+  // startTracking() {
+  //   if (!navigator.geolocation) return
+  //   this.watchId = navigator.geolocation.watchPosition(
+  //     (position) => {
+  //       const newLat = position.coords.latitude
+  //       const newLng = position.coords.longitude
+  //       const accuracy = position.coords.accuracy
+
+  //       console.log(`[실시간 위치] lat: ${newLat}, lng: ${newLng}, accuracy: ${accuracy}m`)
+
+  //       if (this.previousLat !== null && this.previousLng !== null) {
+  //         const movedDistance = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
+  //         if (movedDistance < 1) return // 1m 이상 이동한 경우에만 요청
+  //       }
+
+  //       this.handlePositionChange(newLat, newLng, accuracy)
+  //     },
+  //     (error) => {
+  //       console.error('위치 추적 실패:', error)
+  //     },
+  //     {
+  //       enableHighAccuracy: true,
+  //       timeout: 10000,
+  //       maximumAge: 0
+  //     }
+  //   )
+  // }
+
+  // 위치 추적 중지
+  // stopTracking() {
+  //   if (this.watchId !== null) {
+  //     navigator.geolocation.clearWatch(this.watchId)
+  //     this.watchId = null
+  //   }
+  // }
+
+  // 토글 버튼에서 호출
+  // toggleTracking() {
+  //   this.isTracking = !this.isTracking
+  //   if (this.isTracking) {
+  //     this.startTracking()
+  //   } else {
+  //     this.stopTracking()
+  //   }
+  // }
+  
+  handlePositionChange(lat: number, lng: number, accuracy: number) {
+    // 정확도 기준 판단 (150m 이상은 경고)
+    if (accuracy > 150) {
+      alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
+    }
+
+    this.currentLat = lat
+    this.currentLng = lng
+    this.previousLat = lat
+    this.previousLng = lng
+
+    this.mapsService.readStoreByCurrentLocation(lat, lng).subscribe(
+      (stores) => {
+        this.stores = stores
+        this.filteredStores = stores
+        this.sendStoresToMap(false, { lat, lng })
+      },
+      (error) => {
+        console.error('위치 기반 가게 불러오기 실패:', error)
+      }
+    )
+  }
+
+  // Haversine 거리 계산 (단위: 미터)
+  calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const R = 6371e3 // 지구 반지름
+
+    // 위도 경도 라디안 변환
+    const φ1 = lat1 * Math.PI / 180
+    const φ2 = lat2 * Math.PI / 180
+    const Δφ = (lat2 - lat1) * Math.PI / 180
+    const Δλ = (lng2 - lng1) * Math.PI / 180
+
+    // Haversine 공식 계산
+    const a = Math.sin(Δφ / 2) ** 2 +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) ** 2
+              
+    // 최종 거리 계산
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+    return R * c
+  }
+
   // 검색
   onSearch(query: string) {
     this.searchQuery = query.trim().toLowerCase() // 검색어 저장 (+ 소문자 변환)
-  
+
     if (!this.searchQuery) {
       this.filteredStores = []
       return
     }
-  
+
     // 가게 이름을 먼저 검색해서 store_id를 찾는다
     const foundStore = this.stores.find(store => 
       store.store_name.toLowerCase().includes(this.searchQuery)
     )
-  
+
     if (!foundStore) {
       this.filteredStores = []
       return
     }
-  
+
     const storeId = foundStore.store_id
-  
+
     // store_id로 상세 정보 조회
     this.mapsService.readStoreById(storeId).subscribe(
       (storeData) => {
