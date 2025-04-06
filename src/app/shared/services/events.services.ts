@@ -9,13 +9,17 @@ import { ReadEvent } from '../model/events/read-event.interface'
 @Injectable({
   providedIn: 'root'
 })
-export class EventService {
+export class EventsService {
   private apiUrl = 'http://localhost:3000/api/stores/'
 
   constructor(private http: HttpClient) { }
 
   createEvent(store_id: number, createEvent: CreateEvent): Observable<ApiResponseDTO<void>> {
     return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events`, createEvent)
+  }
+
+  getAllEventsByStore(store_id: number): Observable<ApiResponseDTO<ReadEvent[]>> {
+    return this.http.get<ApiResponseDTO<ReadEvent[]>>(`${this.apiUrl}${store_id}/events`)
   }
 
   getEventById(store_id: number, event_id: number): Observable<ApiResponseDTO<ReadEvent>> {
@@ -28,5 +32,9 @@ export class EventService {
 
   deleteEvent(store_id: number, event_id: number): Observable<ApiResponseDTO<void>> {
     return this.http.delete<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/events/${event_id}`)
+  }
+
+  getLastestEventByStoreId(store_id: number): Observable<ApiResponseDTO<ReadEvent>> {
+    return this.http.get<ApiResponseDTO<ReadEvent>>(`${this.apiUrl}${store_id}/events/latest`)
   }
 }

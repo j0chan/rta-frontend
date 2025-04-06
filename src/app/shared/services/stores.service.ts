@@ -20,31 +20,8 @@ export class StoresService {
         return this.http.get<ApiResponseDTO<ReadStore>>(`${this.apiUrl}${id}`)
     }
 
-    getLastestEventByStoreId(store_id: number): Observable<ApiResponseDTO<ReadEvent>> {
-        return this.http.get<ApiResponseDTO<ReadEvent>>(`${this.apiUrl}${store_id}/events/latest`)
-    }
-
     getMenusByStoreId(store_id: number): Observable<ApiResponseDTO<ReadMenu[]>> {
         return this.http.get<ApiResponseDTO<ReadMenu[]>>(`${this.apiUrl}${store_id}/menus`)
-    }
-
-    getReviewsByStoreId(store_id: number): Observable<ApiResponseDTO<ReadReview[]>> {
-        return this.http.get<ApiResponseDTO<ReadReview[]>>(`${this.apiUrl}${store_id}/reviews`)
-    }
-
-    getAllEventsByStore(store_id: number): Observable<ApiResponseDTO<ReadEvent[]>> {
-        return this.http.get<ApiResponseDTO<ReadEvent[]>>(`${this.apiUrl}${store_id}/events`)
-    }
-
-    createReview(store_id: number, createReview: CreateReview): Observable<ApiResponseDTO<{ review_id: number }>> {
-        return this.http.post<ApiResponseDTO<{ review_id: number }>>(`${this.apiUrl}${store_id}/reviews`, createReview)
-    }
-
-    uploadReviewImage(review_id: number, file: File): Observable<any> {
-        const formData = new FormData()
-        formData.append('file', file)
-
-        return this.http.post(`http://localhost:3000/api/s3/upload/review/${review_id}`, formData)
     }
 
     getAllStores(): Observable<ApiResponseDTO<ReadStore[]>> {
