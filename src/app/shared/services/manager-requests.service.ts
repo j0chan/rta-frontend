@@ -15,6 +15,8 @@ export class ManagerRequestsService {
   constructor(private http: HttpClient) { }
 
   private getAuthHeaders(): HttpHeaders {
+    console.log('access Token: ', localStorage.getItem('accessToken'))
+
     const token = localStorage.getItem('accessToken')
     return new HttpHeaders().set('Authorization', `Bearer ${token ?? ''}`)
   }
@@ -25,6 +27,10 @@ export class ManagerRequestsService {
 
   readAllManagerRequests(): Observable<ApiResponseDTO<ReadManagerRequest[]>> {
     return this.http.get<ApiResponseDTO<ReadManagerRequest[]>>(`${this.apiUrl}`, { headers: this.getAuthHeaders() })
+  }
+
+  getMyManagerRequests(): Observable<ApiResponseDTO<ReadManagerRequest[]>> {
+    return this.http.get<ApiResponseDTO<ReadManagerRequest[]>>(`${this.apiUrl}my`, { headers: this.getAuthHeaders() })
   }
 
   updateManagerRequest(request_id: number, updateManagerRequest: UpdateManagerRequest): Observable<ApiResponseDTO<void>> {

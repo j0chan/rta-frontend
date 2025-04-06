@@ -28,10 +28,6 @@ export class MyPageService {
     return this.http.get<ApiResponseDTO<ReadUser>>(`${this.apiUrl}users/my`, { headers: this.getAuthHeaders() })
   }
 
-  getMyManagerRequests(): Observable<ApiResponseDTO<ReadManagerRequest[]>> {
-    return this.http.get<ApiResponseDTO<ReadManagerRequest[]>>(`${this.apiUrl}manager-requests/my`, { headers: this.getAuthHeaders() })
-  }
-
   getMyStores(): Observable<ApiResponseDTO<ReadStore[]>> {
     return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.apiUrl}stores/my`, { headers: this.getAuthHeaders() })
   }
