@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
 import { ManagerRequestsService } from 'src/app/shared/services/manager-requests.service'
-import { MyPageService } from 'src/app/shared/services/my-page.service'
 
 @Component({
   selector: 'app-manager-request-list',
