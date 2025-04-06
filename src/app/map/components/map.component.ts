@@ -30,6 +30,16 @@ export class MapComponent implements OnInit, AfterViewInit {
         (position) => {
           const lat = position.coords.latitude
           const lng = position.coords.longitude
+          const accuracy = position.coords.accuracy // 정확도 값 (미터 단위)
+
+          console.log('위치:', lat, lng)
+          console.log('위치 정확도:', accuracy + 'm')
+
+          // 정확도 기준 판단 (예: 150m 이상은 경고)
+          if (accuracy > 150) {
+            alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
+          }
+
           this.currentLat = lat
           this.currentLng = lng
 
