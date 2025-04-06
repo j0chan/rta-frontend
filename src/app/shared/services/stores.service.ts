@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
@@ -15,6 +15,11 @@ export class StoresService {
     private apiUrl = 'http://localhost:3000/api/stores/'
 
     constructor(private http: HttpClient) { }
+
+    private getAuthHeaders(): HttpHeaders {
+        const token = localStorage.getItem('accessToken')
+        return new HttpHeaders().set('Authorization', `Bearer ${token ?? ''}`)
+    }
 
     getStoreById(id: number): Observable<ApiResponseDTO<ReadStore>> {
         return this.http.get<ApiResponseDTO<ReadStore>>(`${this.apiUrl}${id}`)
@@ -37,7 +42,7 @@ export class StoresService {
     }
 
     createReview(store_id: number, createReview: CreateReview): Observable<ApiResponseDTO<void>> {
-        return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/reviews`, createReview)
+        return this.http.post<ApiResponseDTO<void>>(`${this.apiUrl}${store_id}/reviews`, createReview, { headers: this.getAuthHeaders() })
     }
 
     getAllStores(): Observable<ApiResponseDTO<ReadStore[]>> {

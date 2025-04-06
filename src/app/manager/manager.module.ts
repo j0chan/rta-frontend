@@ -11,6 +11,8 @@ import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-req
 import { ManagerRequestComponent } from './components/manager-request/manager-request.component'
 import { ManagerRequestListComponent } from './components/manager-request-list/manager-request-list.component'
 import { MyStoresPage } from './pages/my-stores/my-stores.page'
+import { CreateManagerRequestPage } from './pages/create-manager-request/create-manager-request.page'
+import { SearchStoreComponent } from './components/search-store/search-store.component'
 
 @NgModule({
   imports: [
@@ -24,7 +26,9 @@ import { MyStoresPage } from './pages/my-stores/my-stores.page'
     MyManagerRequestsPage,
     ManagerRequestComponent,
     ManagerRequestListComponent,
-    MyStoresPage
+    MyStoresPage,
+    CreateManagerRequestPage,
+    SearchStoreComponent,
   ]
 })
 export class ManagerModule { }

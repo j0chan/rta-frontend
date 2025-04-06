@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface';
-import { ReadStore } from 'src/app/shared/model/stores/read-store.interface';
-import { StoresService } from 'src/app/shared/services/stores.service';
+import { ActivatedRoute, Router } from '@angular/router'
+import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
+import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
+import { MyPageService } from 'src/app/shared/services/my-page.service'
+import { StoresService } from 'src/app/shared/services/stores.service'
 
 @Component({
   selector: 'app-my-stores',
@@ -10,15 +12,15 @@ import { StoresService } from 'src/app/shared/services/stores.service';
 })
 export class MyStoresPage implements OnInit {
   stores: ReadStore[] = []
-  // 임시 user_id
-  user_id: number = 1
 
   constructor(
-    private storesService: StoresService
+    private router: Router,
+    private route: ActivatedRoute,
+    private myPageService: MyPageService,
   ) { }
 
   ngOnInit() {
-    this.storesService.getAllStoresByUserId(this.user_id).subscribe({
+    this.myPageService.getMyStores().subscribe({
       next: (response: ApiResponseDTO<ReadStore[]>) => {
         this.stores = response.data ?? []
       },
@@ -26,6 +28,14 @@ export class MyStoresPage implements OnInit {
         console.error('Failed To Retriving Stores', err)
       }
     })
+  }
+
+  /* 페이지 이동 */
+  goStorePage(store: ReadStore) {
+    const store_id = store.store_id
+
+    this.router.navigate([`/store/${store_id}`])
+    console.log(`go store ${store.store_name} page`)
   }
 
 }

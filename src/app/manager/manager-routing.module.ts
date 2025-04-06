@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { ManagerPage } from './pages/manager/manager.page'
 import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page'
-import { MyStoresPage } from './pages/my-stores/my-stores.page';
+import { MyStoresPage } from './pages/my-stores/my-stores.page'
+import { CreateManagerRequestPage } from './pages/create-manager-request/create-manager-request.page'
 
 const routes: Routes = [
   {
@@ -17,7 +18,11 @@ const routes: Routes = [
   {
     path: 'my-stores',
     component: MyStoresPage
-  }
+  },
+  {
+    path: 'create-manager-request',
+    component: CreateManagerRequestPage
+  },
 ];
 
 @NgModule({
