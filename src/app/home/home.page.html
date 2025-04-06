@@ -17,6 +17,10 @@
     <strong>용기종기 메인 화면입니다.</strong>
   </div>
 
+  <div class="image-container" *ngIf="Pika">
+    <img [src]="Pika" alt="Pikachu" class="responsive-img">
+  </div>
+
   <ion-button expand="block" (click)="signOut()"> 
     로그아웃
   </ion-button>
