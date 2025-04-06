@@ -12,7 +12,7 @@ export class ManagerRequestListComponent implements OnInit {
   requests: ReadManagerRequest[] = []
 
   constructor(
-    private myPageService: MyPageService,
+    private managerRequestsService: ManagerRequestsService,
   ) { }
 
   ngOnInit() {
@@ -20,7 +20,7 @@ export class ManagerRequestListComponent implements OnInit {
   }
 
   loadMyManagerRequests() {
-    this.myPageService.getMyManagerRequests().subscribe({
+    this.managerRequestsService.getMyManagerRequests().subscribe({
       next: response => {
         if (response.success) {
           this.requests = response.data || []
