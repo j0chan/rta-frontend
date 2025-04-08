@@ -15,7 +15,6 @@ export class MyStoresPage implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private myPageService: MyPageService,
   ) { }
 

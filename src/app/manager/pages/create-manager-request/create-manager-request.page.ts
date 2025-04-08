@@ -14,8 +14,6 @@ export class CreateManagerRequestPage  implements OnInit {
   private store_id!: number
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private managerRequestsService: ManagerRequestsService,
     private location: Location,
   ) { }

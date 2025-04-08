@@ -17,7 +17,6 @@ export class WriteEventPage implements OnInit {
   end_date: Date = new Date()
   
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private eventService: EventService,
     private location: Location,

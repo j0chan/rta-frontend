@@ -13,7 +13,6 @@ export class ReviewListComponent implements OnInit {
 
   constructor(
     private reviewsService: ReviewsService,
-    private router: Router,
   ) { }
 
   ngOnInit() {
