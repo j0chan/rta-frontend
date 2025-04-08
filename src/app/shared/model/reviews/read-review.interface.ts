@@ -1,3 +1,4 @@
+import { File } from "../file/read-review.interface"
 import { ReadReply } from "../replies/read-reply.interface"
 
 export interface ReadReview {
@@ -10,5 +11,5 @@ export interface ReadReview {
     reply?: ReadReply
     date: Date
     isModified: Boolean
-    image_urls: string[]
+    files: File[]
 }
