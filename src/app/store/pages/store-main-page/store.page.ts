@@ -1,3 +1,4 @@
+import { EventsService } from 'src/app/shared/services/event.services';
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { filter, Subscription } from 'rxjs'
@@ -5,6 +6,7 @@ import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interfa
 import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
 import { ReadReview } from 'src/app/shared/model/reviews/read-review.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
+import { ReviewsService } from 'src/app/shared/services/reviews.service'
 import { StoresService } from 'src/app/shared/services/stores.service'
 
 @Component({
@@ -23,7 +25,9 @@ export class StorePage implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private storesService: StoresService
+    private storesService: StoresService,
+    private reviewsService: ReviewsService,
+    private eventsService: EventsService,
   ) { }
 
   ngOnInit() {
@@ -38,7 +42,7 @@ export class StorePage implements OnInit {
     // 리뷰 작성하고 다시 스토어 페이지로 돌아왔을 때 리뷰 데이터를 다시 불러와줍니다
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd))
-      .subscribe(() => { 
+      .subscribe(() => {
         if (this.store_id) { this.loadStoreReviews(this.store_id) }
       })
   }
@@ -59,7 +63,7 @@ export class StorePage implements OnInit {
   }
 
   loadStoreEvents(store_id: number) {
-    this.storesService.getLastestEventByStoreId(store_id).subscribe({
+    this.eventsService.getLastestEventByStoreId(store_id).subscribe({
       next: (response: ApiResponseDTO<ReadEvent>) => {
         this.event = response.data ?? null
       },
@@ -70,7 +74,7 @@ export class StorePage implements OnInit {
   }
 
   loadStoreReviews(store_id: number) {
-    this.storesService.getReviewsByStoreId(store_id).subscribe({
+    this.reviewsService.getReviewsByStoreId(store_id).subscribe({
       next: (response: ApiResponseDTO<ReadReview[]>) => {
         this.reviews = response.data ?? []
       },
