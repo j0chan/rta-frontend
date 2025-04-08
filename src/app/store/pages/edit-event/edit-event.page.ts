@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
 import { UpdateEvent } from 'src/app/shared/model/events/update-event.interface'
-import { EventsService } from 'src/app/shared/services/events.services'
+import { EventsService } from 'src/app/shared/services/event.services'
 
 @Component({
   selector: 'app-edit-event',

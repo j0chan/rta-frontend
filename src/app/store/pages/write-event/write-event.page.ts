@@ -2,7 +2,7 @@ import { Location } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CreateEvent } from 'src/app/shared/model/events/create-event.interface'
-import { EventsService } from 'src/app/shared/services/events.services'
+import { EventsService } from 'src/app/shared/services/event.services'
 
 @Component({
   selector: 'app-write-event',

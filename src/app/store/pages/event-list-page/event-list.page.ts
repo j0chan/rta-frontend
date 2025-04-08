@@ -5,7 +5,7 @@ import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
 import { filter, Subscription } from 'rxjs'
-import { EventsService } from 'src/app/shared/services/events.services'
+import { EventsService } from 'src/app/shared/services/event.services'
 
 @Component({
   selector: 'app-event-list',

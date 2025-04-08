@@ -1,4 +1,4 @@
-import { EventsService } from 'src/app/shared/services/events.services';
+import { EventsService } from 'src/app/shared/services/event.services';
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { filter, Subscription } from 'rxjs'
