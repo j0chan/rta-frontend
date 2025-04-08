@@ -1,4 +1,3 @@
-export interface CreateManagerRequestDTO {
-    user_id: number
+export interface CreateManagerRequest {
     store_id: number
 }

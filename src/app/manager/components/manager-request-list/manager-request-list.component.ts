@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
-import { UsersService } from 'src/app/shared/services/users.service'
+import { ManagerRequestsService } from 'src/app/shared/services/manager-requests.service'
 
 @Component({
   selector: 'app-manager-request-list',
@@ -10,11 +10,8 @@ import { UsersService } from 'src/app/shared/services/users.service'
 export class ManagerRequestListComponent implements OnInit {
   requests: ReadManagerRequest[] = []
 
-  // 임시 사용자 아이디
-  user_id: number = 1
-
   constructor(
-    private usersService: UsersService,
+    private managerRequestsService: ManagerRequestsService,
   ) { }
 
   ngOnInit() {
@@ -22,7 +19,7 @@ export class ManagerRequestListComponent implements OnInit {
   }
 
   loadMyManagerRequests() {
-    this.usersService.readMyManagerRequests(this.user_id).subscribe({
+    this.managerRequestsService.getMyManagerRequests().subscribe({
       next: response => {
         if (response.success) {
           this.requests = response.data || []

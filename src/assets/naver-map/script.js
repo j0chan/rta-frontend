@@ -1,5 +1,6 @@
 let scriptLoaded = false // 네이버 지도 API 로드 여부
 let pendingStoreData = null // 지도(mapConfig.map)가 초기화되기 전에 postMessage로 받은 데이터를 임시로 저장
+let currentLocationMarker = null // 현재 위치 마커 저장용
 
 document.addEventListener("DOMContentLoaded", function () {
     // iframe이 동적으로 추가될 때까지 기다리기
@@ -106,23 +107,33 @@ function createInfoWindowContent(store) {
 // 지도에 가게 마커 추가
 function addStoreMarkers(data) {
     if (!mapConfig.map) {
-        console.warn("❗ 지도가 아직 초기화되지 않았습니다.")
+        console.warn("지도가 아직 초기화되지 않았습니다.")
         return
     }
 
     // 기존 마커 제거
     clearMarkers()
 
-    // 현재 위치 마커 추가
+    // 현재 위치 마커 갱신
     if (data.currentLocation) {
         const lat = parseFloat(data.currentLocation.lat)
         const lng = parseFloat(data.currentLocation.lng)
         const currentPosition = new naver.maps.LatLng(lat, lng)
 
-        new naver.maps.Marker({
+        // 이전 마커가 있으면 제거
+        if (currentLocationMarker) {
+            currentLocationMarker.setMap(null)
+        }
+
+        // 새 마커 생성 및 저장
+        currentLocationMarker = new naver.maps.Marker({
             position: currentPosition,
             map: mapConfig.map,
-            title: "현재 위치"
+            title: "현재 위치",
+            icon: {
+                content: `<div class="pulse-marker"></div>`,
+                anchor: new naver.maps.Point(12, 12)
+            }
         })
 
         mapConfig.map.setCenter(currentPosition)

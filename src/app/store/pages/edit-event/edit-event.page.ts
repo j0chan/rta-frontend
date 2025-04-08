@@ -78,14 +78,14 @@ export class EditEventPage implements OnInit {
         if (response.success) {
           this.location.back()
         } else {
-          console.error('create event failed: ', response.message)
+          console.error('edit event failed: ', response.message)
         }
       },
       error: err => {
-        console.error('create event error: ', err)
+        console.error('edit event error: ', err)
       },
       complete: () => {
-        console.log('create event completed')
+        console.log('edit event completed')
       }
     })
   }
