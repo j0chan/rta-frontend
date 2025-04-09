@@ -10,6 +10,7 @@ import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
 import { RequestStatusPipe } from '../pipes/request-status.pipe'
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from '../interceptors/auth.interceptor'
+import { RelativeTimePipe } from '../pipes/relativeTime.pipe'
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor'
     CategoryPipe,
     KoreanDatePipe,
     RequestStatusPipe,
+    RelativeTimePipe,
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor'
     CategoryPipe,
     KoreanDatePipe,
     RequestStatusPipe,
+    RelativeTimePipe,
   ],
   providers: [
     {
