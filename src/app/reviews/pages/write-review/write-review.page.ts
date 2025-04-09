@@ -2,7 +2,6 @@ import { Location } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
-import { CreateReview } from 'src/app/shared/model/reviews/create-review.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ReviewsService } from 'src/app/shared/services/reviews.service'
 import { StoresService } from 'src/app/shared/services/stores.service'
@@ -70,6 +69,11 @@ export class WriteReviewPage implements OnInit {
 
   createReview() {
     if (!this.store_id) { return }
+
+    if (!this.content || this.content.trim() === '') {
+      alert('리뷰 내용을 입력해주세요.')
+      return
+    }
 
     const formData = new FormData()
     formData.append('content', this.content) // 리뷰 내용 추가
