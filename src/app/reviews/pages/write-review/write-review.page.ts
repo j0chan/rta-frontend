@@ -9,6 +9,7 @@ import { StoresService } from 'src/app/shared/services/stores.service'
 @Component({
   selector: 'app-write-review',
   templateUrl: './write-review.page.html',
+  styleUrls: ['./write-review.page.scss'],
   standalone: false,
 })
 export class WriteReviewPage implements OnInit {
