@@ -87,7 +87,7 @@ export class WriteReviewPage implements OnInit {
     this.reviewsService.createReview(this.store_id, formData).subscribe({ // formData 전달
       next: (response) => {
         if (response.success && response.data?.review_id) {
-          this.router.navigate(['/store', this.store_id], {
+          this.router.navigate(['/stores', this.store_id], {
             state: { refresh: true },
           })
         } else {
