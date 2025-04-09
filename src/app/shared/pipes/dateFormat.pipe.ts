@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core'
 
 @Pipe({
-    name: 'koreanDate',
+    name: 'dateFormatPipe',
     pure: true,
     standalone: false,
 })
-export class KoreanDatePipe implements PipeTransform {
+export class DateFormatPipe implements PipeTransform {
     transform(value: Date | string | null): string {
         if (!value) return ''
 

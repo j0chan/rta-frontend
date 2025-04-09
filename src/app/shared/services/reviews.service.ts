@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ReadReview } from '../model/reviews/read-review.interface'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
-import { CreateReview } from '../model/reviews/create-review.interface'
 
 @Injectable({
   providedIn: 'root'
