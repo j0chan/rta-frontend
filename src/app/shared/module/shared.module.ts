@@ -6,10 +6,11 @@ import { FooterMenuComponent } from '../components/footer-menu/footer-menu.compo
 import { IonicModule } from '@ionic/angular'
 import { EventStatusPipe } from '../pipes/event-status.pipe'
 import { CategoryPipe } from '../pipes/category.pipe'
-import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
 import { RequestStatusPipe } from '../pipes/request-status.pipe'
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from '../interceptors/auth.interceptor'
+import { RelativeTimePipe } from '../pipes/relativeTime.pipe'
+import { DateFormatPipe } from '../pipes/dateFormat.pipe'
 
 @NgModule({
   declarations: [
@@ -17,8 +18,9 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor'
     FooterMenuComponent,
     EventStatusPipe,
     CategoryPipe,
-    KoreanDatePipe,
+    DateFormatPipe,
     RequestStatusPipe,
+    RelativeTimePipe,
   ],
   imports: [
     CommonModule,
@@ -30,8 +32,9 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor'
     FooterMenuComponent,
     EventStatusPipe,
     CategoryPipe,
-    KoreanDatePipe,
+    DateFormatPipe,
     RequestStatusPipe,
+    RelativeTimePipe,
   ],
   providers: [
     {

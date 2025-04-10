@@ -1,4 +1,3 @@
-import { StoresService } from 'src/app/shared/services/stores.service'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'

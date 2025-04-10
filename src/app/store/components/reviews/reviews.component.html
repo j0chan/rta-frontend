@@ -3,7 +3,7 @@
     <ion-label>
       <h2>{{ review.user_name }}</h2>
       <p>{{ review.content }}</p>
-      <p>{{ review.date | date: 'yyyy년 MM월 dd일' }}</p>
+      <p>{{ review.date | relativeTime }}</p>
       <p *ngIf="review.isModified">(수정됨)</p>
 
       <!-- 이미지 출력 영역 -->

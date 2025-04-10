@@ -54,6 +54,7 @@ export class ReviewsComponent implements OnInit {
       console.error('store_id가 없습니다')
       return
     }
+    
     this.reviewsService.getReviewsByStoreId(this.store_id).subscribe({
       next: res => {
         this.reviews = res.data || []
