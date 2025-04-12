@@ -4,6 +4,7 @@ import { CreateUserDTO } from '../model/auth/create-user.interface'
 import { BehaviorSubject, Observable, tap } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 import { SignInDTO } from '../model/auth/singin.interface'
+import { parseJwt } from '../utils/token.util'
 
 @Injectable({
   providedIn: 'root'
@@ -37,23 +38,12 @@ export class AuthService {
     this.isLoggedInSubject.next(false)
   }
 
-  // 토큰 파싱 유틸 함수
-  private parseJwt(token: string): any | null {
-    try {
-      const payload = token.split('.')[1]
-      return JSON.parse(atob(payload))
-    } catch (e) {
-      console.error('Invalid token:', e)
-      return null
-    }
-  }
-
   // 로그인된 사용자 이름 반환
   getLogginedUserName(): string | null {
     const token = localStorage.getItem('accessToken')
     if (!token) return null
 
-    const payload = this.parseJwt(token)
+    const payload = parseJwt(token)
     if (!payload) return null
 
     return payload.nickname || payload.name || null
