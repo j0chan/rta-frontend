@@ -15,7 +15,6 @@ export class HomePage implements OnInit {
   // 로그인 상태 관찰
   isLoggedIn$ = this.authService.isLoggedIn$
 
-  Pika!: string
   currentLat: number | null = null
   currentLng: number | null = null
   stores: ReadStore[] = []
@@ -33,13 +32,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    // 이미지 불러오기
-    this.imagesService.getImage('pika.jpg').subscribe((response) => {
-      if (response?.url) {
-        this.Pika = response.url
-      }
-    })
-
     // 지도 초기화
     this.initMiniMap()
   }

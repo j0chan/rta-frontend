@@ -50,12 +50,12 @@ export class EventListPage implements OnInit {
 
   /* 페이지 이동 */
   goWriteEvent() {
-    this.router.navigate([`/store/${this.store_id}/write-event`])
+    this.router.navigate([`/stores/${this.store_id}/write-event`])
     console.log('go write-event page')
   }
 
   goEditEvent(event_id: number) {
-    this.router.navigate([`/store/${this.store_id}/event/${event_id}/edit-event`])
+    this.router.navigate([`/stores/${this.store_id}/event/${event_id}/edit-event`])
     console.log('go edit-event page')
   }
 }

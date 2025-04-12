@@ -33,7 +33,7 @@ export class MyStoresPage implements OnInit {
   goStorePage(store: ReadStore) {
     const store_id = store.store_id
 
-    this.router.navigate([`/store/${store_id}`])
+    this.router.navigate([`/stores/${store_id}`])
     console.log(`go store ${store.store_name} page`)
   }
 
