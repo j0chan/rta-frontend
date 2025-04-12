@@ -18,7 +18,9 @@ export class MapsService {
   // 헤터 토큰 추가 (공통)
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('accessToken')
-    return new HttpHeaders().set('Authorization', `Bearer ${token ?? ''}`)
+    return token
+    ? new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    : new HttpHeaders()
   }
 
   getClientId(): Observable<{ clientId: string }> {
@@ -35,7 +37,7 @@ export class MapsService {
     })
   }
 
-  // 특정 가게 조회
+  // 가게 상세 정보 조회
   readStoreById(store_id: number): Observable<ReadStore> {
     return this.http.get<ApiResponseDTO<ReadStore>>(`${this.storeApiUrl}${store_id}`, {
       headers: this.getAuthHeaders()
@@ -58,4 +60,14 @@ export class MapsService {
       params: { lat: lat.toString(), lng: lng.toString() }
     })
   }
+
+  // 가게 검색
+  readStoresByKeyword(keyword: string): Observable<ReadStore[]> {
+    return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.storeApiUrl}?keyword=${keyword}`, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      map(response => response.data ?? [])
+    )
+  }
+  
 }

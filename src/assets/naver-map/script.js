@@ -142,24 +142,51 @@ function addStoreMarkers(data) {
     }
 
     data.stores.forEach(store => {
-        const lat = parseFloat(store.lat)
-        const lng = parseFloat(store.lng)
-
+        const rawLat = store.lat ?? store.latitude
+        const rawLng = store.lng ?? store.longitude
+    
+        let lat = parseFloat(rawLat)
+        let lng = parseFloat(rawLng)
+    
+        // 검색된 가게이면 좌표 보정
+        const isTarget =
+            data.isSearchPerformed &&
+            data.targetStoreId &&
+            store.store_id == data.targetStoreId
+    
+        if (isTarget) {
+            const correctedLat = normalizeCoordinate(rawLat, true)
+            const correctedLng = normalizeCoordinate(rawLng, false)
+    
+            if (correctedLat == null || correctedLng == null || isNaN(correctedLat) || isNaN(correctedLng)) {
+                console.warn('유효하지 않은 보정 좌표:', rawLat, rawLng)
+                return
+            }
+    
+            lat = correctedLat
+            lng = correctedLng
+        }
+    
+        // NaN 방지
+        if (isNaN(lat) || isNaN(lng)) {
+            console.warn("유효하지 않은 좌표 (마커 생성 생략):", rawLat, rawLng)
+            return
+        }
+    
         const position = new naver.maps.LatLng(lat, lng)
         const marker = new naver.maps.Marker({
             position: position,
             map: mapConfig.map,
             title: store.store_name
         })
-
+    
         const infoWindow = new naver.maps.InfoWindow({
             content: createInfoWindowContent(store),
             disableAutoPan: false,
             borderWidth: 0,
             backgroundColor: "rgba(0,0,0,0)"
         })
-
-        // 마커 클릭 시 정보창 표시
+    
         naver.maps.Event.addListener(marker, "click", function () {
             if (mapConfig.activeInfoWindow) {
                 mapConfig.activeInfoWindow.close()
@@ -167,15 +194,17 @@ function addStoreMarkers(data) {
             infoWindow.open(mapConfig.map, marker)
             mapConfig.activeInfoWindow = infoWindow
         })
-
+    
         mapConfig.markers.push(marker)
         mapConfig.infoWindows.push(infoWindow)
-
-        if(data.isSearchPerformed){ // 검색인 경우에만 화면 이동
+    
+        // InfoWindow 열기 및 지도 이동
+        if (isTarget) {
+            infoWindow.open(mapConfig.map, marker)
             mapConfig.map.setCenter(position)
-            mapConfig.map.setZoom(17)
+            mapConfig.map.setZoom(20)
+            mapConfig.activeInfoWindow = infoWindow
         }
-        
     })
 }
 
@@ -185,6 +214,47 @@ function clearMarkers() {
     mapConfig.infoWindows.forEach(infoWindow => infoWindow.setMap(null))
     mapConfig.markers = []
     mapConfig.infoWindows = []
+}
+
+// 자릿수별 위도, 경도 변환
+function normalizeCoordinate(value, isLat = true) {
+    const num = parseFloat(value)
+    const length = Math.floor(Math.log10(num)) + 1
+
+    if (isLat) {
+        if (length === 7) return num / 1e5
+        if (length === 8) return num / 1e6
+        if (length === 9) return num / 1e7
+        if (length === 10) return num / 1e8
+    } else {
+        if (length === 7) return num / 1e4
+        if (length === 8) return num / 1e5
+        if (length === 9) return num / 1e6
+        if (length === 10) return num / 1e7
+    }
+
+    return null
+}
+
+function focusIfSearchTarget(store, rawLat, rawLng, data, marker, infoWindow) {
+    if (data.isSearchPerformed && data.targetStoreId && store.store_id == data.targetStoreId) {
+        const correctedLat = normalizeCoordinate(rawLat, true)
+        const correctedLng = normalizeCoordinate(rawLng, false)
+
+        if (correctedLat == null || correctedLng == null || isNaN(correctedLat) || isNaN(correctedLng)) {
+            console.warn('유효하지 않은 좌표:', rawLat, rawLng)
+            return
+        }
+
+        const correctedPosition = new naver.maps.LatLng(correctedLat, correctedLng)
+
+        console.log("보정된 좌표:", correctedLat, correctedLng)
+
+        infoWindow.open(mapConfig.map, marker)
+        mapConfig.map.setCenter(correctedPosition)
+        mapConfig.map.setZoom(17)
+        mapConfig.activeInfoWindow = infoWindow
+    }
 }
 
 // 닫기 버튼 클릭 시 InfoWindow 닫기

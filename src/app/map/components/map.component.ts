@@ -188,38 +188,33 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // 검색
   onSearch(query: string) {
-    this.searchQuery = query.trim().toLowerCase() // 검색어 저장 (+ 소문자 변환)
-
+    this.searchQuery = query.trim()
     if (!this.searchQuery) {
-      this.filteredStores = []
+      this.filteredStores = this.stores
       return
     }
-
-    // 가게 이름을 먼저 검색해서 store_id를 찾는다
-    const foundStore = this.stores.find(store => 
-      store.store_name.toLowerCase().includes(this.searchQuery)
-    )
-
-    if (!foundStore) {
-      this.filteredStores = []
-      return
-    }
-
-    const storeId = foundStore.store_id
-
-    // store_id로 상세 정보 조회
-    this.mapsService.readStoreById(storeId).subscribe(
-      (storeData) => {
-        this.filteredStores = storeData ? [storeData] : []
-
+  
+    // 1. 키워드로 서버 검색
+    this.mapsService.readStoresByKeyword(this.searchQuery).subscribe(
+      (stores) => {
+        if (!stores || stores.length === 0) {
+          this.alertVisible = true
+          this.filteredStores = []
+          return
+        }
+  
+        // 검색 결과가 있을 경우 → 마커 + 리스트 출력
+        this.filteredStores = stores
+  
         this.sendStoresToMap(true, {
-          lat: this.currentLat ?? 37.5665, // 기본값: 서울
+          lat: this.currentLat ?? 37.5665,
           lng: this.currentLng ?? 126.9780
         })
       },
       (error) => {
-        console.error('가게 상세정보 로딩 실패:', error)
+        console.error('키워드 검색 실패:', error)
         this.filteredStores = []
+        this.alertVisible = true // 오류 시에도 팝업 표시
       }
     )
   }
@@ -236,15 +231,34 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // map iframe에 가게 데이터를 전달
-  sendStoresToMap(isSearchPerformed: boolean, currentLocation?: { lat: number, lng: number }) {
+  sendStoresToMap(isSearchPerformed: boolean, currentLocation?: { lat: number, lng: number }, targetStoreId?: number) {
     const iframe = document.getElementById('map-iframe') as HTMLIFrameElement
 
     if (iframe && iframe.contentWindow) {
       iframe.contentWindow.postMessage({
         stores: this.filteredStores,
         isSearchPerformed,
-        currentLocation
+        currentLocation,
+        targetStoreId
       }, '*')
     }
   }
+
+  focusStoreOnMap(store: ReadStore) {
+    this.sendStoresToMap(
+      true,
+      {
+        lat: this.currentLat ?? 37.5665,
+        lng: this.currentLng ?? 126.9780
+      },
+      store.store_id
+    )
+  }
+
+  onClearSearch() {
+    this.searchQuery = ''
+    this.filteredStores = []
+    this.alertVisible = false
+  }
+  
 }
