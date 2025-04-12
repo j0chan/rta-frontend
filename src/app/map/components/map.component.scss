@@ -55,6 +55,37 @@ iframe {
     width: 100%;
 }
 
+/* 검색 결과 리스트 */
+.search-result-list {
+    position: absolute;
+    top: 60px; // 검색창 바로 밑
+    left: 0;
+    width: 100%;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-result-list li {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s;
+}
+
+.search-result-list li:hover {
+    background-color: #e6f7ff;
+    cursor: pointer;
+}
+
 // .tracking-toggle {
 //     position: absolute;
 //     top: 70px; // 검색창 아래쪽에 위치
