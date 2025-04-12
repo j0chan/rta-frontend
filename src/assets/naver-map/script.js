@@ -31,15 +31,17 @@ function loadMapScript() {
 
     scriptLoaded = true // 중복 실행 방지
 
-    const token = localStorage.getItem('accessToken')
-
-    fetch("http://localhost:3000/api/maps/client-id", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-        .then((response) => response.json())
+    fetch("http://localhost:3000/api/maps/client-id") // 헤더 없이 호출
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`서버 응답 오류: ${response.status}`)
+            }
+            return response.json()
+        })
         .then((data) => {
+            if (!data.clientId) {
+                throw new Error("clientId가 undefined.")
+            }
 
             // 네이버 지도 API 동적 로드
             const script = document.createElement("script")
