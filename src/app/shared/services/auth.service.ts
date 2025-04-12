@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { CreateUserDTO } from '../model/auth/create-user.interface'
 import { BehaviorSubject, Observable, tap } from 'rxjs'
@@ -35,5 +35,27 @@ export class AuthService {
   signOut(): void {
     localStorage.removeItem('accessToken') // 로그아웃 시 토큰 삭제
     this.isLoggedInSubject.next(false)
+  }
+
+  // 토큰 파싱 유틸 함수
+  private parseJwt(token: string): any | null {
+    try {
+      const payload = token.split('.')[1]
+      return JSON.parse(atob(payload))
+    } catch (e) {
+      console.error('Invalid token:', e)
+      return null
+    }
+  }
+
+  // 로그인된 사용자 이름 반환
+  getLogginedUserName(): string | null {
+    const token = localStorage.getItem('accessToken')
+    if (!token) return null
+
+    const payload = this.parseJwt(token)
+    if (!payload) return null
+
+    return payload.nickname || payload.name || null
   }
 }

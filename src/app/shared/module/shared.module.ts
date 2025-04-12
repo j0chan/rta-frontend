@@ -10,15 +10,19 @@ import { KoreanDatePipe } from '../pipes/koreanDate.pipe'
 import { RequestStatusPipe } from '../pipes/request-status.pipe'
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from '../interceptors/auth.interceptor'
+import { LogginedComponent } from 'src/app/shared/components/loggined/loggined.component'
+import { HeaderBarComponent } from '../components/header-bar/header-bar.component'
 
 @NgModule({
   declarations: [
     SearchBarComponent,
     FooterMenuComponent,
+    LogginedComponent,
     EventStatusPipe,
     CategoryPipe,
     KoreanDatePipe,
     RequestStatusPipe,
+    HeaderBarComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,7 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor'
     CategoryPipe,
     KoreanDatePipe,
     RequestStatusPipe,
+    HeaderBarComponent,
   ],
   providers: [
     {

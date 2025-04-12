@@ -1,0 +1,14 @@
+/* header-bar.component.scss */
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* 오른쪽에 붙는 요소 묶음 */
+  .right-items {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
