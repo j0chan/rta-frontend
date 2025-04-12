@@ -9,6 +9,8 @@ import { CategoryPipe } from '../pipes/category.pipe'
 import { RequestStatusPipe } from '../pipes/request-status.pipe'
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from '../interceptors/auth.interceptor'
+import { LogginedComponent } from 'src/app/shared/components/loggined/loggined.component'
+import { HeaderBarComponent } from '../components/header-bar/header-bar.component'
 import { RelativeTimePipe } from '../pipes/relativeTime.pipe'
 import { DateFormatPipe } from '../pipes/dateFormat.pipe'
 
@@ -16,10 +18,12 @@ import { DateFormatPipe } from '../pipes/dateFormat.pipe'
   declarations: [
     SearchBarComponent,
     FooterMenuComponent,
+    LogginedComponent,
     EventStatusPipe,
     CategoryPipe,
     DateFormatPipe,
     RequestStatusPipe,
+    HeaderBarComponent,
     RelativeTimePipe,
   ],
   imports: [
@@ -34,6 +38,7 @@ import { DateFormatPipe } from '../pipes/dateFormat.pipe'
     CategoryPipe,
     DateFormatPipe,
     RequestStatusPipe,
+    HeaderBarComponent,
     RelativeTimePipe,
   ],
   providers: [

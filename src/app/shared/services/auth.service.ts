@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { CreateUserDTO } from '../model/auth/create-user.interface'
 import { BehaviorSubject, Observable, tap } from 'rxjs'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
 import { SignInDTO } from '../model/auth/singin.interface'
+import { parseJwt } from '../utils/token.util'
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,16 @@ export class AuthService {
   signOut(): void {
     localStorage.removeItem('accessToken') // 로그아웃 시 토큰 삭제
     this.isLoggedInSubject.next(false)
+  }
+
+  // 로그인된 사용자 이름 반환
+  getLogginedUserName(): string | null {
+    const token = localStorage.getItem('accessToken')
+    if (!token) return null
+
+    const payload = parseJwt(token)
+    if (!payload) return null
+
+    return payload.nickname || payload.name || null
   }
 }

@@ -1,0 +1,8 @@
+<div style="display: flex; align-items: center; gap: 10px;">
+  <span *ngIf="isLoggined">로그인된 사용자: {{ userName }}</span>
+
+  <ion-button *ngIf="isLoggined" (click)="signOut()">로그아웃</ion-button>
+  <ion-button *ngIf="!isLoggined" color="primary" (click)="goSignInPage()">로그인</ion-button>
+
+  <ion-button color="success" (click)="goMyPage()">마이페이지</ion-button>
+</div>

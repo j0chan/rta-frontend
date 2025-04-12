@@ -10,7 +10,6 @@ export class MyManagerRequestsPage implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() { }

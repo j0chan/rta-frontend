@@ -10,3 +10,14 @@ export function getUserIdFromToken(): number | null {
         return null
     }
 }
+
+// 토큰 파싱 유틸 함수
+export function parseJwt(token: string): any | null {
+    try {
+      const payload = token.split('.')[1]
+      return JSON.parse(atob(payload))
+    } catch (e) {
+      console.error('Invalid token:', e)
+      return null
+    }
+  }
