@@ -232,7 +232,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       activeElement.blur() // focus 해제 후 페이지 이동
     }
     this.alertVisible = false // alert 숨기기
-    this.router.navigate(['/store/create-store-request'])
+    this.router.navigate(['/stores/create-store-request'])
   }
 
   // map iframe에 가게 데이터를 전달
