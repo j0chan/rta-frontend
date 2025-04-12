@@ -3,9 +3,20 @@
     <ion-label>
       <h2>{{ review.user_name }}</h2>
       <p>{{ review.content }}</p>
-      <p>{{ review.date | date: 'yyyy년 MM월 dd일' }}</p>
+      <p>{{ review.date | relativeTime }}</p>
       <p *ngIf="review.isModified">(수정됨)</p>
+
+      <!-- 이미지 출력 영역 -->
+      <div *ngIf="review.files && review.files.length > 0" class="image-row">
+        <ion-img *ngFor="let file of review.files" [src]="file.url" class="thumbnail-img"></ion-img>
+      </div>
     </ion-label>
+
+      <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->
+      <ion-button color="danger" fill="clear" size="small" *ngIf="review.user_id === currentUserId"
+        (click)="deleteReview(review.review_id)">
+        삭제
+      </ion-button>
   </ion-item>
 </ion-list>
 

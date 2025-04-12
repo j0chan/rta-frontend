@@ -2,7 +2,7 @@ import { Location } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CreateEvent } from 'src/app/shared/model/events/create-event.interface'
-import { EventService } from 'src/app/shared/services/event.services'
+import { EventsService } from 'src/app/shared/services/event.services'
 
 @Component({
   selector: 'app-write-event',
@@ -18,7 +18,7 @@ export class WriteEventPage implements OnInit {
   
   constructor(
     private route: ActivatedRoute,
-    private eventService: EventService,
+    private eventService: EventsService,
     private location: Location,
   ) { }
 

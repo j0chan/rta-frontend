@@ -1,10 +1,10 @@
-import { StoresService } from 'src/app/shared/services/stores.service'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadEvent } from 'src/app/shared/model/events/read-event.interface'
 import { filter, Subscription } from 'rxjs'
+import { EventsService } from 'src/app/shared/services/event.services'
 
 @Component({
   selector: 'app-event-list',
@@ -22,7 +22,7 @@ export class EventListPage implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private storesService: StoresService,
+    private eventsService: EventsService
   ) { }
 
   ngOnInit() {
@@ -38,7 +38,7 @@ export class EventListPage implements OnInit {
   }
 
   loadEvents() {
-    this.storesService.getAllEventsByStore(this.store_id).subscribe({
+    this.eventsService.getAllEventsByStore(this.store_id).subscribe({
       next: (response: ApiResponseDTO<ReadEvent[]>) => {
         this.events = response.data ?? []
       },

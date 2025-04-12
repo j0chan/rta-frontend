@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./map/map.module').then(m => m.MapPageModule)
   },
   {
-    path: 'store',
+    path: 'stores',
     loadChildren: () => import('./store/store.module').then(m => m.StorePageModule)
   },
   {
@@ -46,7 +46,8 @@ const routes: Routes = [
   {
     path: 'favorite',
     loadChildren: () => import('./favorite/favorite.module').then(m => m.FavoritePageModule)
-  },  {
+  },
+  {
     path: 'search',
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   }

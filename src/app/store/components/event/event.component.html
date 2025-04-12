@@ -5,7 +5,7 @@
     <p><strong>이벤트 제목:</strong> {{ event.title }}</p>
     <p><strong>상태:</strong> {{ event.event_status | eventStatusPipe }}</p>
     <p><strong>설명:</strong> {{ event.description }}</p>
-    <p><strong>시작 날짜:</strong> {{ event.start_date | koreanDate }}</p>
-    <p><strong>종료 날짜:</strong> {{ event.end_date | koreanDate }}</p>
+    <p><strong>시작 날짜:</strong> {{ event.start_date | dateFormatPipe }}</p>
+    <p><strong>종료 날짜:</strong> {{ event.end_date | dateFormatPipe }}</p>
   </ion-card-content>
 </ion-card>

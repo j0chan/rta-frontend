@@ -2,6 +2,13 @@
     <app-search-bar (searchEvent)="onSearch($event)"></app-search-bar>
 </div>
 
+<!-- 위치 추적 토글 버튼 -->
+<!-- <div class="tracking-toggle">
+    <button (click)="toggleTracking()">
+        {{ isTracking ? '실시간 위치 추적 중지' : '실시간 위치 추적 시작' }}
+    </button>
+</div> -->
+
 <!-- 검색 결과 없을 때 중앙 팝업 표시 -->
 <div *ngIf="searchQuery && filteredStores.length === 0 && alertVisible" class="alert-popup"> 
     <div class="alert-content">

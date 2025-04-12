@@ -15,6 +15,25 @@
 
   <ion-textarea placeholder="포장 경험을 알려주세요" [(ngModel)]="content" [clearOnEdit]="true"></ion-textarea>
 
+    <!-- 이미지 업로드 -->
+    <ion-item lines="none">
+      <ion-label>사진 추가</ion-label>
+      <input
+        type="file"
+        multiple
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        style="margin-top: 10px;" />
+    </ion-item>
+  
+    <!-- 이미지 미리보기 -->
+    <div class="preview-image-row" *ngIf="previewUrls.length > 0">
+      <img
+        *ngFor="let url of previewUrls"
+        [src]="url"
+        class="preview-img" />
+    </div>
+
 <ion-button expand="full" (click)="submit()">작성 완료</ion-button>
 
 </ion-content>
