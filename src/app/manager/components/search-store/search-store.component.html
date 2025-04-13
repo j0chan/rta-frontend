@@ -1,15 +1,28 @@
+<!-- <textarea id="keyword" [(ngModel)]="keyword" name="keyword" required></textarea>
+<ion-button expand="block" (click)="searchByKeyword()">검색</ion-button> -->
 
-  <textarea id="keyword" [(ngModel)]="keyword" name="keyword" required></textarea>
-  <ion-button expand="block" (click)="searchByKeyword()">검색</ion-button>
+<ion-searchbar
+  [(ngModel)]="keyword" 
+  (keydown.enter)="searchByKeyword()"
+  placeholder="가게명 검색"
+  showCancelButton="focus"
+></ion-searchbar>
 
-  <ion-content>
-    <ion-list>
-      <ion-item *ngFor="let store of searchedStores">
-        <ion-label>
-          <h2>{{ store.store_name }}</h2>
-          <p>{{ store.address }}</p>
-          <ion-button expand="block" (click)="selectStore(store)">선택하기</ion-button>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let store of searchedStores">
+      <ion-label>
+        <h2>{{ store.store_name }}</h2>
+        <p>{{ store.address }}</p>
+      </ion-label>
+      <ion-button
+        slot="end"
+        [color]="selectedStoreId === store.store_id ? 'primary' : 'medium'"
+        (click)="selectStore(store)"
+      >
+        선택하기
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

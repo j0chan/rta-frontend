@@ -10,6 +10,8 @@ import { SearchService } from 'src/app/shared/services/search.service'
 export class SearchStoreComponent  implements OnInit {
   keyword: string = ''
   searchedStores: ReadStore[] = []
+  
+  selectedStoreId: number | null = null
   @Output() selectedStore = new EventEmitter<ReadStore>()
 
   constructor(private searchService: SearchService) { }
@@ -33,6 +35,7 @@ export class SearchStoreComponent  implements OnInit {
 
   selectStore(store: ReadStore) {
     console.log("selectedStore: ", store.store_name, store.store_id)
+    this.selectedStoreId = store.store_id
     this.selectedStore.emit(store)
   }
 }
