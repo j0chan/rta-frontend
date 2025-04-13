@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
 import { AdminPage } from './pages/admin/admin.page'
-import { StoreRequestPage } from './pages/store-request-page/store-request-page'
 import { ManagerRequestPage } from './pages/manager-request-page/manager-request-page'
 
 const routes: Routes = [
@@ -13,10 +12,6 @@ const routes: Routes = [
   {
     path: 'manager-request-page',
     component: ManagerRequestPage
-  },
-  {
-    path: 'store-request-page',
-    component: StoreRequestPage
   },
 ]
 
