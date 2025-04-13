@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthService } from '../shared/services/auth.service'
-import { ImagesService } from './../shared/services/images.service'
+import { ImagesService } from '../shared/services/images.service'
 import { MapsService } from '../shared/services/maps.service'
 import { ReadStore } from '../shared/model/stores/read-store.interface'
 
@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private imagesService: ImagesService,
-    private mapsService: MapsService
+    private mapsService: MapsService,
   ) {}
 
   async signOut() {

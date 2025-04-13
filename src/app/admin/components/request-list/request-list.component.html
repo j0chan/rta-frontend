@@ -1,13 +1,19 @@
 <ion-list>
-  {{ getPageTitle() }}
-  <ion-item *ngFor="let request of requests">
+  미승인된 요청
+  <ion-item *ngFor="let request of getNotConfirmedRequests()">
     <ion-label>
-      <ng-container *ngIf="requestPage === 'STORE_REQUEST'; else managerRequest">
-        <app-store-request [request]="request"></app-store-request>
-      </ng-container>
-      <ng-template #managerRequest>
+      <ng-container>
         <app-manager-request [request]="request"></app-manager-request>
-      </ng-template>
+      </ng-container>
     </ion-label>
   </ion-item>
+  처리 완료된 요청
+  <ion-item *ngFor="let request of getConfirmedRequests()">
+    <ion-label>
+      <ng-container>
+        <app-manager-request [request]="request"></app-manager-request>
+      </ng-container>
+    </ion-label>
+  </ion-item>
+
 </ion-list>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ReadUser } from 'src/app/shared/model/users/read-user.interface'
 import { MyPageService } from 'src/app/shared/services/my-page.service'
 

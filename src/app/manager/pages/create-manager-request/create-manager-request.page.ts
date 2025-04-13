@@ -1,6 +1,5 @@
 import { Location } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
 import { CreateManagerRequest } from 'src/app/shared/model/manager-requests/create-manager-request.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ManagerRequestsService } from 'src/app/shared/services/manager-requests.service'

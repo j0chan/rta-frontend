@@ -103,7 +103,12 @@ function createInfoWindowContent(store) {
             <p>🏢 주소: ${store.address}</p>
             <p>📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
             <p>ℹ️ 설명: ${store.description || '설명 없음'}</p>
-        </div>`;
+            <a href="http://localhost:8100/stores/${store.store_id}" target="_self">
+                <button style="margin-top: 8px; background-color: #2dd36f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                    가게 페이지 접속
+                </button>
+            </a>
+        </div>`
 }
 
 // 지도에 가게 마커 추가
@@ -149,12 +154,10 @@ function addStoreMarkers(data) {
         let lng = parseFloat(rawLng)
     
         // 검색된 가게이면 좌표 보정
-        const isTarget =
-            data.isSearchPerformed &&
-            data.targetStoreId &&
-            store.store_id == data.targetStoreId
-    
-        if (isTarget) {
+        const isTarget = data.isSearchPerformed && data.targetStoreId && store.store_id == data.targetStoreId
+        const isDetailPage = !data.isSearchPerformed && data.stores.length === 1
+
+        if (isTarget || isDetailPage) {
             const correctedLat = normalizeCoordinate(rawLat, true)
             const correctedLng = normalizeCoordinate(rawLng, false)
     
