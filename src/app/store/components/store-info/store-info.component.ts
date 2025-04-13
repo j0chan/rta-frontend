@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 

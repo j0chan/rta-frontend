@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
 import { ManagerRequestsService } from 'src/app/shared/services/manager-requests.service'
 

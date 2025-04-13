@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ReadReview } from 'src/app/shared/model/reviews/read-review.interface'
 import { ReviewsService } from 'src/app/shared/services/reviews.service'

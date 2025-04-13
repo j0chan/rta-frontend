@@ -219,17 +219,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     )
   }
 
-  // 가게 등록 페이지로 이동
-  // openStoreRequestForm() {
-  //   // 현재 활성화된 요소를 HTMLElement로 변환 후 blur() 실행
-  //   const activeElement = document.activeElement as HTMLElement
-  //   if (activeElement) {
-  //     activeElement.blur() // focus 해제 후 페이지 이동
-  //   }
-  //   this.alertVisible = false // alert 숨기기
-  //   this.router.navigate(['/stores/create-store-request'])
-  // }
-
   // map iframe에 가게 데이터를 전달
   sendStoresToMap(isSearchPerformed: boolean, currentLocation?: { lat: number, lng: number }, targetStoreId?: number) {
     const iframe = document.getElementById('map-iframe') as HTMLIFrameElement

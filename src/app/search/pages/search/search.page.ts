@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { SearchService } from 'src/app/shared/services/search.service'
 
