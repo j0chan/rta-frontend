@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { RequestStatus } from 'src/app/shared/model/common/request-status.enum'
 import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
@@ -41,16 +41,16 @@ export class ManagerRequestComponent implements OnInit {
     this.managerRequestsService.updateManagerRequest(this.request_id, updateData).subscribe({
       next: response => {
         if (response.success) {
-          this.router.navigate(['/'])
+          console.log('confirm manager request successfully')
         } else {
-          console.error('approve manager request failed: ', response.message)
+          console.error('confirm manager request failed: ', response.message)
         }
       },
       error: err => {
-        console.error('approve manager request error: ', err)
+        console.error('confirm manager request error: ', err)
       },
       complete: () => {
-        console.log('approve manager request completed')
+        console.log('confirm manager request completed')
       }
     })
   }

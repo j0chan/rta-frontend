@@ -1,9 +1,19 @@
 <ion-list>
-  <ion-item *ngFor="let request of requests">
+  미승인된 요청
+  <ion-item *ngFor="let request of getNotConfirmedRequests()">
     <ion-label>
       <ng-container>
         <app-manager-request [request]="request"></app-manager-request>
       </ng-container>
     </ion-label>
   </ion-item>
+  처리 완료된 요청
+  <ion-item *ngFor="let request of getConfirmedRequests()">
+    <ion-label>
+      <ng-container>
+        <app-manager-request [request]="request"></app-manager-request>
+      </ng-container>
+    </ion-label>
+  </ion-item>
+
 </ion-list>

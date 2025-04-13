@@ -35,4 +35,12 @@ export class RequestListComponent implements OnInit {
       }
     })
   }
+
+  getConfirmedRequests(): ReadManagerRequest[] {
+    return this.requests.filter(request => request.status !== 'SUBMITTED')
+  }
+  
+  getNotConfirmedRequests(): ReadManagerRequest[] {
+    return this.requests.filter(request => request.status === 'SUBMITTED')
+  }
 }
