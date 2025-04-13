@@ -154,12 +154,10 @@ function addStoreMarkers(data) {
         let lng = parseFloat(rawLng)
     
         // 검색된 가게이면 좌표 보정
-        const isTarget =
-            data.isSearchPerformed &&
-            data.targetStoreId &&
-            store.store_id == data.targetStoreId
-    
-        if (isTarget) {
+        const isTarget = data.isSearchPerformed && data.targetStoreId && store.store_id == data.targetStoreId
+        const isDetailPage = !data.isSearchPerformed && data.stores.length === 1
+
+        if (isTarget || isDetailPage) {
             const correctedLat = normalizeCoordinate(rawLat, true)
             const correctedLng = normalizeCoordinate(rawLng, false)
     
