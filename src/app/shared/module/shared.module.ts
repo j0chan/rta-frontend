@@ -13,6 +13,7 @@ import { LogginedComponent } from 'src/app/shared/components/loggined/loggined.c
 import { HeaderBarComponent } from '../components/header-bar/header-bar.component'
 import { RelativeTimePipe } from '../pipes/relativeTime.pipe'
 import { DateFormatPipe } from '../pipes/dateFormat.pipe'
+import { MapComponent } from 'src/app/map/components/map.component'
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { DateFormatPipe } from '../pipes/dateFormat.pipe'
     RequestStatusPipe,
     HeaderBarComponent,
     RelativeTimePipe,
+    MapComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { DateFormatPipe } from '../pipes/dateFormat.pipe'
     RequestStatusPipe,
     HeaderBarComponent,
     RelativeTimePipe,
+    MapComponent
   ],
   providers: [
     {

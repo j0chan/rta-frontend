@@ -1,11 +1,3 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -14,14 +6,13 @@
   </ion-header>
 <app-header-bar></app-header-bar>
 
-  <!-- 지도 미리보기 -->
-  <div class="mini-map-wrapper" (click)="goToFullMap()">
-    <!-- 미니맵 iframe -->
-    <iframe id="mini-map-iframe" src="assets/naver-map/index.html" width="100%" height="300" style="pointer-events: none; border: none;"></iframe>
+<!-- <app-search-bar></app-search-bar> -->
 
-  </div>
+<!-- 지도 미리보기 -->
+<!-- <div class="mini-map-wrapper" (click)="goToFullMap()"> -->
+  <!-- 미니맵 iframe -->
+  <!-- <iframe id="mini-map-iframe" src="assets/naver-map/index.html" width="100%" height="300" style="pointer-events: none; border: none;"></iframe>
+</div> -->
 
-  <ion-button expand="block" (click)="signOut()"> 
-    로그아웃
-  </ion-button>
+  <app-map></app-map>
 </ion-content>
