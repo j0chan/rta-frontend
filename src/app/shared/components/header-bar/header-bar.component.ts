@@ -18,6 +18,6 @@ export class HeaderBarComponent  implements OnInit {
   /* 페이지 이동 */
   goHomePage() {
     console.log('go home page')
-    this.router.navigate(['/'])
+    this.router.navigate(['/home'])
   }
 }

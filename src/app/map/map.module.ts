@@ -19,7 +19,7 @@ import { MapRoutingModule } from './map-routing.module'
   ],
   declarations: [
     MapPage,
-    MapComponent
+    // MapComponent
   ]
 })
 export class MapPageModule { }
