@@ -13,13 +13,15 @@ import { ManagerRequestListComponent } from './components/manager-request-list/m
 import { MyStoresPage } from './pages/my-stores/my-stores.page'
 import { CreateManagerRequestPage } from './pages/create-manager-request/create-manager-request.page'
 import { SearchStoreComponent } from './components/search-store/search-store.component'
+import { SharedModule } from '../shared/module/shared.module'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ManagerRoutingModule
+    ManagerRoutingModule,
+    SharedModule
   ],
   declarations: [
     ManagerPage,
