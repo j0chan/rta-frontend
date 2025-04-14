@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
     private router: Router,
     private imagesService: ImagesService,
     private mapsService: MapsService,
-  ) {}
+  ) { }
 
   async signOut() {
     this.authService.signOut()
@@ -33,9 +33,15 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    // 지도 초기화
-    this.initMiniMap()
+    const hasRefreshed = localStorage.getItem('homePageRefreshed')
+    if (!hasRefreshed) {
+      localStorage.setItem('homePageRefreshed', 'true')
+      window.location.reload()
+    } else {
+      localStorage.removeItem('homePageRefreshed')
+      this.initMiniMap() // 새로고침 후 로직 실행
     this.role = this.authService.getUserRole()
+    }
   }
 
   initMiniMap() {

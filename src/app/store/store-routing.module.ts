@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { StorePage } from './pages/store-main-page/store.page'
 import { EventListPage } from './pages/event-list-page/event-list.page'
-import { MenuPage } from './pages/menu-page/menu.page'
 import { StoreDetailPage } from './pages/store-detail-page/store-detail-page'
 import { WriteReviewPage } from '../reviews/pages/write-review/write-review.page'
 import { WriteEventPage } from './pages/write-event/write-event.page'
@@ -23,10 +22,6 @@ const routes: Routes = [
   {
     path: ':store_id',
     component: StorePage,
-  },
-  {
-    path: ':store_id/menu',
-    component: MenuPage
   },
   {
     path: ':store_id/event-list',

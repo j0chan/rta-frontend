@@ -22,10 +22,6 @@ export class StoresService {
         return this.http.get<ApiResponseDTO<ReadStore>>(`${this.apiUrl}${id}`)
     }
 
-    getMenusByStoreId(store_id: number): Observable<ApiResponseDTO<ReadMenu[]>> {
-        return this.http.get<ApiResponseDTO<ReadMenu[]>>(`${this.apiUrl}${store_id}/menus`)
-    }
-
     getAllStores(): Observable<ApiResponseDTO<ReadStore[]>> {
         return this.http.get<ApiResponseDTO<ReadStore[]>>(`${this.apiUrl}`)
     }
