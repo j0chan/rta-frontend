@@ -2,7 +2,7 @@
 <app-store-header *ngIf="store" [store]="store"></app-store-header>
 
 <!-- (매니저) 이벤트 작성 페이지로 이동-->
-<button (click)="goWriteEvent()">새로운 이벤트 작성</button>
+<ion-button (click)="goWriteEvent()">새로운 이벤트 작성</ion-button>
 
 <!-- 메뉴 목록 출력 -->
 <ion-content>
@@ -23,11 +23,11 @@
     </ion-list>
   </ng-container>
 
-  <!-- 메뉴가 없는 경우 표시 -->
+  <!-- 이벤트가 없는 경우 표시 -->
   <ng-template #noEvent>
     <ion-card>
       <ion-card-content>
-        <p>등록된 메뉴가 없습니다.</p>
+        <p>등록된 이벤트가 없습니다.</p>
       </ion-card-content>
     </ion-card>
   </ng-template>
