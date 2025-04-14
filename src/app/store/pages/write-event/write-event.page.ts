@@ -13,9 +13,10 @@ export class WriteEventPage implements OnInit {
   store_id!: number
   title: string = ''
   description: string = ''
-  start_date: Date = new Date()
-  end_date: Date = new Date()
-  
+  start_date: string = new Date().toISOString().slice(0, 16)
+  end_date: string = new Date().toISOString().slice(0, 16)
+
+
   constructor(
     private route: ActivatedRoute,
     private eventService: EventsService,
@@ -30,8 +31,8 @@ export class WriteEventPage implements OnInit {
     const createEvent: CreateEvent = {
       title: this.title,
       description: this.description,
-      start_date: this.start_date,
-      end_date: this.end_date
+      start_date: new Date(this.start_date),
+      end_date: new Date(this.end_date)
     }
 
     this.eventService.createEvent(this.store_id, createEvent).subscribe({
@@ -44,6 +45,7 @@ export class WriteEventPage implements OnInit {
       },
       error: err => {
         console.error('create event error: ', err)
+        console.error('에러 메시지:', err.error?.message)
       },
       complete: () => {
         console.log('create event completed')

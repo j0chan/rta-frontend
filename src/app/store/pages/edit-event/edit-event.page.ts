@@ -18,8 +18,8 @@ export class EditEventPage implements OnInit {
 
   title: string = ''
   description: string = ''
-  start_date: Date = new Date()
-  end_date: Date = new Date()
+  start_date: string = new Date().toISOString().slice(0, 16)
+  end_date: string = new Date().toISOString().slice(0, 16)
   is_canceled: boolean = false
 
   constructor(
@@ -49,8 +49,8 @@ export class EditEventPage implements OnInit {
           if (this.event) {
             this.title = this.event.title || ''
             this.description = this.event.description || ''
-            this.start_date = new Date(this.event.start_date)
-            this.end_date = this.event.end_date
+            this.start_date = new Date(this.event.start_date).toISOString()
+            this.end_date = this.event.end_date.toISOString()
             this.is_canceled = this.event.is_canceled
           }
         },
@@ -68,8 +68,8 @@ export class EditEventPage implements OnInit {
     const updateEvent: UpdateEvent = {
       title: this.title,
       description: this.description,
-      start_date: this.start_date,
-      end_date: this.end_date,
+      start_date: new Date(this.start_date),
+      end_date: new Date(this.end_date),
       is_canceled: this.is_canceled
     }
 

@@ -23,5 +23,13 @@
       <button type="button" (click)="updateEvent()">저장</button>
       <button type="button" (click)="deleteEvent()">삭제</button>
     </div>
+
+    <!-- 취소 여부 체크박스 -->
+    <label for="is_canceled">
+    <input id="is_Canceled" type="checkbox" [(ngModel)]="is_canceled" name="is_canceled" />
+    이벤트 취소
+    </label>
+
+
   </form>
 </div>
