@@ -18,6 +18,7 @@ export class HomePage implements OnInit {
   currentLat: number | null = null
   currentLng: number | null = null
   stores: ReadStore[] = []
+  role: string | null = null
 
   constructor(
     private authService: AuthService,
@@ -34,6 +35,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     // 지도 초기화
     this.initMiniMap()
+    this.role = this.authService.getUserRole()
   }
 
   initMiniMap() {
@@ -85,4 +87,17 @@ export class HomePage implements OnInit {
   goToFullMap() {
     this.router.navigate(['/map'])
   }
+
+  goToCreateManagerRequest() {
+    this.router.navigate(['/manager/create-manager-request'])
+  }
+  
+  goToMyManagerRequests() {
+    this.router.navigate(['/manager/my-manager-requests'])
+  }
+  
+  goToManagerRequestPage() {
+    this.router.navigate(['/admin/manager-request-page'])
+  }
+  
 }

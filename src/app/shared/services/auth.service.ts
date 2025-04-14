@@ -48,4 +48,14 @@ export class AuthService {
 
     return payload.nickname || payload.name || null
   }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem('accessToken')
+    if (!token) return null
+  
+    const payload = parseJwt(token)
+    if (!payload) return null
+  
+    return payload.role || null
+  }
 }
