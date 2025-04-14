@@ -1,3 +1,4 @@
+import { ToastController } from '@ionic/angular';
 import { EventsService } from 'src/app/shared/services/event.services'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
@@ -8,6 +9,7 @@ import { ReadReview } from 'src/app/shared/model/reviews/read-review.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ReviewsService } from 'src/app/shared/services/reviews.service'
 import { StoresService } from 'src/app/shared/services/stores.service'
+import { AuthService } from 'src/app/shared/services/auth.service'
 
 @Component({
   selector: 'app-store',
@@ -15,6 +17,8 @@ import { StoresService } from 'src/app/shared/services/stores.service'
   standalone: false,
 })
 export class StorePage implements OnInit {
+  isLoggedIn = false
+
   private store_id: number | null = null
   store: ReadStore | null = null
   event: ReadEvent | null = null
@@ -28,6 +32,8 @@ export class StorePage implements OnInit {
     private storesService: StoresService,
     private reviewsService: ReviewsService,
     private eventsService: EventsService,
+    private authService: AuthService,
+    private toastController: ToastController,
   ) { }
 
   ngOnInit() {
@@ -96,8 +102,24 @@ export class StorePage implements OnInit {
     console.log('go event-list page')
   }
 
-  goWriteReviewPage() {
-    this.router.navigate([`write-review`], { relativeTo: this.route })
-    console.log('go write-review page')
+  async goWriteReviewPage() {
+    this.authService.isLoggedIn$.subscribe((status) => {
+      this.isLoggedIn = status
+    })
+    if (!this.isLoggedIn) {
+      const toast = await this.toastController.create({
+        message: '로그인이 필요합니다.',
+        duration: 2000,
+        position: 'top',
+        color: 'warning'
+      })
+      await toast.present()
+
+      this.router.navigate(['/signin'])
+    }
+    else {
+      this.router.navigate([`write-review`], { relativeTo: this.route })
+      console.log('go write-review page')
+    }
   }
 }
