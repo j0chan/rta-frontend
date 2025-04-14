@@ -99,7 +99,7 @@ function createInfoWindowContent(store) {
             <button onclick="closeInfoWindow()">❌</button>
             <strong style="font-size: 18px; color: #333;">${store.store_name}</strong><br>
             <hr>
-            <p>📌 카테고리: ${store.category || '정보 없음'}</p>
+            <p>📌 카테고리: ${store.category_name || '정보 없음'}</p>
             <p>🏢 주소: ${store.address}</p>
             <p>📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
             <p>ℹ️ 설명: ${store.description || '설명 없음'}</p>

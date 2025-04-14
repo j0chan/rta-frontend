@@ -6,6 +6,23 @@
   </ion-header>
 <app-header-bar></app-header-bar>
 
+<div>
+  <ng-container *ngIf="role === 'MANAGER'">
+    <ion-button expand="block" (click)="goToCreateManagerRequest()">
+      매니저 요청 생성
+    </ion-button>
+    <ion-button expand="block" (click)="goToMyManagerRequests()">
+      내 요청 목록
+    </ion-button>
+  </ng-container>
+
+  <ng-container *ngIf="role === 'ADMIN'">
+    <ion-button expand="block" (click)="goToManagerRequestPage()">
+      매니저 요청 페이지 (관리자용)
+    </ion-button>
+  </ng-container>
+</div>
+
 <!-- <app-search-bar></app-search-bar> -->
 
 <!-- 지도 미리보기 -->

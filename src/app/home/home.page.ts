@@ -18,6 +18,7 @@ export class HomePage implements OnInit {
   currentLat: number | null = null
   currentLng: number | null = null
   stores: ReadStore[] = []
+  role: string | null = null
 
   constructor(
     private authService: AuthService,
@@ -38,7 +39,8 @@ export class HomePage implements OnInit {
       window.location.reload()
     } else {
       localStorage.removeItem('homePageRefreshed')
-      this.initMiniMap() // 새로고침 후 정상 로직 수행
+      this.initMiniMap() // 새로고침 후 로직 실행
+    this.role = this.authService.getUserRole()
     }
   }
 
@@ -91,4 +93,17 @@ export class HomePage implements OnInit {
   goToFullMap() {
     this.router.navigate(['/map'])
   }
+
+  goToCreateManagerRequest() {
+    this.router.navigate(['/manager/create-manager-request'])
+  }
+  
+  goToMyManagerRequests() {
+    this.router.navigate(['/manager/my-manager-requests'])
+  }
+  
+  goToManagerRequestPage() {
+    this.router.navigate(['/admin/manager-request-page'])
+  }
+  
 }
