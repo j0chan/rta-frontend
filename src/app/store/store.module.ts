@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular'
 import { StorePageRoutingModule } from './store-routing.module'
 import { StorePage } from './pages/store-main-page/store.page'
 import { StoreInfoComponent } from './components/store-info/store-info.component'
-import { MenuPage } from './pages/menu-page/menu.page'
 import { EventListPage } from './pages/event-list-page/event-list.page'
 import { EventComponent } from './components/event/event.component'
 import { ReviewsComponent } from './components/reviews/reviews.component'
@@ -30,7 +29,6 @@ import { WriteEventPage } from './pages/write-event/write-event.page'
   declarations: [
     StorePage,
     StoreInfoComponent,
-    MenuPage,
     EventListPage,
     EventComponent,
     ReviewsComponent,
