@@ -143,7 +143,10 @@ function addStoreMarkers(data) {
             }
         })
 
-        mapConfig.map.setCenter(currentPosition)
+        // 단일 store가 아니면 현재 위치로 포커스
+        if (!data.stores || data.stores.length !== 1) {
+            mapConfig.map.setCenter(currentPosition)
+        }
     }
 
     data.stores.forEach(store => {
@@ -209,6 +212,19 @@ function addStoreMarkers(data) {
             mapConfig.activeInfoWindow = infoWindow
         }
     })
+
+    // 모든 마커 생성 후, 단일 가게일 경우 가게로 포커스
+    if (data.stores.length === 1) {
+        const store = data.stores[0]
+        const lat = normalizeCoordinate(store.lat ?? store.latitude, true)
+        const lng = normalizeCoordinate(store.lng ?? store.longitude, false)
+
+        if (lat != null && lng != null && !isNaN(lat) && !isNaN(lng)) {
+            const position = new naver.maps.LatLng(lat, lng)
+            mapConfig.map.setCenter(position)
+            mapConfig.map.setZoom(18)
+        }
+    }
 }
 
 // 마커 초기화
