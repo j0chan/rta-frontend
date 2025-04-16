@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: RegisterPage
     }
-];
+]
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

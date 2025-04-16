@@ -23,7 +23,7 @@ const routes: Routes = [
     path: 'create-manager-request',
     component: CreateManagerRequestPage
   },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

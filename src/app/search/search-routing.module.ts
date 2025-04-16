@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: SearchPage
   }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

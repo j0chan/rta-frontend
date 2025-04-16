@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: SigninPage
   }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

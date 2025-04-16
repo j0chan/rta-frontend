@@ -13,7 +13,7 @@ const routes: Routes = [
     path: 'reviews',
     component: MyReviewsPage
   },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

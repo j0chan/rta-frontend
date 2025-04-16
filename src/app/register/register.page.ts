@@ -59,7 +59,7 @@ export class RegisterPage implements OnInit {
           alert('사용 가능한 이메일입니다.')
         } else {
           alert('이미 존재하는 이메일입니다.')
-          this.isEmailChecked = false; // 입력 필드 재활성화
+          this.isEmailChecked = false // 입력 필드 재활성화
         }
       },
       error: (err) => {
