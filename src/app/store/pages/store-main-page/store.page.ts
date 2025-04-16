@@ -1,4 +1,4 @@
-import { ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular'
 import { EventsService } from 'src/app/shared/services/event.services'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
@@ -88,6 +88,10 @@ export class StorePage implements OnInit {
         console.error('Failed to Retriving Reviews', err)
       }
     })
+  }
+
+  getReviewsCount(): number {
+    return this.reviews.length
   }
 
   /* 페이지 이동 */
