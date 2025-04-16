@@ -90,6 +90,10 @@ export class StorePage implements OnInit {
     })
   }
 
+  getReviewsCount(): number {
+    return this.reviews.length
+  }
+
   /* 페이지 이동 */
 
   goMenuPage() {
