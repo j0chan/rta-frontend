@@ -68,9 +68,10 @@ export class StoreDetailPage implements OnInit {
     iframe.contentWindow.postMessage({
       stores: [this.store],
       isSearchPerformed: false,
-      currentLocation: this.currentLat && this.currentLng
-        ? { lat: this.currentLat, lng: this.currentLng }
-        : undefined
+      // 단일 가게일 경우 현위치를 넘기지 않는다 (현위치가 아닌 가게로 포커스)
+      // currentLocation: this.currentLat && this.currentLng
+      //   ? { lat: this.currentLat, lng: this.currentLng }
+      //   : undefined
     }, '*')
   }
 }
