@@ -10,6 +10,7 @@ import { ReviewListComponent } from 'src/app/reviews/components/review-list/revi
 import { ReviewComponent } from './components/review/review.component'
 import { WriteReviewPage } from './pages/write-review/write-review.page'
 import { RouterModule } from '@angular/router'
+import { SharedModule } from '../shared/module/shared.module'
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { RouterModule } from '@angular/router'
     IonicModule,
     RouterModule,
     ReviewsPageRoutingModule,
+    SharedModule,
   ],
   declarations: [
     ReviewListComponent,

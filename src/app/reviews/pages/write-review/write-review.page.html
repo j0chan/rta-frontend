@@ -1,9 +1,3 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>write-review</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -34,6 +28,5 @@
         class="preview-img" />
     </div>
 
-<ion-button expand="full" (click)="submit()">작성 완료</ion-button>
-
+<app-button label="작성 완료" variant="primary-full" (click)="submit()"></app-button>
 </ion-content>
