@@ -1,0 +1,35 @@
+.btn {
+    padding: 5px;
+    // border-radius: 20px;
+    border: #007bff;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &.primary {
+        background-color: #1560BD;
+        color: white;
+    }
+
+    &.secondary {
+        background-color: white;
+        color: gray;
+        font-size: 13px;
+    }
+
+    &.small {
+        background-color: #1560BD;
+        color: white;
+        font-size: 13px;
+    }
+
+    &.primary-full {
+        background-color: #1560BD;
+        color: white;
+        width: 100%;
+    }
+
+    &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+}
