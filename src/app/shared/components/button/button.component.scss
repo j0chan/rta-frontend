@@ -1,35 +1,71 @@
 .btn {
-    padding: 5px;
-    // border-radius: 20px;
-    border: #007bff;
-    font-size: 1rem;
+    border-radius: 10px;
     cursor: pointer;
 
-    &.primary {
-        background-color: #1560BD;
-        color: white;
+    /* variant */
+    &.filled {
+        background-color: var(--primary-blue);
+        color: var(--white);
     }
 
-    &.secondary {
-        background-color: white;
-        color: gray;
-        font-size: 13px;
+    &.tinted {
+        background-color: var(--secondary-blue);
+        color: var(--primary-blue);
     }
 
-    &.small {
-        background-color: #1560BD;
-        color: white;
-        font-size: 13px;
+    &.tinted-bordered {
+        background-color: var(--secondary-blue);
+        border: var(--primary-blue);
+        color: var(--primary-blue);
     }
 
-    &.primary-full {
-        background-color: #1560BD;
-        color: white;
-        width: 100%;
+    &.tinted-gray {
+        background-color: var(--background-gray);
+        border: var(--light-gray);
+        color: var(--deep-gray);
+    }
+
+    &.bordered-gray {
+        background-color: var(--white);
+        border: var(--light-gray);
+        color: var(--deep-gray);
+    }
+
+    &.borderless {
+        background-color: transparent;
+        color: var(--deep-gray);
     }
 
     &:disabled {
-        background-color: #ccc;
+        background-color: var(--light-gray);
         cursor: not-allowed;
+    }
+
+    /* size */
+
+    &.full {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    &.fit {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    &.fit-small {
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+
+    &.small {
+        font-size: 12px;
+    }
+
+    &.symbol {
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 15px;
     }
 }
