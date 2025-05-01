@@ -1,3 +1,5 @@
+@use '../../../../theme-typography' as *;
+
 .btn {
     border-radius: 10px;
     cursor: pointer;
@@ -45,27 +47,32 @@
     /* size */
 
     &.full {
+        display: block;
         width: 100%;
-        font-size: 16px;
+        font-size: $typo-body1;
         padding: 10px;
     }
 
     &.fit {
-        font-size: 16px;
+        display: inline-block;
+        font-size: $typo-body1;
         padding: 10px 15px;
     }
 
     &.fit-small {
-        font-size: 12px;
+        display: inline-block;
+        font-size: $typo-body2;
         padding: 10px 15px;
     }
 
     &.small {
-        font-size: 12px;
+        display: inline-block;
+        font-size: $typo-body2;
     }
 
     &.symbol {
-        font-size: 14px;
+        display: inline-block;
+        font-size: $typo-body2;
         padding: 5px 10px;
         border-radius: 15px;
     }
