@@ -15,19 +15,19 @@
 
     &.tinted-bordered {
         background-color: var(--secondary-blue);
-        border: var(--primary-blue);
+        border: 1px solid var(--primary-blue);
         color: var(--primary-blue);
     }
 
     &.tinted-gray {
         background-color: var(--background-gray);
-        border: var(--light-gray);
+        border: 1px solid var(--light-gray);
         color: var(--deep-gray);
     }
 
     &.bordered-gray {
         background-color: var(--white);
-        border: var(--light-gray);
+        border: 1px solid var(--light-gray);
         color: var(--deep-gray);
     }
 
@@ -38,6 +38,7 @@
 
     &:disabled {
         background-color: var(--light-gray);
+        color: var(--deep-gray);
         cursor: not-allowed;
     }
 

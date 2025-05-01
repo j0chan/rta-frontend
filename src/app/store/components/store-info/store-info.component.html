@@ -1,12 +1,9 @@
 <!-- 가게 정보 -->
 <div *ngIf="store">
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <strong>가게 정보</strong>
-    <app-button label="자세히" variant="secondary" (click)="goStoreDetailPage()"></app-button>
-  </div>
-  <br>
+  <strong>정보</strong>
   <!-- <p><strong>카테고리:</strong> {{ store.category.category_name }}</p> -->
-  <p>주소: {{ store.address }}</p>
-  <p>전화: {{ store.contact_number }}</p>
+  <p><ion-icon name="location-sharp"></ion-icon> {{ store.address }}</p>
+  <p><ion-icon name="call-sharp"></ion-icon> {{ store.contact_number }}</p>
   <p *ngIf="store.description">{{ store.description }}</p>
+  <app-button label="더보기" variant="borderless" size="small" (click)="goStoreDetailPage()"></app-button>
 </div>

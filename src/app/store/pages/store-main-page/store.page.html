@@ -13,7 +13,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center;">
       
       <span><strong>진행 중 이벤트</strong></span>
-      <app-button label="더보기" variant="secondary" (click)="goEventListPage()"></app-button>
+      <app-button label="더보기" variant="borderless" size="small" (click)="goEventListPage()"></app-button>
     </div>
     
     <ng-container *ngIf="event; else noEvent">
@@ -31,7 +31,7 @@
      <div style="display: flex; justify-content: space-between; align-items: center;">
        <span><strong>가게 리뷰</strong> {{ getReviewsCount() }} 개</span> 
        <!-- 리뷰 작성 페이지로 이동하는 버튼 -->
-       <app-button label="리뷰 작성하기" variant="small" (click)="goWriteReviewPage()"></app-button>
+       <app-button label="리뷰 작성하기" variant="filled" size="fit" (click)="goWriteReviewPage()"></app-button>
      </div>
     
     <!-- review-list -->
