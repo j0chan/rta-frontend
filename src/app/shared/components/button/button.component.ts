@@ -35,3 +35,13 @@ export class ButtonComponent  implements OnInit {
 
   ngOnInit() {}
 }
+
+/** sample
+ * <app-button variant="filled" size="full"></app-button>
+  <app-button variant="tinted" size="full"></app-button>
+  <app-button variant="tinted-bordered" size="fit"></app-button>
+  <app-button variant="bordered-gray" size="fit"></app-button>
+  <app-button variant="borderless" size="small"></app-button>
+  <app-button size="full" [disabled]="true"></app-button>
+ */
+
