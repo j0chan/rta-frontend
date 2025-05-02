@@ -1,10 +1,33 @@
 <ion-label>
-  나의 정보입니다
-  <div>
-    <p>email {{ user?.email }}</p>
-    <p>nickname {{ user?.nickname }}</p>
-    <p>phone {{ user?.phone_number }}</p>
-    <p>role {{ user?.role }}</p>
+  <!-- 나의 프로필 -->
+  <div class="profile">
+    <div>
+      <span style="display: inline-block; width: 60px; height: 60px; background-color: gray;">프로필사진</span>
+      <span class="nickname"><strong>{{ user?.nickname }}</strong>님, 안녕하세요!</span>
+    </div>
+    <app-button label="로그아웃" variant="bordered-gray" size="fit-small"></app-button>
+  </div>
+
+  <!-- 나의 정보 -->
+  <div class="container">
+    <div class="sub-title-bar">
+      <div class="text-heading3">나의 정보</div>
+      <app-button label="수정" variant="borderless" size="small"></app-button>
+    </div>
+    <div class="info-table typo-body1">
+      <div>
+        <span class="key">email</span> 
+        <span class="value">{{ user?.email }}</span>
+      </div>
+      <div>
+        <span class="key">phone</span> 
+        <span class="value">{{ user?.phone_number }}</span>
+      </div>
+      <div>
+        <span class="key">role</span> 
+        <span class="value">{{ user?.role }}</span>
+      </div>
+    </div>
   </div>
 </ion-label>
 
