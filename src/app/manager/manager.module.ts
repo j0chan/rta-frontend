@@ -14,6 +14,7 @@ import { MyStoresPage } from './pages/my-stores/my-stores.page'
 import { CreateManagerRequestPage } from './pages/create-manager-request/create-manager-request.page'
 import { SearchStoreComponent } from './components/search-store/search-store.component'
 import { SharedModule } from '../shared/module/shared.module'
+import { EditMyStorePage } from './pages/edit-my-store/edit-my-store.page'
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { SharedModule } from '../shared/module/shared.module'
     MyStoresPage,
     CreateManagerRequestPage,
     SearchStoreComponent,
+    EditMyStorePage
   ]
 })
 export class ManagerModule { }

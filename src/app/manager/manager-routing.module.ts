@@ -5,6 +5,7 @@ import { ManagerPage } from './pages/manager/manager.page'
 import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page'
 import { MyStoresPage } from './pages/my-stores/my-stores.page'
 import { CreateManagerRequestPage } from './pages/create-manager-request/create-manager-request.page'
+import { EditMyStorePage } from './pages/edit-my-store/edit-my-store.page'
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
     path: 'create-manager-request',
     component: CreateManagerRequestPage
   },
+  {
+    path: 'my-stores/:id/edit',
+    component: EditMyStorePage
+  }
 ]
 
 @NgModule({

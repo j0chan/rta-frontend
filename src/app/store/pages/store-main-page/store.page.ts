@@ -1,5 +1,5 @@
-import { ToastController } from '@ionic/angular'
 import { EventsService } from 'src/app/shared/services/event.services'
+import { ToastController } from '@ionic/angular'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { filter, Subscription } from 'rxjs'

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { MyPageService } from 'src/app/shared/services/my-page.service'
@@ -14,6 +14,7 @@ export class MyStoresPage implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private myPageService: MyPageService,
   ) { }
 
@@ -36,4 +37,10 @@ export class MyStoresPage implements OnInit {
     console.log(`go store ${store.store_name} page`)
   }
 
+  goEditPage(store: ReadStore) {
+    const store_id = store.store_id
+    
+    this.router.navigate([store_id, 'edit'], {relativeTo: this.route})
+    console.log(`go store ${store.store_name} edit page`)
+  }
 }
