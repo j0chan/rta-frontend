@@ -1,9 +1,6 @@
 <!-- Store header -->
 <app-store-header *ngIf="store" [store]="store"></app-store-header>
 
-<!-- (매니저) 이벤트 작성 페이지로 이동-->
-<ion-button (click)="goWriteEvent()">새로운 이벤트 작성</ion-button>
-
 <!-- 메뉴 목록 출력 -->
 <ion-content>
   <ng-container *ngIf="events && events.length > 0; else noEvent">
@@ -18,7 +15,6 @@
           <p>상태: {{ event.event_status | eventStatusPipe }}</p>
           <p>작성일: {{ event.created_at | dateFormatPipe }}</p>
         </ion-label>
-        <ion-button (click)="goEditEvent(event.event_id)">수정</ion-button>
       </ion-item>
     </ion-list>
   </ng-container>
