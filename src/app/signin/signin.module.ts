@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular'
 import { SigninPageRoutingModule } from './signin-routing.module'
 
 import { SigninPage } from './signin.page'
+import { SharedModule } from '../shared/module/shared.module'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     SigninPageRoutingModule,
   ],
   declarations: [SigninPage]
