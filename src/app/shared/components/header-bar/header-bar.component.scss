@@ -1,14 +1,32 @@
-/* header-bar.component.scss */
+// header-bar
 .header-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+    padding: 10px;
+
+    .logo-button{
+      height: 30px;
+      background: transparent;
+      border: none;
+      padding: 0; /* 버튼 안쪽 여백 없애기 */
+      cursor: pointer;
+    }
+
+    .logo-image{
+      max-height: 100%;
+      object-fit: contain;
+      display: block; /* 이미지 주변 여백 없애기 */
+    }
+}
   
-  /* 오른쪽에 붙는 요소 묶음 */
-  .right-items {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+// 오른쪽에 붙는 요소 묶음 (로그인 버튼, 마이페이지 버튼)
+.right-items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+
   

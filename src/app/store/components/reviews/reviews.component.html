@@ -1,30 +1,35 @@
 <ion-list *ngIf="reviews && reviews.length > 0; else noReview">
   <ion-item *ngFor="let review of reviews">
-    <ion-label>
-      <h2>{{ review.user_name }}</h2>
-      <p>{{ review.content }}</p>
-      <p>{{ review.date | relativeTime }}</p>
-      <p *ngIf="review.isModified">(수정됨)</p>
+    <div class="review-container">
+        <div class="review-user-bar">
+          <span class="component-title">{{ review.user_name }}</span>
+          <span class="body2">
+            <span>{{ review.date | relativeTime }}</span>
+            <span *ngIf="review.isModified">(수정됨)</span>
+          </span>
+        </div>
+        <!-- 이미지 출력 영역 -->
+        <div *ngIf="review.files && review.files.length > 0" class="image-row">
+          <ion-img *ngFor="let file of review.files" [src]="file.url" class="thumbnail-img"></ion-img>
+        </div>
+        <div>{{ review.content }}</div>
 
-      <!-- 이미지 출력 영역 -->
-      <div *ngIf="review.files && review.files.length > 0" class="image-row">
-        <ion-img *ngFor="let file of review.files" [src]="file.url" class="thumbnail-img"></ion-img>
-      </div>
-    </ion-label>
-
-      <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->
-      <ion-button color="danger" fill="clear" size="small" *ngIf="review.user_id === currentUserId"
-        (click)="deleteReview(review.review_id)">
-        삭제
-      </ion-button>
+        <div class="review-bottom-bar">
+          <!-- 도음돼요 버튼 -->
+          <span>
+            <app-button label="{{ review.helpful_count }}" variant="bordered-gray" size="symbol"></app-button>
+          </span>
+  
+          <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->
+          <span class="review-action" *ngIf="review.user_id === currentUserId">
+            <app-button label="삭제" variant="borderless" (click)="deleteReview(review.review_id)"></app-button>
+          </span>
+        </div>
+    </div>
   </ion-item>
 </ion-list>
 
 <!-- 등록된 리뷰 없는 경우 표시 -->
 <ng-template #noReview>
-  <ion-card>
-    <ion-card-content>
-      <p>첫번째 리뷰를 작성해주세요!</p>
-    </ion-card-content>
-  </ion-card>
+  <p>첫번째 리뷰를 작성해주세요!</p>
 </ng-template>

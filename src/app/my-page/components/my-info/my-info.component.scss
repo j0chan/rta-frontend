@@ -1,0 +1,41 @@
+.profile {
+    width: 100%;
+    align-items: center; 
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.sub-title-bar {
+    width: 100%;
+    align-items: center; 
+    display: inline-flex;
+    justify-content: space-between;
+    // margin: 10px 0px;
+}
+
+.info-table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.key {
+    display: inline-block;
+    width: 20%;
+    color: var(--deep-gray);
+}
+
+.value {
+    color: var(--black);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nickname {
+    margin: 10px;
+}
+

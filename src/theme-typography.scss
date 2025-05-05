@@ -1,0 +1,35 @@
+// 서체
+$font-primary: 'Noto Sans KR', sans-serif;
+$font-secondary: 'Roboto', sans-serif;
+
+// 크기
+$typo-heading1: 32px;
+$typo-heading2: 24px;
+$typo-heading3: 18px;
+
+$typo-body1: 16px;
+$typo-body2: 14px;
+$typo-body3: 12px;
+
+// 굵기
+// $font-weight-bold: 700;
+// $font-weight-regular: 400;
+
+// 라인 높이
+// $line-height-base: 1.5;
+
+.page-title {
+    font-size: $typo-heading2;
+    font-weight: bold;
+}
+
+.component-title {
+    font-size: $typo-heading3;
+    font-weight: bold;
+}
+
+.body2 {
+    font-size: $typo-body2;
+    color: var(--deep-gray);
+}
+

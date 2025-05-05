@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { ReadUser } from 'src/app/shared/model/users/read-user.interface'
 import { MyPageService } from 'src/app/shared/services/my-page.service'
 
 @Component({
   selector: 'app-my-info',
   templateUrl: './my-info.component.html',
+  styleUrls: ['./my-info.component.scss'],
   standalone: false,
 })
 export class MyInfoComponent implements OnInit {

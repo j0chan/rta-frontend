@@ -1,14 +1,9 @@
 <!-- 가게 정보 -->
-<ion-card *ngIf="store">
-  <ion-card-content>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <h2 style="margin: 0;"><strong>가게 정보</strong></h2>
-      <ion-button size="small" (click)="goStoreDetailPage()">자세히 보기</ion-button>
-    </div>
-    <br>
-    <!-- <p><strong>카테고리:</strong> {{ store.category.category_name }}</p> -->
-    <p>{{ store.address }}</p>
-    <p>{{ store.contact_number }}</p>
-    <p *ngIf="store.description">{{ store.description }}</p>
-  </ion-card-content>
-</ion-card>
+<div *ngIf="store">
+  <div class="component-title">정보</div>
+  <!-- <p><strong>카테고리:</strong> {{ store.category.category_name }}</p> -->
+  <p><ion-icon name="location-sharp"></ion-icon> {{ store.address }}</p>
+  <p><ion-icon name="call-sharp"></ion-icon> {{ store.contact_number }}</p>
+  <p *ngIf="store.description">{{ store.description }}</p>
+  <app-button label="더보기" variant="borderless" size="small" (click)="goStoreDetailPage()"></app-button>
+</div>

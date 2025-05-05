@@ -1,8 +1,10 @@
 <div style="display: flex; align-items: center; gap: 10px;">
-  <span *ngIf="isLoggined">로그인된 사용자: {{ userName }}</span>
+  <span *ngIf="isLoggined">{{ userName }}님, 안녕하세요</span>
 
-  <ion-button *ngIf="isLoggined" (click)="signOut()">로그아웃</ion-button>
-  <ion-button *ngIf="!isLoggined" color="primary" (click)="goSignInPage()">로그인</ion-button>
+  <button *ngIf="isLoggined" (click)="signOut()">Log out</button>
+  <button *ngIf="!isLoggined" color="primary" (click)="goSignInPage()">Sign in</button>
 
-  <ion-button color="success" (click)="goMyPage()">마이페이지</ion-button>
+  <button color="success" (click)="goMyPage()">
+    <ion-icon name="person-circle-outline"></ion-icon>
+  </button>
 </div>
