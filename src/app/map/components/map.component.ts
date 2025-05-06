@@ -203,8 +203,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.markers = []
 
     stores.forEach(store => {
-      const lat = store.latitude
-      const lng = store.longitude
+      const lat = store.lat
+      const lng = store.lng
     
       if (isNaN(lat) || isNaN(lng)) return
     
