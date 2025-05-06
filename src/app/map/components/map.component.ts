@@ -83,6 +83,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     const mapContainer = document.getElementById('map')
     if (!mapContainer) return
 
+    // 기본 지도 생성 (서울 기준)
     this.map = new naver.maps.Map(mapContainer, {
       center: new naver.maps.LatLng(37.5665, 126.9780),
       zoom: 15
@@ -94,20 +95,32 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private requestGeolocation(): void {
     if (navigator.geolocation) {
+      // 최초 1회 위치 요청
       navigator.geolocation.getCurrentPosition(
-        (pos) => this.handlePositionChange(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy),
+        (pos) => this.handlePositionChange(
+          pos.coords.latitude, 
+          pos.coords.longitude, 
+          pos.coords.accuracy // 정확도 값 (미터 단위)
+        ),
         (err) => console.error('위치 정보 실패:', err),
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        { 
+          enableHighAccuracy: true, // 고정밀 위치 요청
+          timeout: 10000, // 10초 안에 위치 못 찾으면 실패 처리
+          maximumAge: 0 // 이전 위치 캐시 사용 금지 (항상 새 위치 요청)
+        }
       )
 
+      // 실시간 위치 추적 (토글 없이 항상 활성화)
       this.watchId = navigator.geolocation.watchPosition(
         (pos) => {
           const newLat = pos.coords.latitude
           const newLng = pos.coords.longitude
 
+          console.log(`[실시간 위치] lat: ${newLat}, lng: ${newLng}, accuracy: ${pos.coords.accuracy}m`) // 지우지 말것
+
           if (this.previousLat && this.previousLng) {
             const moved = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
-            if (moved < 1) return
+            if (moved < 1) return // 1m 이상 이동한 경우에 다시 요청
           }
 
           this.handlePositionChange(newLat, newLng, pos.coords.accuracy)
@@ -119,6 +132,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handlePositionChange(lat: number, lng: number, accuracy: number): void {
+    // 정확도 기준 판단 (150m 이상은 경고)
     if (accuracy > 150) {
       alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
     }
@@ -206,6 +220,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.markers.push(marker)
   }  
 
+  // InfoWindow HTML
   createInfoWindowHtml(store: ReadStore): string {
     return `
       <div class="custom-infowindow">
@@ -221,6 +236,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       </div>`;
   }
 
+  // Haversine 거리 계산 (단위: 미터)
   calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
     const R = 6371e3 // 지구 반지름
 
@@ -258,6 +274,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     )
   }
 
+  // 검색창 지우기
   onClearSearch(): void {
     this.searchQuery = ''
     this.filteredStores = []
