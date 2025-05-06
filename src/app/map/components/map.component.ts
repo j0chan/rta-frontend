@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { MapsService } from 'src/app/shared/services/maps.service'
+import { ToastController } from '@ionic/angular'
 
 @Component({
   selector: 'app-map',
@@ -23,7 +24,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   map!: naver.maps.Map
   markers: naver.maps.Marker[] = []
 
-  constructor(private mapsService: MapsService) {}
+  constructor(
+    private mapsService: MapsService,
+    private toastController: ToastController
+  ) {}
 
   ngOnInit(): void {
     if (navigator.geolocation) {
@@ -33,6 +37,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       )
 
+      // 초기 위치 받은 후에만 실시간 위치 추적 시작
       this.watchId = navigator.geolocation.watchPosition(
         (pos) => {
           const newLat = pos.coords.latitude
@@ -40,7 +45,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
           if (this.previousLat && this.previousLng) {
             const moved = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
-            if (moved < 1) return
+            if (moved < 1) return // 1m 미만 이동은 무시
           }
 
           this.handlePositionChange(newLat, newLng, pos.coords.accuracy)
@@ -131,10 +136,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  async showAccuracyWarning() {
+    const toast = await this.toastController.create({
+      message: '현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.',
+      duration: 4000,
+      position: 'top',
+      color: 'primary',
+      buttons: [
+        {
+          text: '닫기',
+          role: 'cancel'
+        }
+      ]
+    })
+    toast.present()
+  }
+
   handlePositionChange(lat: number, lng: number, accuracy: number): void {
     // 정확도 기준 판단 (150m 이상은 경고)
     if (accuracy > 150) {
-      alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
+      // alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
+      this.showAccuracyWarning()
     }
 
     this.currentLat = lat
