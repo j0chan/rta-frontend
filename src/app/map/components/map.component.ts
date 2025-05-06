@@ -246,16 +246,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   createInfoWindowHtml(store: ReadStore): string {
     return `
       <div class="custom-infowindow">
-        <button onclick="this.parentElement.style.display='none'">❌</button>
-        <div class="info-content">
-          <strong style="font-size: 18px; color: #333;">${store.store_name}</strong><br>
-          <hr>
-          <p>📌 카테고리: ${store.category?.category_name || '정보 없음'}</p>
-          <p>🏢 주소: ${store.address}</p>
-          <p>📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
-          <p>ℹ️ 설명: ${store.description || '설명 없음'}</p>
-        </div>
-      </div>`;
+          <button onclick="closeInfoWindow()">❌</button>
+          <div class="info-content">
+              <strong style="font-size: 18px; color: #333;">${store.store_name}</strong><br>
+              <hr>
+              <p>📌 카테고리: ${store.category.category_name || '정보 없음'}</p>
+              <p>🏢 주소: ${store.address}</p>
+              <p>📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
+              <p>ℹ️ 설명: ${store.description || '설명 없음'}</p>
+          </div>
+          <a href="http://localhost:8100/stores/${store.store_id}" target="_self" class="access-button">
+              <button>
+                  가게 페이지 접속
+              </button>
+          </a>
+      </div>`
   }
 
   // Haversine 거리 계산 (단위: 미터)
