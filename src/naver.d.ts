@@ -37,8 +37,8 @@ declare namespace naver.maps {
             overlayLayer: HTMLElement
         }
         getProjection(): {
-            fromCoordToOffset(latlng: LatLng): { x: number y: number }
-        }
+            fromCoordToOffset(latlng: LatLng): { x: number; y: number }
+        };
         setMap(map: Map | null): void
         setPosition(position: LatLng): void
         setElement(el: HTMLElement): void
