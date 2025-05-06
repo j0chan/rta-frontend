@@ -23,6 +23,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   map!: naver.maps.Map
   markers: naver.maps.Marker[] = []
+  infoWindows: naver.maps.InfoWindow[] = []
+
 
   constructor(
     private mapsService: MapsService,
@@ -96,6 +98,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // 지도 초기화 후 위치 요청 실행
     this.requestGeolocation()
+
+    // 지도 클릭 시 infoWindow 모두 닫기
+    naver.maps.Event.addListener(this.map, 'click', () => {
+      this.infoWindows.forEach(win => win.close())
+    })
   }
 
   private requestGeolocation(): void {
@@ -215,9 +222,19 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         content: this.createInfoWindowHtml(store),
         disableAutoPan: false
       })
-    
+      
+      this.infoWindows.push(infoWindow)
+
       naver.maps.Event.addListener(marker, 'click', () => {
         infoWindow.open(this.map, marker)
+
+        // InfoWindow 내부 닫기 버튼 이벤트 바인딩
+        const closeBtn = document.querySelector('.info-close')
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            infoWindow.close()
+          })
+        }
       })
     
       this.markers.push(marker)
