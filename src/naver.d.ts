@@ -28,19 +28,4 @@ declare namespace naver.maps {
       addListener(instance: any, eventName: string, listener: Function): void
     }
 
-    abstract class OverlayView {
-        constructor()
-        abstract onAdd(): void
-        abstract draw(): void
-        abstract onRemove(): void
-        getPanes(): {
-            overlayLayer: HTMLElement
-        }
-        getProjection(): {
-            fromCoordToOffset(latlng: LatLng): { x: number; y: number }
-        };
-        setMap(map: Map | null): void
-        setPosition(position: LatLng): void
-        setElement(el: HTMLElement): void
-    }
   }
