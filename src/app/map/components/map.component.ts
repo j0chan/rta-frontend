@@ -23,6 +23,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   map!: naver.maps.Map
   markers: naver.maps.Marker[] = []
+  infoWindows: naver.maps.InfoWindow[] = []
+
 
   constructor(
     private mapsService: MapsService,
@@ -96,6 +98,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // 지도 초기화 후 위치 요청 실행
     this.requestGeolocation()
+
+    // 지도 클릭 시 infoWindow 모두 닫기
+    naver.maps.Event.addListener(this.map, 'click', () => {
+      this.infoWindows.forEach(win => win.close())
+    })
   }
 
   private requestGeolocation(): void {
@@ -213,11 +220,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     
       const infoWindow = new naver.maps.InfoWindow({
         content: this.createInfoWindowHtml(store),
+        borderWidth: 0,
+        disableAnchor: true,
         disableAutoPan: false
       })
-    
+      
+      this.infoWindows.push(infoWindow)
+
       naver.maps.Event.addListener(marker, 'click', () => {
         infoWindow.open(this.map, marker)
+
+        // InfoWindow 내부 닫기 버튼 이벤트 바인딩
+        const closeBtn = document.querySelector('.info-close')
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            infoWindow.close()
+          })
+        }
       })
     
       this.markers.push(marker)
@@ -245,17 +264,51 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // InfoWindow HTML
   createInfoWindowHtml(store: ReadStore): string {
     return `
-      <div class="custom-infowindow">
-        <button onclick="this.parentElement.style.display='none'">❌</button>
-        <div class="info-content">
+      <div style="
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        width: 260px;
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        color: #333;
+        line-height: 1.5;
+        position: relative;
+      ">
+        <button class="info-close"
+          style="
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          border: none;
+          background: none;
+          font-size: 16px;
+          cursor: pointer;
+        ">❌</button>
+  
+        <div style="margin-top: 8px;">
           <strong style="font-size: 18px; color: #333;">${store.store_name}</strong><br>
-          <hr>
-          <p>📌 카테고리: ${store.category?.category_name || '정보 없음'}</p>
-          <p>🏢 주소: ${store.address}</p>
-          <p>📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
-          <p>ℹ️ 설명: ${store.description || '설명 없음'}</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 8px 0;">
+          <p style="margin: 4px 0; font-size: 14px;">📌 카테고리: ${store.category.category_name || '정보 없음'}</p>
+          <p style="margin: 4px 0; font-size: 14px;">🏠 주소: ${store.address}</p>
+          <p style="margin: 4px 0; font-size: 14px;">📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
+          <p style="margin: 4px 0; font-size: 14px;">ℹ️ 설명: ${store.description || '설명 없음'}</p>
         </div>
-      </div>`;
+  
+        <a href="http://localhost:8100/stores/${store.store_id}" target="_self" style="display: block; margin-top: 12px; text-align: center; text-decoration: none;">
+          <button style="
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+          ">가게 페이지 접속</button>
+        </a>
+      </div>
+    `;
   }
 
   // Haversine 거리 계산 (단위: 미터)
