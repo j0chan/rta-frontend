@@ -32,9 +32,7 @@
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss", "src/theme-style.scss", "src/theme-typography.scss", "src/theme-component-style.scss"],
-            "scripts": [
-              "src/assets/naver-map/script.js"
-            ]
+            "scripts": [ ]
           },
           "configurations": {
             "production": {
