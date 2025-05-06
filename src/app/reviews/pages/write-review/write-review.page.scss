@@ -6,10 +6,21 @@
 }
 
 .preview-img {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
     /* 이미지 비율 유지하며 자르기 */
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.title-bar {
+    display: flex;
+    align-items: end;
+    gap: 5px;
+}
+
+.input-box {
+    border-radius: 10px;
+    border: 1px solid var(--light-gray);
 }
