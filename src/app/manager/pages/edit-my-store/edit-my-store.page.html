@@ -1,0 +1,95 @@
+<h2>가게 정보</h2>
+
+<form (ngSubmit)="updateStoreInfo()">
+  <div>
+    <label for="storeName">가게명</label>
+    <input id="storeName" [(ngModel)]="editableStore.store_name" name="store_name" placeholder="가게명" />
+  </div>
+
+  <div>
+    <label for="ownerName">매니저 이름</label>
+    <input id="ownerName" [(ngModel)]="editableStore.owner_name" name="owner_name" placeholder="매니저 이름" />
+  </div>
+
+  <div>
+    <label for="contactNumber">전화번호</label>
+    <input id="contactNumber" [(ngModel)]="editableStore.contact_number" name="contact_number" placeholder="전화번호" />
+  </div>
+
+  <div>
+    <label for="description">설명</label>
+    <textarea id="description" [(ngModel)]="editableStore.description" name="description" placeholder="설명"></textarea>
+  </div>
+
+  <button type="submit" [disabled]="!isStoreModified()">수정하기</button>
+</form>
+
+<h2>이벤트</h2>
+
+<div *ngFor="let event of editableEvent; let i = index">
+  <div>
+    <label>제목</label>
+    <input [(ngModel)]="editableEvent[i].title" name="title_{{ i }}" placeholder="이벤트 제목" />
+  </div>
+
+  <div>
+    <label>설명</label>
+    <textarea [(ngModel)]="editableEvent[i].description" name="description_{{ i }}" placeholder="이벤트 설명"></textarea>
+  </div>
+
+  <div>
+    <label>시작일</label>
+    <input type="date" [(ngModel)]="editableEvent[i].start_date" name="start_date_{{ i }}" />
+  </div>
+
+  <div>
+    <label>종료일</label>
+    <input type="date" [(ngModel)]="editableEvent[i].end_date" name="end_date_{{ i }}" />
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" [(ngModel)]="editableEvent[i].is_canceled" name="is_canceled_{{ i }}" />
+      이벤트 취소하기
+    </label>
+  </div>
+
+  <button (click)="updateEvent(i)" [disabled]="!isEventModified(i)">수정하기</button>
+  <button (click)="deleteEvent(events[i].event_id)">삭제하기</button>
+</div>
+
+<!-- 새 이벤트 생성 토글 -->
+<div>
+  <button (click)="toggleCreateEventForm()">
+    {{ showCreateEventForm ? '이벤트 생성 취소' : '새 이벤트 추가' }}
+  </button>
+</div>
+
+<!-- 새 이벤트 생성 폼 -->
+<div *ngIf="showCreateEventForm">
+  <h3>새 이벤트 생성</h3>
+  <form (ngSubmit)="createEvent()">
+    <div>
+      <label for="newTitle">제목</label>
+      <input id="newTitle" [(ngModel)]="newEvent.title" name="new_event_title" placeholder="이벤트 제목" />
+    </div>
+
+    <div>
+      <label for="newDescription">설명</label>
+      <textarea id="newDescription" [(ngModel)]="newEvent.description" name="new_event_description"
+        placeholder="이벤트 설명"></textarea>
+    </div>
+
+    <div>
+      <label for="newStartDate">시작일</label>
+      <input type="date" id="newStartDate" [(ngModel)]="newEvent.start_date" name="new_event_start_date" />
+    </div>
+
+    <div>
+      <label for="newEndDate">종료일</label>
+      <input type="date" id="newEndDate" [(ngModel)]="newEvent.end_date" name="new_event_end_date" />
+    </div>
+
+    <button type="submit">이벤트 생성</button>
+  </form>
+</div>
