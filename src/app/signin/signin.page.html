@@ -1,29 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>로그인</ion-title>
-  </ion-toolbar>
+  <app-header-bar></app-header-bar>
 </ion-header>
 
 <ion-content>
+  <div class="page-title">로그인</div>
+
   <form (ngSubmit)="onSubmit()">
     <ion-list>
       <!-- 이메일 -->
-      <ion-item>
-        <ion-label position="floating">이메일</ion-label>
-        <ion-input type="email" [(ngModel)]="form.email" name="email"></ion-input>
-      </ion-item>
+       <div class="input-container">
+          <div class="component-title">이메일</div>
+          <div class="input-box"><ion-input type="email" [(ngModel)]="form.email" name="email" placeholder="이메일"></ion-input></div>
+       </div>
 
       <!-- 비밀번호 -->
-      <ion-item>
-        <ion-label position="floating">비밀번호</ion-label>
-        <ion-input type="password" [(ngModel)]="form.password" name="password"></ion-input>
-      </ion-item>
+       <div class="input-container">
+          <div class="component-title">비밀번호</div>
+          <div class="input-box"><ion-input type="password" [(ngModel)]="form.password" name="password" placeholder="비밀번호"></ion-input></div>
+       </div>
     </ion-list>
 
     <!-- 로그인 버튼 -->
-    <ion-button expand="full" type="submit">로그인</ion-button>
+    <app-button label="로그인" variant="filled" size="full" type="submit"></app-button>
 
-    <!-- 회원가입 버튼 -->
-    <ion-button (click)="goRegisterPage()">회원가입하기</ion-button>
   </form>
+
+  <!-- 회원가입 버튼 -->
+  <app-button label="회원가입" variant="tinted" size="full" (click)="goRegisterPage()"></app-button>
 </ion-content>

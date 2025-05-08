@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core'
-import { Router } from '@angular/router'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { MapsService } from 'src/app/shared/services/maps.service'
+import { ToastController } from '@ionic/angular'
 
 @Component({
   selector: 'app-map',
@@ -9,143 +9,161 @@ import { MapsService } from 'src/app/shared/services/maps.service'
   styleUrls: ['./map.component.scss'],
   standalone: false
 })
+
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   stores: ReadStore[] = []
   filteredStores: ReadStore[] = []
   searchQuery: string = ''
-  alertVisible: boolean = true
   currentLat: number | null = null
   currentLng: number | null = null
   previousLat: number | null = null
   previousLng: number | null = null
   watchId: number | null = null
-  // isTracking: boolean = false // 실시간 추적 상태
+  currentLocationMarker: naver.maps.Marker | null = null
+
+  map!: naver.maps.Map
+  markers: naver.maps.Marker[] = []
+  infoWindows: naver.maps.InfoWindow[] = []
+
 
   constructor(
     private mapsService: MapsService,
-    private router: Router
+    private toastController: ToastController
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => this.handlePositionChange(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy),
+        (err) => console.error('위치 정보 실패:', err),
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      )
+
+      // 초기 위치 받은 후에만 실시간 위치 추적 시작
+      this.watchId = navigator.geolocation.watchPosition(
+        (pos) => {
+          const newLat = pos.coords.latitude
+          const newLng = pos.coords.longitude
+
+          if (this.previousLat && this.previousLng) {
+            const moved = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
+            if (moved < 1) return // 1m 미만 이동은 무시
+          }
+
+          this.handlePositionChange(newLat, newLng, pos.coords.accuracy)
+        },
+        (err) => console.error('위치 추적 실패:', err),
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      )
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.loadMapScript()
+  }
+
+  ngOnDestroy(): void {
+    if (this.watchId) navigator.geolocation.clearWatch(this.watchId)
+  }
+
+  loadMapScript(): void {
+    if (document.getElementById('naver-map-script')) {
+      this.initMap()
+      return
+    }
+  
+    this.mapsService.getClientId().subscribe({
+      next: (res) => {
+        const script = document.createElement('script')
+        script.id = 'naver-map-script'
+        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${res.clientId}`
+        script.onload = () => this.initMap()
+        document.body.appendChild(script)
+      },
+      error: (err) => {
+        console.error('Client ID 요청 실패:', err)
+      }
+    })
+  }
+
+  initMap(): void {
+    const mapContainer = document.getElementById('map')
+    if (!mapContainer) return
+
+    // 기본 지도 생성 (서울 기준)
+    this.map = new naver.maps.Map(mapContainer, {
+      center: new naver.maps.LatLng(37.5665, 126.9780),
+      zoom: 15
+    })
+
+    // 지도 초기화 후 위치 요청 실행
+    this.requestGeolocation()
+
+    // 지도 클릭 시 infoWindow 모두 닫기
+    naver.maps.Event.addListener(this.map, 'click', () => {
+      this.infoWindows.forEach(win => win.close())
+    })
+  }
+
+  private requestGeolocation(): void {
     if (navigator.geolocation) {
       // 최초 1회 위치 요청
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.handlePositionChange(
-            position.coords.latitude,
-            position.coords.longitude,
-            position.coords.accuracy // 정확도 값 (미터 단위)
-          )
-
-        },
-        (error) => {
-          console.error('위치 정보 가져오기 실패:', error)
-        },
-        {
+        (pos) => this.handlePositionChange(
+          pos.coords.latitude, 
+          pos.coords.longitude, 
+          pos.coords.accuracy // 정확도 값 (미터 단위)
+        ),
+        (err) => console.error('위치 정보 실패:', err),
+        { 
           enableHighAccuracy: true, // 고정밀 위치 요청
-          timeout: 10000, // 10초 안에 위치 못 받으면 실패 처리
+          timeout: 10000, // 10초 안에 위치 못 찾으면 실패 처리
           maximumAge: 0 // 이전 위치 캐시 사용 금지 (항상 새 위치 요청)
         }
       )
 
       // 실시간 위치 추적 (토글 없이 항상 활성화)
       this.watchId = navigator.geolocation.watchPosition(
-        (position) => {
-          const newLat = position.coords.latitude
-          const newLng = position.coords.longitude
-          const accuracy = position.coords.accuracy
+        (pos) => {
+          const newLat = pos.coords.latitude
+          const newLng = pos.coords.longitude
 
-          console.log(`[실시간 위치] lat: ${newLat}, lng: ${newLng}, accuracy: ${accuracy}m`) // 지우지 말것
+          console.log(`[실시간 위치] lat: ${newLat}, lng: ${newLng}, accuracy: ${pos.coords.accuracy}m`) // 지우지 말것
 
-          if (this.previousLat !== null && this.previousLng !== null) {
-            const movedDistance = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
-            if (movedDistance < 1) return // 1m 이상 이동한 경우에 다시 요청
+          if (this.previousLat && this.previousLng) {
+            const moved = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
+            if (moved < 1) return // 1m 이상 이동한 경우에 다시 요청
           }
 
-          this.handlePositionChange(newLat, newLng, accuracy)
+          this.handlePositionChange(newLat, newLng, pos.coords.accuracy)
         },
-        (error) => {
-          console.error('위치 추적 실패:', error)
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0
-        }
+        (err) => console.error('위치 추적 실패:', err),
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       )
-    } else {
-      console.error('브라우저가 위치 정보를 지원하지 않습니다.')
     }
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.currentLat !== null && this.currentLng !== null) {
-        this.sendStoresToMap(false, {
-          lat: this.currentLat,
-          lng: this.currentLng
-        })
-      }
-    }, 1000)
+  async showAccuracyWarning() {
+    const toast = await this.toastController.create({
+      message: '현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.',
+      duration: 4000,
+      position: 'top',
+      color: 'primary',
+      buttons: [
+        {
+          text: '닫기',
+          role: 'cancel'
+        }
+      ]
+    })
+    toast.present()
   }
 
-  ngOnDestroy() {
-    if (this.watchId !== null) {
-      navigator.geolocation.clearWatch(this.watchId)
-    }
-  }
-
-  // 위치 추적 시작
-  // startTracking() {
-  //   if (!navigator.geolocation) return
-  //   this.watchId = navigator.geolocation.watchPosition(
-  //     (position) => {
-  //       const newLat = position.coords.latitude
-  //       const newLng = position.coords.longitude
-  //       const accuracy = position.coords.accuracy
-
-  //       console.log(`[실시간 위치] lat: ${newLat}, lng: ${newLng}, accuracy: ${accuracy}m`)
-
-  //       if (this.previousLat !== null && this.previousLng !== null) {
-  //         const movedDistance = this.calculateDistance(this.previousLat, this.previousLng, newLat, newLng)
-  //         if (movedDistance < 1) return // 1m 이상 이동한 경우에만 요청
-  //       }
-
-  //       this.handlePositionChange(newLat, newLng, accuracy)
-  //     },
-  //     (error) => {
-  //       console.error('위치 추적 실패:', error)
-  //     },
-  //     {
-  //       enableHighAccuracy: true,
-  //       timeout: 10000,
-  //       maximumAge: 0
-  //     }
-  //   )
-  // }
-
-  // 위치 추적 중지
-  // stopTracking() {
-  //   if (this.watchId !== null) {
-  //     navigator.geolocation.clearWatch(this.watchId)
-  //     this.watchId = null
-  //   }
-  // }
-
-  // 토글 버튼에서 호출
-  // toggleTracking() {
-  //   this.isTracking = !this.isTracking
-  //   if (this.isTracking) {
-  //     this.startTracking()
-  //   } else {
-  //     this.stopTracking()
-  //   }
-  // }
-  
-  handlePositionChange(lat: number, lng: number, accuracy: number) {
+  handlePositionChange(lat: number, lng: number, accuracy: number): void {
     // 정확도 기준 판단 (150m 이상은 경고)
     if (accuracy > 150) {
-      alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
+      // alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
+      this.showAccuracyWarning()
     }
 
     this.currentLat = lat
@@ -153,16 +171,144 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.previousLat = lat
     this.previousLng = lng
 
+    if (this.map) {
+      const position = new naver.maps.LatLng(lat, lng)
+    
+      // 기존 마커 제거
+      if (this.currentLocationMarker) {
+        this.currentLocationMarker.setMap(null)
+      }
+    
+      // 새 마커 생성
+      this.currentLocationMarker = new naver.maps.Marker({
+        position,
+        map: this.map,
+        title: '현재 위치',
+        // icon: {
+        //   content: `<div class="pulse-marker"></div>`,
+        //   anchor: new naver.maps.Point(12, 12)
+        // }
+      })
+    
+      this.map.setCenter(position) // 초기 이동
+    }
+
     this.mapsService.readStoreByCurrentLocation(lat, lng).subscribe(
       (stores) => {
         this.stores = stores
         this.filteredStores = stores
-        this.sendStoresToMap(false, { lat, lng })
+        this.drawMarkers(stores)
       },
-      (error) => {
-        console.error('위치 기반 가게 불러오기 실패:', error)
-      }
+      (err) => console.error('가게 로딩 실패:', err)
     )
+  }
+  
+  drawMarkers(stores: ReadStore[]): void {
+    if (!this.map) return
+
+    this.markers.forEach(m => m.setMap(null))
+    this.markers = []
+
+    stores.forEach(store => {
+      const lat = store.latitude
+      const lng = store.longitude
+    
+      if (isNaN(lat) || isNaN(lng)) return
+    
+      const pos = new naver.maps.LatLng(lat, lng)
+      const marker = new naver.maps.Marker({ position: pos, map: this.map, title: store.store_name })
+    
+      const infoWindow = new naver.maps.InfoWindow({
+        content: this.createInfoWindowHtml(store),
+        borderWidth: 0,
+        disableAnchor: true,
+        disableAutoPan: false
+      })
+      
+      this.infoWindows.push(infoWindow)
+
+      naver.maps.Event.addListener(marker, 'click', () => {
+        infoWindow.open(this.map, marker)
+
+        // InfoWindow 내부 닫기 버튼 이벤트 바인딩
+        const closeBtn = document.querySelector('.info-close')
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            infoWindow.close()
+          })
+        }
+      })
+    
+      this.markers.push(marker)
+    })
+  }
+
+  focusStoreOnMap(store: ReadStore): void {
+    const lat = store.latitude
+    const lng = store.longitude
+    if (!this.map || isNaN(lat) || isNaN(lng)) return
+  
+    const position = new naver.maps.LatLng(lat, lng)
+    this.map.setCenter(position)
+    this.map.setZoom(18)
+  
+    const marker = new naver.maps.Marker({ position, map: this.map })
+    const infoWindow = new naver.maps.InfoWindow({
+      content: this.createInfoWindowHtml(store),
+      disableAutoPan: false
+    })
+    infoWindow.open(this.map, marker)
+    this.markers.push(marker)
+  }  
+
+  // InfoWindow HTML
+  createInfoWindowHtml(store: ReadStore): string {
+    return `
+      <div style="
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        width: 260px;
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        color: #333;
+        line-height: 1.5;
+        position: relative;
+      ">
+        <button class="info-close"
+          style="
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          border: none;
+          background: none;
+          font-size: 16px;
+          cursor: pointer;
+        ">❌</button>
+  
+        <div style="margin-top: 8px;">
+          <strong style="font-size: 18px; color: #333;">${store.store_name}</strong><br>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 8px 0;">
+          <p style="margin: 4px 0; font-size: 14px;">📌 카테고리: ${store.category.category_name || '정보 없음'}</p>
+          <p style="margin: 4px 0; font-size: 14px;">🏠 주소: ${store.address}</p>
+          <p style="margin: 4px 0; font-size: 14px;">📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
+          <p style="margin: 4px 0; font-size: 14px;">ℹ️ 설명: ${store.description || '설명 없음'}</p>
+        </div>
+  
+        <a href="http://localhost:8100/stores/${store.store_id}" target="_self" style="display: block; margin-top: 12px; text-align: center; text-decoration: none;">
+          <button style="
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+          ">가게 페이지 접속</button>
+        </a>
+      </div>
+    `;
   }
 
   // Haversine 거리 계산 (단위: 미터)
@@ -193,61 +339,22 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.filteredStores = this.stores
       return
     }
-  
-    // 1. 키워드로 서버 검색
+
     this.mapsService.readStoresByKeyword(this.searchQuery).subscribe(
       (stores) => {
-        if (!stores || stores.length === 0) {
-          this.alertVisible = true
-          this.filteredStores = []
-          return
-        }
-  
-        // 검색 결과가 있을 경우 → 마커 + 리스트 출력
         this.filteredStores = stores
-  
-        this.sendStoresToMap(true, {
-          lat: this.currentLat ?? 37.5665,
-          lng: this.currentLng ?? 126.9780
-        })
+        this.drawMarkers(stores)
       },
-      (error) => {
-        console.error('키워드 검색 실패:', error)
-        this.filteredStores = []
-        this.alertVisible = true // 오류 시에도 팝업 표시
-      }
+      (err) => console.error('검색 실패:', err)
     )
   }
 
-  // map iframe에 가게 데이터를 전달
-  sendStoresToMap(isSearchPerformed: boolean, currentLocation?: { lat: number, lng: number }, targetStoreId?: number) {
-    const iframe = document.getElementById('map-iframe') as HTMLIFrameElement
-
-    if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage({
-        stores: this.filteredStores,
-        isSearchPerformed,
-        currentLocation,
-        targetStoreId
-      }, '*')
-    }
-  }
-
-  focusStoreOnMap(store: ReadStore) {
-    this.sendStoresToMap(
-      true,
-      {
-        lat: this.currentLat ?? 37.5665,
-        lng: this.currentLng ?? 126.9780
-      },
-      store.store_id
-    )
-  }
-
-  onClearSearch() {
+  // 검색창 지우기
+  onClearSearch(): void {
     this.searchQuery = ''
     this.filteredStores = []
-    this.alertVisible = false
+    this.markers.forEach(m => m.setMap(null))
+    this.markers = []
   }
-  
+
 }

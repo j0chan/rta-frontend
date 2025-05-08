@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service'
 @Component({
   selector: 'app-loggined',
   templateUrl: './loggined.component.html',
+  styleUrls: ['./loggined.component.scss'],
   standalone: false,
 })
 export class LogginedComponent  implements OnInit {

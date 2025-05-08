@@ -1,62 +1,68 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>회원가입</ion-title>
-  </ion-toolbar>
+  <app-header-bar></app-header-bar>
 </ion-header>
 
 <ion-content>
+  <div class="page-title">회원가입</div>
   <form (ngSubmit)="onSubmit()">
     <ion-list>
-      <!-- 이메일 -->
-      <ion-item>
-        <ion-label position="floating">이메일</ion-label>
-        <ion-input 
-          type="email" 
-          [(ngModel)]="form.email" 
-          name="email" 
-          required 
-          [disabled]="isEmailChecked"
-          (ngModelChange)="onEmailChange()">
-        </ion-input>
-        <ion-button 
-          (click)="duplicateCheck()" 
-          [disabled]="isEmailChecked">
-          중복 확인
-        </ion-button>
-      </ion-item>
-
-      <!-- 비밀번호 -->
-      <ion-item>
-        <ion-label position="floating">비밀번호</ion-label>
-        <ion-input type="password" [(ngModel)]="form.password" name="password" required></ion-input>
-      </ion-item>
-
-      <!-- 닉네임 -->
-      <ion-item>
-        <ion-label position="floating">닉네임</ion-label>
-        <ion-input type="text" [(ngModel)]="form.nickname" name="nickname" required></ion-input>
-      </ion-item>
-
-      <!-- 전화번호 -->
-      <ion-item>
-        <ion-label position="floating">전화번호</ion-label>
-        <ion-input type="tel" [(ngModel)]="form.phone_number" name="phone_number" required></ion-input>
-      </ion-item>
 
       <!-- 역할 -->
-      <ion-item>
-        <ion-label>역할</ion-label>
-        <ion-select [(ngModel)]="form.role" name="role">
-          <ion-select-option value="USER">사용자</ion-select-option>
-          <ion-select-option value="MANAGER">가게 매니저</ion-select-option>
-          <ion-select-option value="ADMIN">관리자</ion-select-option>
-        </ion-select>
-      </ion-item>
+       <div class="input-container">
+         <div class="component-title">역할</div>
+         <div class="selections">
+           <app-button label="사용자" variant="bordered-gray" size="fit"></app-button>
+           <app-button label="점주" variant="bordered-gray" size="fit"></app-button>
+           <app-button label="관리자" variant="bordered-gray" size="fit"></app-button>
+         </div>
+         <ion-select [(ngModel)]="form.role" name="role">
+           <ion-select-option value="USER">사용자</ion-select-option>
+           <ion-select-option value="MANAGER">가게 매니저</ion-select-option>
+           <ion-select-option value="ADMIN">관리자</ion-select-option>
+         </ion-select>
+       </div>
+
+      <!-- 이메일 -->
+       <div class="input-container">
+         <div class="component-title">이메일</div>
+         <div class="email-check">
+           <div class="input-box">
+             <ion-input 
+               type="email" 
+               [(ngModel)]="form.email" 
+               name="email" 
+               required 
+               [disabled]="isEmailChecked"
+               (ngModelChange)="onEmailChange()"
+               placeholder="이메일">
+             </ion-input>
+           </div>
+           <app-button label="중복 확인" variant="filled" size="fit" (click)="duplicateCheck()" [disabled]="isEmailChecked"></app-button>
+         </div>
+       </div>
+
+      <!-- 비밀번호 -->
+      <div class="input-container">
+        <div class="component-title">비밀번호</div>
+        <div class="input-box">
+          <ion-input type="password" [(ngModel)]="form.password" name="password" required placeholder="비밀번호"></ion-input>
+        </div>
+      </div>
+
+      <!-- 닉네임 -->
+       <div class="input-container">
+        <div class="component-title">닉네임</div>
+        <div class="input-box"><ion-input type="text" [(ngModel)]="form.nickname" name="nickname" required placeholder="닉네임"></ion-input></div>
+       </div>
+
+      <!-- 전화번호 -->
+      <div  class="input-container">
+        <div class="component-title">전화번호</div>
+        <div class="input-box"><ion-input type="tel" [(ngModel)]="form.phone_number" name="phone_number" required placeholder="전화번호"></ion-input></div>
+      </div>
     </ion-list>
 
     <!-- 회원가입 버튼 -->
-    <ion-button expand="full" type="submit" [disabled]="!(isEmailChecked && isEmailUsable)">
-      회원가입
-    </ion-button>
+     <app-button label="회원가입" variant="filled" size="full" type="submit" [disabled]="!(isEmailChecked && isEmailUsable)"></app-button>
   </form>
 </ion-content>

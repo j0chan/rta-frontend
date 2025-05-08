@@ -1,0 +1,4 @@
+<button [ngClass]="['btn', variant, size]" [disabled]="disabled">
+  <span *ngIf="size === 'symbol'">💙 </span>
+  {{ label }}
+</button>

@@ -1,0 +1,81 @@
+@use '../../../../theme-typography' as *;
+
+.btn {
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px 0;
+    font-weight: bold;
+
+    /* variant */
+    &.filled {
+        background-color: var(--primary-blue);
+        color: var(--white);
+    }
+
+    &.tinted {
+        background-color: var(--secondary-blue);
+        color: var(--primary-blue);
+    }
+
+    &.tinted-bordered {
+        background-color: var(--secondary-blue);
+        border: 1px solid var(--primary-blue);
+        color: var(--primary-blue);
+    }
+
+    &.tinted-gray {
+        background-color: var(--background-gray);
+        border: 1px solid var(--light-gray);
+        color: var(--deep-gray);
+    }
+
+    &.bordered-gray {
+        background-color: var(--white);
+        border: 1px solid var(--light-gray);
+        color: var(--deep-gray);
+    }
+
+    &.borderless {
+        background-color: transparent;
+        color: var(--deep-gray);
+    }
+
+    &:disabled {
+        background-color: var(--light-gray);
+        color: var(--deep-gray);
+        cursor: not-allowed;
+    }
+
+    /* size */
+
+    &.full {
+        display: block;
+        width: 100%;
+        font-size: $typo-body1;
+        padding: 10px;
+    }
+
+    &.fit {
+        display: inline-block;
+        font-size: $typo-body1;
+        padding: 10px 15px;
+    }
+
+    &.fit-small {
+        display: inline-block;
+        font-size: $typo-body2;
+        padding: 10px 15px;
+    }
+
+    &.small {
+        display: inline-block;
+        font-size: $typo-body2;
+    }
+
+    &.symbol {
+        display: inline-block;
+        font-size: $typo-body2;
+        padding: 5px 10px;
+        border-radius: 15px;
+    }
+}
