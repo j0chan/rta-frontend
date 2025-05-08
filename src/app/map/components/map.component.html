@@ -12,12 +12,14 @@
 <!-- 검색 결과가 있을 때 리스트 표시 -->
 <div *ngIf="searchQuery && filteredStores.length > 0" class="search-result-list">
     <h3>검색 결과</h3>
-    <ul>
-        <li *ngFor="let store of filteredStores" (click)="focusStoreOnMap(store)">
-            {{ store.store_name }} - {{ store.address }}
+    <ul class="store-list">
+        <li *ngFor="let store of filteredStores" class="store-item" (click)="focusStoreOnMap(store)">
+        <div class="store-name">{{ store.store_name }}</div>
+        <div class="store-address">{{ store.address }}</div>
         </li>
     </ul>
 </div>
+  
 
 <!-- 지도 표시 -->
 <div id="map" class="map-container"></div>
