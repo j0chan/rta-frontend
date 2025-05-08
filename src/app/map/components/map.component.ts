@@ -278,7 +278,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       const infoWindow = new naver.maps.InfoWindow({
         content: this.createInfoWindowHtml(store),
         borderWidth: 0,
-        disableAnchor: true,
+        backgroundColor: 'transparent',
+        disableAnchor: false,
         disableAutoPan: false
       })
       
@@ -312,6 +313,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     const marker = new naver.maps.Marker({ position, map: this.map })
     const infoWindow = new naver.maps.InfoWindow({
       content: this.createInfoWindowHtml(store),
+      borderWidth: 0,
+      backgroundColor: 'transparent',
+      disableAnchor: false,
       disableAutoPan: false
     })
     infoWindow.open(this.map, marker)
@@ -324,7 +328,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       <div style="
         background-color: #fff;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 16px;
+        border-radius: 20px;
         padding: 16px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         width: 260px;
@@ -399,8 +403,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.mapsService.readStoresByKeyword(this.searchQuery).subscribe(
       (stores) => {
-        this.filteredStores = stores
-        this.drawMarkers(stores)
+        // 좌표 변환 처리
+        const normalized = stores
+          .map(store => {
+            const lat = this.normalizeCoordinate(store.latitude, true)
+            const lng = this.normalizeCoordinate(store.longitude, false)
+            if (lat === null || lng === null) return null
+            return { ...store, latitude: lat, longitude: lng }
+          })
+          .filter((s): s is ReadStore => s !== null) // 타입 가드
+
+        this.filteredStores = normalized
+        this.drawMarkers(normalized)
       },
       (err) => console.error('검색 실패:', err)
     )
@@ -412,6 +426,25 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filteredStores = []
     this.markers.forEach(m => m.setMap(null))
     this.markers = []
+  }
+
+  normalizeCoordinate(value: number | string, isLat = true): number | null {
+    const num = parseFloat(value.toString())
+    const length = Math.floor(Math.log10(num)) + 1
+  
+    if (isLat) {
+      if (length === 7) return num / 1e5
+      if (length === 8) return num / 1e6
+      if (length === 9) return num / 1e7
+      if (length === 10) return num / 1e8
+    } else {
+      if (length === 7) return num / 1e4
+      if (length === 8) return num / 1e5
+      if (length === 9) return num / 1e6
+      if (length === 10) return num / 1e7
+    }
+  
+    return null
   }
 
 }

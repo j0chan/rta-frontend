@@ -5,3 +5,62 @@
     position: relative;
     z-index: 0;
 }
+
+/* 검색 결과 전체 박스 스타일 */
+.search-result-list {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  /* 검색 결과 제목 */
+  .search-result-list h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+  
+  /* 리스트 기본 설정 */
+  .store-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* 개별 가게 항목 */
+  .store-item {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  /* 마지막 항목은 밑줄 제거 */
+  .store-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* 마우스 오버 시 배경 강조 */
+  .store-item:hover {
+    background: #f9f9f9;
+  }
+  
+  /* 가게 이름 강조 */
+  .store-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #222;
+  }
+  
+  /* 주소는 보조 정보로 회색 처리 */
+  .store-address {
+    font-size: 13px;
+    color: #666;
+  }
+  
