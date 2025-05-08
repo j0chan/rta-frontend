@@ -278,7 +278,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       const infoWindow = new naver.maps.InfoWindow({
         content: this.createInfoWindowHtml(store),
         borderWidth: 0,
-        disableAnchor: true,
+        backgroundColor: 'transparent',
+        disableAnchor: false,
         disableAutoPan: false
       })
       
@@ -312,6 +313,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     const marker = new naver.maps.Marker({ position, map: this.map })
     const infoWindow = new naver.maps.InfoWindow({
       content: this.createInfoWindowHtml(store),
+      borderWidth: 0,
+      backgroundColor: 'transparent',
+      disableAnchor: false,
       disableAutoPan: false
     })
     infoWindow.open(this.map, marker)
@@ -324,7 +328,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       <div style="
         background-color: #fff;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 16px;
+        border-radius: 20px;
         padding: 16px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         width: 260px;
