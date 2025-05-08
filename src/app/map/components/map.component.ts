@@ -310,7 +310,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.map.setCenter(position)
     this.map.setZoom(18)
   
-    const marker = new naver.maps.Marker({ position, map: this.map })
+    // 기존 마커, InfoWindow 정리
+    this.markers.forEach(m => m.setMap(null))
+    this.infoWindows.forEach(iw => iw.close())
+    this.markers = []
+    this.infoWindows = []
+  
+    const marker = new naver.maps.Marker({
+      position,
+      map: this.map,
+      title: store.store_name
+    })
+  
     const infoWindow = new naver.maps.InfoWindow({
       content: this.createInfoWindowHtml(store),
       borderWidth: 0,
@@ -318,9 +329,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       disableAnchor: false,
       disableAutoPan: false
     })
+  
     infoWindow.open(this.map, marker)
     this.markers.push(marker)
-  }  
+    this.infoWindows.push(infoWindow)
+  
+    // InfoWindow 렌더링 이후 닫기 버튼 이벤트 바인딩
+    setTimeout(() => {
+      const closeBtn = document.querySelector('.info-close')
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          infoWindow.close()
+        })
+      }
+    }, 0)
+  }
 
   // InfoWindow HTML
   createInfoWindowHtml(store: ReadStore): string {
