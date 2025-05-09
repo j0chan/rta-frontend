@@ -1,3 +1,12 @@
+// 프로필 이미지
+.profile-img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
 // 리뷰 이미지 출력부
 .image-row {
     display: flex;
@@ -5,12 +14,13 @@
     gap: 10px;
     overflow-x: auto;
 }
+
 .thumbnail-img {
     width: 80px;
     height: 80px;
     object-fit: cover;
     border-radius: 6px;
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 /* 리뷰 */
