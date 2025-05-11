@@ -8,9 +8,10 @@ import { AuthService } from 'src/app/shared/services/auth.service'
   styleUrls: ['./loggined.component.scss'],
   standalone: false,
 })
-export class LogginedComponent  implements OnInit {
+export class LogginedComponent implements OnInit {
   isLoggined: Boolean = false
   userName: string | null = null
+  userProfileImage: string | null = null
 
   constructor(
     private authService: AuthService,
@@ -18,12 +19,26 @@ export class LogginedComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadLogginedUserName()
+    // 로그인 상태 구독
+    this.authService.isLoggedIn$.subscribe((loggedIn) => {
+      this.isLoggined = loggedIn;
+      if (loggedIn) {
+        this.loadLogginedUserInfo(); // 로그인 정보 로드
+      } else {
+        this.clearUserInfo(); // 로그아웃 시 사용자 정보 초기화
+      }
+    })
   }
 
-  loadLogginedUserName() {
+  clearUserInfo() {
+    this.userName = null
+    this.userProfileImage = null
+  }
+
+  loadLogginedUserInfo() {
     this.userName = this.authService.getLogginedUserName()
-    if (this.userName) { 
+    this.userProfileImage = this.authService.getUserProfileImage()
+    if (this.userName) {
       this.isLoggined = true
     }
     console.log('username: ', this.userName)
@@ -31,7 +46,7 @@ export class LogginedComponent  implements OnInit {
 
   async signOut() {
     this.authService.signOut()
-    await this.router.navigate(['/'])
+    await this.router.navigate(['/signin'])
   }
 
   /* 페이지 이동 */
