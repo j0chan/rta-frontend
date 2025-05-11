@@ -1,10 +1,15 @@
-import { File } from "../file/read-review.interface"
+import { File } from "../file/file.interface"
 import { ReadReply } from "../replies/read-reply.interface"
 
 export interface ReadReview {
     review_id: number
-    user_name: string
-    user_id: number
+    user: {
+        id: number
+        nickname: string
+        profile_image: {
+            url: string
+        }
+    }
     store_name: string
     content: string
     helpful_count: number

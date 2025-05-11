@@ -1,9 +1,11 @@
 <ion-label>
   <!-- 나의 프로필 -->
   <div class="profile">
-    <div>
-      <span style="display: inline-block; width: 60px; height: 60px; background-color: gray;">프로필사진</span>
-      <span class="nickname"><strong>{{ user?.nickname }}</strong>님, 안녕하세요!</span>
+    <div class="profile-left">
+      <ion-img *ngIf="user && user.profile_image" [src]="user.profile_image" class="profile-img" alt="프로필 이미지" />
+      <span class="nickname">
+        <strong>{{ user?.nickname }}</strong>님, 안녕하세요!
+      </span>
     </div>
     <app-button label="로그아웃" variant="bordered-gray" size="fit-small"></app-button>
   </div>
@@ -16,18 +18,21 @@
     </div>
     <div class="info-table typo-body1">
       <div>
-        <span class="key">email</span> 
+        <span class="key">nickname</span>
+        <span class="value">{{ user?.nickname }}</span>
+      </div>
+      <div>
+        <span class="key">email</span>
         <span class="value">{{ user?.email }}</span>
       </div>
       <div>
-        <span class="key">phone</span> 
+        <span class="key">phone</span>
         <span class="value">{{ user?.phone_number }}</span>
       </div>
       <div>
-        <span class="key">role</span> 
+        <span class="key">role</span>
         <span class="value">{{ user?.role }}</span>
       </div>
     </div>
   </div>
 </ion-label>
-

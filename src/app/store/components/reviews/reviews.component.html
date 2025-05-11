@@ -2,7 +2,13 @@
   <ion-item *ngFor="let review of reviews">
     <div class="review-container">
         <div class="review-user-bar">
-          <span class="component-title">{{ review.user_name }}</span>
+          <img 
+          *ngIf="review.user?.profile_image?.url" 
+          [src]="review.user.profile_image.url" 
+          class="profile-img" 
+          alt="프로필 이미지"
+          />
+          <span class="component-title">{{ review.user.nickname }}</span>
           <span class="body2">
             <span>{{ review.date | relativeTime }}</span>
             <span *ngIf="review.isModified">(수정됨)</span>
@@ -21,7 +27,7 @@
           </span>
   
           <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->
-          <span class="review-action" *ngIf="review.user_id === currentUserId">
+          <span class="review-action" *ngIf="review.user.id === currentUserId">
             <app-button label="삭제" variant="borderless" (click)="deleteReview(review.review_id)"></app-button>
           </span>
         </div>

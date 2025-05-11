@@ -1,13 +1,20 @@
 .profile {
     width: 100%;
-    align-items: center; 
+    align-items: center;
     display: inline-flex;
     justify-content: space-between;
 }
 
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .sub-title-bar {
     width: 100%;
-    align-items: center; 
+    align-items: center;
     display: inline-flex;
     justify-content: space-between;
     // margin: 10px 0px;
@@ -38,4 +45,3 @@
 .nickname {
     margin: 10px;
 }
-
