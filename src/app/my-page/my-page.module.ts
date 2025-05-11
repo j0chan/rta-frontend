@@ -12,6 +12,8 @@ import { ReviewsModule } from '../reviews/reviews.module'
 import { MyInfoComponent } from './components/my-info/my-info.component'
 import { MyReviewListComponent } from './components/my-review-list/my-review-list.component'
 import { SharedModule } from '../shared/module/shared.module'
+import { EditMyInfoPagePage } from './pages/edit-my-info-page/edit-my-info-page.page'
+import { EditMyInfoComponent } from './components/edit-my-info/edit-my-info.component'
 
 @NgModule({
   imports: [
@@ -25,8 +27,10 @@ import { SharedModule } from '../shared/module/shared.module'
   declarations: [
     MyPagePage,
     MyReviewsPage,
+    EditMyInfoPagePage,
     MyInfoComponent,
     MyReviewListComponent,
+    EditMyInfoComponent,
   ]
 })
 export class MyPageModule { }

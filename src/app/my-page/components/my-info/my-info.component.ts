@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ReadUser } from 'src/app/shared/model/users/read-user.interface'
 import { MyPageService } from 'src/app/shared/services/my-page.service'
 
@@ -13,6 +14,8 @@ export class MyInfoComponent implements OnInit {
 
   constructor(
     private myPageService: MyPageService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -33,4 +36,11 @@ export class MyInfoComponent implements OnInit {
     })
   }
 
+  goEditMyInfoPage() {
+    this.router.navigate([`edit`], {
+      relativeTo: this.route,
+      state: { user: this.user }
+    })
+    console.log('go edit-my-info page')
+  }
 }
