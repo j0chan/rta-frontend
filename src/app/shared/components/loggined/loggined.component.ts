@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthService } from 'src/app/shared/services/auth.service'
+import { parseJwt } from '../../utils/token.util'
 
 @Component({
   selector: 'app-loggined',
@@ -11,6 +12,7 @@ import { AuthService } from 'src/app/shared/services/auth.service'
 export class LogginedComponent  implements OnInit {
   isLoggined: Boolean = false
   userName: string | null = null
+  userProfileImage: string | null = null
 
   constructor(
     private authService: AuthService,
@@ -18,11 +20,12 @@ export class LogginedComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadLogginedUserName()
+    this.loadLogginedUserInfo()
   }
 
-  loadLogginedUserName() {
+  loadLogginedUserInfo() {
     this.userName = this.authService.getLogginedUserName()
+    this.userProfileImage = this.authService.getUserProfileImage()
     if (this.userName) { 
       this.isLoggined = true
     }
@@ -31,7 +34,7 @@ export class LogginedComponent  implements OnInit {
 
   async signOut() {
     this.authService.signOut()
-    await this.router.navigate(['/'])
+    await this.router.navigate(['/signin'])
   }
 
   /* 페이지 이동 */

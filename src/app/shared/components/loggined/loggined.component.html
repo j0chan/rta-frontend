@@ -4,7 +4,9 @@
   <button *ngIf="isLoggined" (click)="signOut()">Log out</button>
   <button *ngIf="!isLoggined" color="primary" (click)="goSignInPage()">Sign in</button>
 
-  <button color="success" (click)="goMyPage()">
-    <ion-icon name="person-circle-outline"></ion-icon>
+  <!-- 프로필 이미지 버튼 -->
+  <button *ngIf="isLoggined" color="success" (click)="goMyPage()">
+    <img *ngIf="userProfileImage" [src]="userProfileImage" alt="User Profile Image" style="width: 40px; height: 40px; border-radius: 50%;" />
+    <ion-icon *ngIf="!userProfileImage" name="person-circle-outline"></ion-icon>
   </button>
 </div>

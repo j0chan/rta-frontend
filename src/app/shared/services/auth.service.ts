@@ -52,10 +52,20 @@ export class AuthService {
   getUserRole(): string | null {
     const token = localStorage.getItem('accessToken')
     if (!token) return null
-  
+
     const payload = parseJwt(token)
     if (!payload) return null
-  
+
     return payload.role || null
+  }
+
+  getUserProfileImage(): string | null {
+    const token = localStorage.getItem('accessToken')
+    if (!token) return null
+
+    const payload = parseJwt(token)
+    if (!payload) return null
+
+    return payload.profile_image || null
   }
 }

@@ -14,10 +14,13 @@ export function getUserIdFromToken(): number | null {
 // 토큰 파싱 유틸 함수
 export function parseJwt(token: string): any | null {
     try {
-      const payload = token.split('.')[1]
-      return JSON.parse(atob(payload))
+        const payloadBase64 = token.split('.')[1];
+        // '+'를 '-'로, '/'를 '_'로 변환하여 Base64 디코딩
+        const base64Url = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+        const decodedPayload = atob(base64Url); // Base64 디코딩
+        return JSON.parse(decodedPayload); // JSON으로 변환하여 리턴
     } catch (e) {
-      console.error('Invalid token:', e)
-      return null
+        console.error('Invalid token:', e);
+        return null;
     }
-  }
+}
