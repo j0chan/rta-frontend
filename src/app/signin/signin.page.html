@@ -6,19 +6,17 @@
   <div class="page-title">로그인</div>
 
   <form (ngSubmit)="onSubmit()">
-    <ion-list>
       <!-- 이메일 -->
-       <div class="input-container">
-          <div class="component-title">이메일</div>
-          <div class="input-box"><ion-input type="email" [(ngModel)]="form.email" name="email" placeholder="이메일"></ion-input></div>
-       </div>
+      <div class="input-container">
+        <div class="component-title">이메일</div>
+        <app-input [placeholder]="'이메일'" [(value)]="form.email"></app-input>
+     </div>
 
       <!-- 비밀번호 -->
-       <div class="input-container">
-          <div class="component-title">비밀번호</div>
-          <div class="input-box"><ion-input type="password" [(ngModel)]="form.password" name="password" placeholder="비밀번호"></ion-input></div>
-       </div>
-    </ion-list>
+      <div class="input-container">
+        <div class="component-title">비밀번호</div>
+            <app-input [placeholder]="'비밀번호'" [(value)]="form.password" type="password"></app-input>
+      </div>
 
     <!-- 로그인 버튼 -->
     <app-button label="로그인" variant="filled" size="full" type="submit"></app-button>
