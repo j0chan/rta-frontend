@@ -22,6 +22,7 @@ export class InputComponent  implements OnInit {
    * box : 여러 줄짜리 입력창
    */
   @Input() area: 'one-line' | 'box' = 'one-line'
+  @Input() type: string = 'text'
 
   constructor() { }
 
