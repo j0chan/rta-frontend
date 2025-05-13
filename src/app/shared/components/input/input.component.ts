@@ -7,9 +7,21 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
   standalone: false,
 })
 export class InputComponent  implements OnInit {
-  @Input() placeholder: string = '';
-  @Input() value: string = '';
-  @Output() valueChange = new EventEmitter<string>();
+  // 입력이 아무것도 없을 때 보이는 안내 메세지
+  @Input() placeholder: string = ''
+  // 입력받는 값
+  @Input() value: string = ''
+  @Output() valueChange = new EventEmitter<string>()
+
+  // 검색창 여부
+  @Input() isSearch: Boolean = false
+  
+  // 텍스트 영역 크기
+  /**
+   * one-line : 한 줄짜리 입력창
+   * box : 여러 줄짜리 입력창
+   */
+  @Input() area: 'one-line' | 'box' = 'one-line'
 
   constructor() { }
 
