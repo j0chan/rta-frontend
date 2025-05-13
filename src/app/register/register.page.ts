@@ -19,6 +19,7 @@ export class RegisterPage implements OnInit {
       this.router.navigate(['/home'])
     }
   }
+  UserRole = UserRole
 
   form: CreateUserDTO = {
     email: '',

@@ -1,5 +1,11 @@
 .email-check {
     display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.email-input {
+    flex: 1;
 }
 
 .selections {
