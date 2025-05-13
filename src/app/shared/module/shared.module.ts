@@ -15,6 +15,7 @@ import { RelativeTimePipe } from '../pipes/relativeTime.pipe'
 import { DateFormatPipe } from '../pipes/dateFormat.pipe'
 import { MapComponent } from 'src/app/map/components/map.component'
 import { ButtonComponent } from '../components/button/button.component'
+import { InputComponent } from '../components/input/input.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ButtonComponent } from '../components/button/button.component'
     HeaderBarComponent,
     ButtonComponent,
     RelativeTimePipe,
-    MapComponent
+    MapComponent,
+    InputComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { ButtonComponent } from '../components/button/button.component'
     HeaderBarComponent,
     ButtonComponent,
     RelativeTimePipe,
-    MapComponent
+    MapComponent,
+    InputComponent,
   ],
   providers: [
     {
