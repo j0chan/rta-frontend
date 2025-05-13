@@ -1,36 +1,21 @@
 <ion-content [fullscreen]="true">
   <app-header-bar></app-header-bar>
 
-  <!-- <p><strong>{{ this.store_name }}</strong>에 리뷰 남기기</p> -->
-   <div class="title-bar">
-     <span class="page-title">{{ this.store_name }}</span>
-     <span class="component-title">리뷰 작성</span>
+  <div class="title-bar">
+    <span class="page-title">{{ this.store_name }}</span>
+    <span class="component-title">리뷰 작성</span>
   </div>
 
   <!-- 이미지 미리보기 -->
   <span class="preview-image-row" *ngIf="previewUrls.length > 0">
-    <img
-      *ngFor="let url of previewUrls"
-      [src]="url"
-      class="preview-img" />
+    <img *ngFor="let url of previewUrls" [src]="url" class="preview-img" />
   </span>
 
   <!-- 이미지 업로드 -->
-  <input
-    type="file"
-    multiple
-    accept="image/*"
-    (change)="onFileSelected($event)"/>
+  <input type="file" multiple accept="image/*" (change)="onFileSelected($event)" />
 
   <!-- 리뷰 입력창 -->
-  <div class="input-box">
-    <ion-input
-      id="custom-input"
-      [counter]="true"
-      maxlength="500"
-      placeholder="리뷰를 작성해주세요"
-      [(ngModel)]="content"></ion-input>
-  </div>
+  <app-input [placeholder]="'리뷰를 작성해주세요'" [(value)]="content" area="box"></app-input>
 
-<app-button label="작성 완료" variant="filled" size="full" (click)="submit()"></app-button>
+  <app-button label="작성 완료" variant="filled" size="full" (click)="submit()"></app-button>
 </ion-content>
