@@ -1,17 +1,9 @@
-.preview-image-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-}
-
 .preview-img {
     width: 70px;
     height: 70px;
     object-fit: cover;
     /* 이미지 비율 유지하며 자르기 */
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .title-bar {
@@ -20,7 +12,28 @@
     gap: 5px;
 }
 
-.input-box {
+.upload-button {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    /* 중앙 정렬을 위한 Flex 설정 */
+    justify-content: center;
+    align-items: center;
+    color: var(--background-gray);
     border-radius: 10px;
+    cursor: pointer;
     border: 1px solid var(--light-gray);
+    user-select: none;
+    background-color: white;
+    /* 필요시 배경 설정 */
+}
+
+.upload-icon {
+    color: var(--light-gray);
+    font-size: 30px;
+}
+
+.image-box {
+    display: flex;
+    gap: 10px;
 }

@@ -6,13 +6,21 @@
     <span class="component-title">리뷰 작성</span>
   </div>
 
-  <!-- 이미지 미리보기 -->
-  <span class="preview-image-row" *ngIf="previewUrls.length > 0">
-    <img *ngFor="let url of previewUrls" [src]="url" class="preview-img" />
-  </span>
-
-  <!-- 이미지 업로드 -->
-  <input type="file" multiple accept="image/*" (change)="onFileSelected($event)" />
+  <!-- 이미지 -->
+   <div class="image-box">
+     <!-- 미리보기 -->
+     <span *ngIf="previewUrls.length > 0">
+       <img *ngFor="let url of previewUrls" [src]="url" class="preview-img" />
+     </span>
+   
+     <!-- 업로드 -->
+     <label class="upload-button">
+       <ion-icon name="add" class="upload-icon"></ion-icon>
+       <input type="file" multiple accept="image/*" (change)="onFileSelected($event)" hidden />
+     </label>
+   </div>
+  
+  
 
   <!-- 리뷰 입력창 -->
   <app-input [placeholder]="'리뷰를 작성해주세요'" [(value)]="content" area="box"></app-input>
