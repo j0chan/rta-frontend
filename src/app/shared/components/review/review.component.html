@@ -1,0 +1,28 @@
+<div class="review-container">
+  <div class="review-user-bar">
+    <img *ngIf="review.user?.profile_image?.url" [src]="review.user.profile_image.url" class="profile-img"
+      alt="프로필 이미지" />
+    <span class="component-title">{{ review.user.nickname }}</span>
+    <span class="body2">
+      <span>{{ review.date | relativeTime }}</span>
+      <span *ngIf="review.isModified">(수정됨)</span>
+    </span>
+  </div>
+  <!-- 이미지 출력 영역 -->
+  <div *ngIf="review.files && review.files.length > 0" class="image-row">
+    <ion-img *ngFor="let file of review.files" [src]="file.url" class="thumbnail-img"></ion-img>
+  </div>
+  <div>{{ review.content }}</div>
+
+  <div class="review-bottom-bar">
+    <!-- 도음돼요 버튼 -->
+    <span>
+      <app-button label="{{ review.helpful_count }}" variant="bordered-gray" size="symbol"></app-button>
+    </span>
+
+    <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->
+    <!-- <span class="review-action" *ngIf="review.user.id === currentUserId">
+      <app-button label="삭제" variant="borderless" (click)="deleteReview(review.review_id)"></app-button>
+    </span> -->
+  </div>
+</div>
