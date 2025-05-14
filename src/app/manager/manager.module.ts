@@ -10,7 +10,6 @@ import { ManagerPage } from './pages/manager/manager.page'
 import { MyManagerRequestsPage } from './pages/my-manager-request/my-manager-requests.page'
 import { ManagerRequestComponent } from './components/manager-request/manager-request.component'
 import { ManagerRequestListComponent } from './components/manager-request-list/manager-request-list.component'
-import { MyStoresPage } from './pages/my-stores/my-stores.page'
 import { CreateManagerRequestPage } from './pages/create-manager-request/create-manager-request.page'
 import { SearchStoreComponent } from './components/search-store/search-store.component'
 import { SharedModule } from '../shared/module/shared.module'
@@ -29,7 +28,6 @@ import { EditMyStorePage } from './pages/edit-my-store/edit-my-store.page'
     MyManagerRequestsPage,
     ManagerRequestComponent,
     ManagerRequestListComponent,
-    MyStoresPage,
     CreateManagerRequestPage,
     SearchStoreComponent,
     EditMyStorePage
