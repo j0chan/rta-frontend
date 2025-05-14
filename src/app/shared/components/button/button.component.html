@@ -1,4 +1,4 @@
-<button [ngClass]="['btn', variant, size]" [disabled]="disabled">
-  <span *ngIf="size === 'symbol'">💙 </span>
+<button [ngClass]="['btn', variant, size]" [disabled]="disabled" [type]="type">
+  <ion-icon *ngIf="size === 'symbol'" [name]="variant === 'bordered-gray' ? 'heart-outline' : 'heart'"></ion-icon>
   {{ label }}
 </button>
