@@ -1,8 +1,8 @@
 <div style="display: flex; align-items: center; gap: 10px;">
   <span *ngIf="isLoggined">{{ userName }}님, 안녕하세요</span>
 
-  <button *ngIf="isLoggined" (click)="signOut()">Log out</button>
-  <button *ngIf="!isLoggined" color="primary" (click)="goSignInPage()">Sign in</button>
+  <!-- <button *ngIf="isLoggined" (click)="signOut()">Log out</button> -->
+  <button *ngIf="!isLoggined" color="primary" (click)="goSignInPage()">로그인</button>
 
   <!-- 프로필 이미지 버튼 -->
   <button *ngIf="isLoggined" color="success" (click)="goMyPage()">
