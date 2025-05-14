@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular'
 import { ReviewsPageRoutingModule } from './reviews-routing.module'
 
 import { ReviewListComponent } from 'src/app/reviews/components/review-list/review-list.component'
-import { ReviewComponent } from './components/review/review.component'
 import { WriteReviewPage } from './pages/write-review/write-review.page'
 import { RouterModule } from '@angular/router'
 import { SharedModule } from '../shared/module/shared.module'
@@ -23,12 +22,10 @@ import { SharedModule } from '../shared/module/shared.module'
   ],
   declarations: [
     ReviewListComponent,
-    ReviewComponent,
     WriteReviewPage,
   ],
   exports: [
     ReviewListComponent,
-    ReviewComponent,
   ]
 })
 export class ReviewsModule { }
