@@ -1,4 +1,4 @@
-<p>
-  my-review-list works!
-</p>
-아직 미구현..
+<div class="component-title">내가 작성한 리뷰</div>
+<div *ngFor="let review of reviews">
+  <app-review [review]="review"></app-review>
+</div>

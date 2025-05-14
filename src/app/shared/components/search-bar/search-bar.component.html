@@ -5,10 +5,18 @@
 - showCancelButton="focus" → 입력할 때 취소 버튼 표시
 - debounce="500" → 0.5초마다 입력된 값 검색 
 ----------------------------------------------------->
-<ion-searchbar
+<!-- <ion-searchbar
   [(ngModel)]="searchQuery" 
   (keydown.enter)="search()"
   (ionClear)="clearSearch()"
   placeholder="가게명 검색"
   showCancelButton="focus"
 ></ion-searchbar>
+ -->
+
+<app-input
+  (keydown.enter)="search()"
+  [placeholder]="'가게명 검색'"
+  [(value)]="searchQuery"
+  [isSearch]=true
+></app-input>

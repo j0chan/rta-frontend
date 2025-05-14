@@ -1,0 +1,19 @@
+<div class="input-container">
+    <ion-icon *ngIf="isSearch" name="search"></ion-icon>
+    <input *ngIf="area === 'one-line'"
+      [type]="type"
+      class="input-box component-title"
+      [placeholder]="placeholder"
+      [value]="value"
+      (input)="onInput($event)"
+    />
+
+  <textarea
+    *ngIf="area === 'box'"
+    class="input-box component-title"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="onInput($event)"
+    rows="4"
+  ></textarea>
+</div>

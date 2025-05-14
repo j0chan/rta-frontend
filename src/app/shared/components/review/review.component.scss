@@ -1,0 +1,49 @@
+// 프로필 이미지
+.profile-img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
+// 리뷰 이미지 출력부
+.image-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+}
+
+.thumbnail-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+/* 리뷰 */
+.review-container {
+    display: flex;
+    width: 100%;
+    padding: 10px 0;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.review-action {
+    display: flex;
+    align-items: center;
+}
+
+.review-user-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.review-bottom-bar {
+    display: flex;
+    align-items: center;
+}

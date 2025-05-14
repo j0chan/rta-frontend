@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular'
 import { MyPageRoutingModule } from './my-page-routing.module'
 
 import { MyPagePage } from './pages/my-page/my-page.page'
-import { MyReviewsPage } from './pages/my-reviews-page/my-reviews.page'
 import { ReviewsModule } from '../reviews/reviews.module'
 import { MyInfoComponent } from './components/my-info/my-info.component'
 import { MyReviewListComponent } from './components/my-review-list/my-review-list.component'
@@ -26,7 +25,6 @@ import { EditMyInfoComponent } from './components/edit-my-info/edit-my-info.comp
   ],
   declarations: [
     MyPagePage,
-    MyReviewsPage,
     EditMyInfoPagePage,
     MyInfoComponent,
     MyReviewListComponent,

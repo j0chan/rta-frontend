@@ -1,37 +1,30 @@
-<ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>즐겨찾기 목록</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-    <ion-refresher slot="fixed" (ionRefresh)="loadFavorites($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-  
-    <ion-list>
-      <ion-item-sliding *ngFor="let fav of favorites">
-        <ion-item>
-          <ion-label>
-            <h2>{{ fav.store_name }}</h2>
-          </ion-label>
-  
-          <app-favorite-button
-            [storeId]="fav.store_id"
-            [userId]="user_id"
-            slot="end">
-          </app-favorite-button>
-        </ion-item>
-  
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="removeFavorite(fav.store_id)">
-            삭제
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-  
-    <ion-text color="medium" *ngIf="favorites.length === 0" class="ion-padding">
-      즐겨찾기에 추가된 상점이 없습니다.
-    </ion-text>
-  </ion-content>
+<ion-title>즐겨찾기 목록</ion-title>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="loadFavorites($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let fav of favorites">
+      <ion-item>
+        <ion-label>
+          <h2>{{ fav.store_name }}</h2>
+        </ion-label>
+
+        <app-favorite-button [storeId]="fav.store_id" [userId]="user_id" slot="end">
+        </app-favorite-button>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removeFavorite(fav.store_id)">
+          삭제
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-text color="medium" *ngIf="favorites.length === 0" class="ion-padding">
+    즐겨찾기에 추가된 상점이 없습니다.
+  </ion-text>
+</ion-content>

@@ -30,7 +30,7 @@ export class ButtonComponent  implements OnInit {
    */
   @Input() size: 'full' | 'fit' | 'fit-small' | 'small' | 'symbol' = 'full'
   @Input() disabled = false
-
+  @Input() type = "button"
   constructor() { }
 
   ngOnInit() {}

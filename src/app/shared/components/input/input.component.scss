@@ -1,0 +1,31 @@
+.input-container {
+    width: 100%;
+    margin: 10px 0;
+    background: var(--background-gray);
+    border-radius: 10px;
+    outline: 1px solid var(--light-gray);
+    outline-offset: -1px;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+}
+  
+.input-box {
+    width: 100%;
+    padding: 0 10px;
+    margin: 10px 0;
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    color: var(--black);
+    outline: none;
+}
+
+ion-icon {
+    width: 16px;
+    height: 16px;
+    padding: 10px 0 10px 10px;
+    color: var(--primary-blue);
+}
+  
