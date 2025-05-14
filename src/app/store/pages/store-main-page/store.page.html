@@ -2,35 +2,38 @@
 <app-header-bar></app-header-bar>
 <div *ngIf="store" class="page-title">{{ store.store_name }}</div>
 
-<ion-list>
-  <!-- store-info -->
-  <app-store-info *ngIf="store" [store]="store"></app-store-info>
-  
-  <!-- latest event -->
-  <div>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div class="component-title">진행중 이벤트</div>
-      <app-button label="더보기" variant="borderless" size="small" (click)="goEventListPage()"></app-button>
-    </div>
+<ion-content>
 
-    <ng-container *ngIf="event; else noEvent">
-      <app-event [event]="event"></app-event>
-    </ng-container>
-
-    <ng-template #noEvent>
-      <p>현재 진행중인 이벤트가 없습니다</p>
-    </ng-template>
-  </div>
-
-   <!-- reviews -->
-   <div>
-     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <span><span class="component-title">가게 리뷰</span> {{ getReviewsCount() }}개</span> 
-       <!-- 리뷰 작성 페이지로 이동하는 버튼 -->
-       <app-button label="리뷰 작성하기" variant="filled" size="fit" (click)="goWriteReviewPage()"></app-button>
-     </div>
+  <ion-list>
+    <!-- store-info -->
+    <app-store-info *ngIf="store" [store]="store"></app-store-info>
     
-    <!-- review-list -->
-    <app-reviews *ngIf="reviews" [reviews]="reviews"></app-reviews>
-   </div>
-</ion-list>
+    <!-- latest event -->
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="component-title">진행중 이벤트</div>
+        <app-button label="더보기" variant="borderless" size="small" (click)="goEventListPage()"></app-button>
+      </div>
+  
+      <ng-container *ngIf="event; else noEvent">
+        <app-event [event]="event"></app-event>
+      </ng-container>
+  
+      <ng-template #noEvent>
+        <p>현재 진행중인 이벤트가 없습니다</p>
+      </ng-template>
+    </div>
+  
+     <!-- reviews -->
+     <div>
+       <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span><span class="component-title">가게 리뷰</span> {{ getReviewsCount() }}개</span> 
+         <!-- 리뷰 작성 페이지로 이동하는 버튼 -->
+         <app-button label="리뷰 작성하기" variant="filled" size="fit" (click)="goWriteReviewPage()"></app-button>
+       </div>
+      
+      <!-- review-list -->
+      <app-reviews *ngIf="reviews" [reviews]="reviews"></app-reviews>
+     </div>
+  </ion-list>
+</ion-content>
