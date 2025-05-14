@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ReadUser } from 'src/app/shared/model/users/read-user.interface'
+import { AuthService } from 'src/app/shared/services/auth.service'
 import { MyPageService } from 'src/app/shared/services/my-page.service'
 
 @Component({
@@ -14,6 +15,7 @@ export class MyInfoComponent implements OnInit {
 
   constructor(
     private myPageService: MyPageService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
@@ -36,6 +38,12 @@ export class MyInfoComponent implements OnInit {
     })
   }
 
+  async signOut() {
+    this.authService.signOut()
+    await this.router.navigate(['/signin'])
+  }
+
+  /* 페이지 이동 */
   goEditMyInfoPage() {
     this.router.navigate([`edit`], {
       relativeTo: this.route,

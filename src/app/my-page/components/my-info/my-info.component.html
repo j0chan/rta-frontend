@@ -7,7 +7,7 @@
         <strong>{{ user?.nickname }}</strong>님, 안녕하세요!
       </span>
     </div>
-    <app-button label="로그아웃" variant="bordered-gray" size="fit-small"></app-button>
+    <app-button label="로그아웃" variant="bordered-gray" size="fit-small" (click)="signOut()"></app-button>
   </div>
 
   <!-- 나의 정보 -->
