@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { MapsService } from 'src/app/shared/services/maps.service'
 import { ToastController } from '@ionic/angular'
+import { OpenaiService } from 'src/app/shared/services/openai.service'
 
 @Component({
   selector: 'app-map',
@@ -25,10 +26,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   markers: naver.maps.Marker[] = []
   infoWindows: naver.maps.InfoWindow[] = []
 
+  userWeather: string = ''
+  recommendedKeywords: string[] = []
+  selectedKeyword: string | null = null
+
 
   constructor(
     private mapsService: MapsService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private openaiService: OpenaiService
   ) {}
 
   ngOnInit(): void {
@@ -245,7 +251,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           `,
           anchor: new naver.maps.Point(24, 24) // 중앙 맞추기 (48 / 2)
         }
-      });
+      })
     
       this.map.setCenter(position) // 초기 이동
     }
@@ -451,6 +457,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.markers = []
   }
 
+  // 좌표 변환
   normalizeCoordinate(value: number | string, isLat = true): number | null {
     const num = parseFloat(value.toString())
     const length = Math.floor(Math.log10(num)) + 1
@@ -468,6 +475,51 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   
     return null
+  }
+
+  // OpenAI 키워드 요청
+  generateKeywordRecommendations() {
+    const today = new Date().toLocaleDateString('ko-KR')
+
+    const prompt = `
+      오늘은 ${today}이고 날씨는 ${this.userWeather}입니다.
+      이런 조건에서 사람들이 좋아할 만한 음식 키워드 3개만 추천해줘. (예: 냉면, 파스타, 삼계탕)
+    `
+
+    this.openaiService.getRecommendedKeywords(prompt).subscribe({
+      next: (keywords: string[]) => {
+        this.recommendedKeywords = keywords
+        this.selectedKeyword = null // 초기화
+        this.filteredStores = [] // 클릭 전까지 비움
+        console.log('추천 키워드:', keywords)
+      },
+      error: (err) => {
+        console.error('추천 키워드 불러오기 실패:', err)
+      }
+    })
+  }
+
+  // 키워드 기반 가게 필터링
+  filterStoresByKeywords(keywords: string[]) {
+    console.log('키워드 기반 필터링 시작:', keywords)
+    this.filteredStores = this.stores.filter(store =>
+      keywords.some(keyword =>
+        store.store_name.includes(keyword) ||
+        store.category?.category_name?.includes(keyword)
+      )
+    )
+    console.log(`필터링된 가게 수: ${this.filteredStores.length}`)
+    this.drawMarkers(this.filteredStores)
+  }
+
+  // 사용자가 선택한 키워드로 가게를 필터링하고 지도에 표시
+  onClickKeyword(keyword: string) {
+    this.selectedKeyword = keyword
+    this.filteredStores = this.stores.filter(store =>
+      store.store_name.includes(keyword) ||
+      store.category?.category_name?.includes(keyword)
+    )
+    this.drawMarkers(this.filteredStores)
   }
 
 }

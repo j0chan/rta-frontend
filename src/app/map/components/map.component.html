@@ -2,6 +2,26 @@
     <app-search-bar (searchEvent)="onSearch($event)" (clearEvent)="onClearSearch()"></app-search-bar>
 </div>
 
+<!-- 사용자 날씨 입력창 추가 (예: 맑음, 흐림, 비) -->
+<div class="weather-input-wrapper">
+    <input [(ngModel)]="userWeather" placeholder="오늘 날씨는 어떤가요? "/>
+    <button (click)="generateKeywordRecommendations()">추천받기</button>
+</div>
+
+<!-- 추천 키워드 버튼 리스트 -->
+<div *ngIf="recommendedKeywords.length > 0" class="keyword-chips">
+  <p>추천 키워드</p>
+  <div class="chip-list">
+    <button
+      *ngFor="let keyword of recommendedKeywords"
+      class="chip"
+      [class.active]="selectedKeyword === keyword"
+      (click)="onClickKeyword(keyword)">
+      {{ keyword }}
+    </button>
+  </div>
+</div>
+
 <!-- 위치 추적 토글 버튼 -->
 <!-- <div class="tracking-toggle">
     <button (click)="toggleTracking()">
@@ -19,7 +39,6 @@
         </li>
     </ul>
 </div>
-  
 
 <!-- 지도 표시 -->
 <div id="map" class="map-container"></div>
