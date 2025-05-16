@@ -12,10 +12,12 @@ import { StoresService } from 'src/app/shared/services/stores.service'
 @Component({
   selector: 'app-edit-my-store',
   templateUrl: './edit-my-store.page.html',
+  styleUrls: ['./edit-my-store.page.scss'],
   standalone: false,
 })
 export class EditMyStorePage implements OnInit {
   private store_id: number | null = null
+  activeTab: string = 'store'
 
   store: ReadStore | null = null
   editableStore: UpdateStoreDetail = {
@@ -42,7 +44,7 @@ export class EditMyStorePage implements OnInit {
     private router: Router,
     private storesService: StoresService,
     private eventsService: EventsService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     const idParam = this.route.snapshot.paramMap.get('id') ?? ''
@@ -106,7 +108,7 @@ export class EditMyStorePage implements OnInit {
   isEventModified(index: number): boolean {
     const original = this.events[index]
     const edited = this.editableEvent[index]
-  
+
     return (
       original.title !== edited.title ||
       original.description !== edited.description ||
@@ -115,7 +117,7 @@ export class EditMyStorePage implements OnInit {
       original.is_canceled !== edited.is_canceled
     )
   }
-  
+
 
   updateStoreInfo() {
     if (!this.store_id) return
@@ -123,7 +125,6 @@ export class EditMyStorePage implements OnInit {
     this.storesService.updateStoreDetail(this.store_id, this.editableStore).subscribe({
       next: () => {
         alert('Store Info Updated Successfully')
-        this.router.navigate(['/manager/my-stores'])
       },
       error: (err) => {
         console.error('Store update failed', err)
@@ -161,6 +162,18 @@ export class EditMyStorePage implements OnInit {
         alert('Failed to Create Event. Try Again')
       }
     })
+  }
+
+  isNewEventValid(): boolean {
+    return (
+      this.newEvent.title.trim().length > 0 &&
+      this.newEvent.description.trim().length > 0 &&
+      this.newEvent.start_date instanceof Date &&
+      !isNaN(this.newEvent.start_date.getTime()) &&
+      this.newEvent.end_date instanceof Date &&
+      !isNaN(this.newEvent.end_date.getTime()) &&
+      this.newEvent.end_date >= this.newEvent.start_date  // 종료일이 시작일 이후 또는 같아야 함
+    )
   }
 
   deleteEvent(event_id: number) {
