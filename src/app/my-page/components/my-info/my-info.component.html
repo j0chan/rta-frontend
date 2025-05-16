@@ -1,39 +1,44 @@
 <ion-label>
   <!-- 나의 프로필 -->
-  <div class="profile">
+  <!-- <div class="profile">
     <div class="profile-left">
       <ion-img *ngIf="user && user.profile_image" [src]="user.profile_image" class="profile-img" alt="프로필 이미지" />
       <span class="nickname">
         <strong>{{ user?.nickname }}</strong>님, 안녕하세요!
       </span>
     </div>
-  </div>
+  </div> -->
 
   <!-- 나의 정보 -->
   <div class="container">
     <div class="sub-title-bar">
-      <div class="component-title">나의 정보</div>
-      <app-button label="수정" variant="borderless" size="small" (click)="goEditMyInfoPage()"></app-button>
+      <div class="component-title">내 정보</div>
     </div>
     <div class="info-table typo-body1">
       <div>
-        <span class="key">nickname</span>
+        <span class="key">닉네임</span>
         <span class="value">{{ user?.nickname }}</span>
       </div>
       <div>
-        <span class="key">email</span>
+        <span class="key">이메일</span>
         <span class="value">{{ user?.email }}</span>
       </div>
       <div>
-        <span class="key">phone</span>
+        <span class="key">휴대폰</span>
         <span class="value">{{ user?.phone_number }}</span>
       </div>
       <div>
-        <span class="key">role</span>
-        <span class="value">{{ user?.role }}</span>
+        <span class="key">구분</span>
+        <span class="value">{{ user?.role | userRolePipe }}</span>
       </div>
     </div>
   </div>
-      <app-button label="로그아웃" variant="bordered-gray" size="fit-small" (click)="signOut()"></app-button>
 
+  <div class="footer-button-row">
+    <app-button label="내 정보 수정" variant="bordered-gray" size="fit-small" (click)="goEditMyInfoPage()">
+    </app-button>
+
+    <app-button label="로그아웃" variant="bordered-gray" size="fit-small" (click)="signOut()">
+    </app-button>
+  </div>
 </ion-label>
