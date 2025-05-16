@@ -20,7 +20,7 @@ const routes: Routes = [
     component: CreateManagerRequestPage
   },
   {
-    path: 'my-stores/:id/edit',
+    path: ':id/edit',
     component: EditMyStorePage
   }
 ]
