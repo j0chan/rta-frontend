@@ -1,39 +1,37 @@
 <ion-content [fullscreen]="true">
   <div class="title-bar">
     <span class="page-title">내 정보 수정</span>
-    <br><br>
   </div>
 
-  <!-- 이미지 미리보기 -->
-  <div class="preview-image-row" *ngIf="previewUrls.length > 0">
-    <img
-      *ngFor="let url of previewUrls"
-      [src]="url"
-      class="preview-img" />
-  </div>
+  <!-- 이미지 -->
+  <div class="image-box">
+    <!-- 미리보기 -->
+    <span *ngIf="previewUrls.length > 0">
+      <img *ngFor="let url of previewUrls" [src]="url" class="preview-img" />
+    </span>
 
-  <!-- 이미지 업로드 -->
-  <input
-    type="file"
-    accept="image/*"
-    (change)="onFileSelected($event)" />
+    <!-- 업로드 -->
+    <label class="upload-button">
+      <ion-icon name="add" class="upload-icon"></ion-icon>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+    </label>
+  </div>
 
   <!-- 닉네임 입력창 -->
-  <div class="input-box">
-    <ion-input
-      type="text"
-      placeholder="닉네임"
-      [(ngModel)]="new_nickname"
-      (ngModelChange)="onNicknameChange()">
-    </ion-input>
-  </div>
+  <app-input 
+    type="text" 
+    placeholder="새 닉네임" 
+    area="one-line" 
+    [(value)]="new_nickname" 
+    (valueChange)="onNicknameChange()">
+  </app-input>
 
   <!-- 제출 버튼 -->
-  <app-button
-    label="변경 완료"
-    variant="filled"
-    size="full"
-    [disabled]="isButtonDisabled"
+  <app-button 
+    label="변경 완료" 
+    variant="filled" 
+    size="full" 
+    [disabled]="isButtonDisabled" 
     (click)="onSubmit()">
   </app-button>
 </ion-content>
