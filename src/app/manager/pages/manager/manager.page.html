@@ -3,17 +3,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="sub-title-bar">
-    <div class="component-title">내 매장 관리</div>
-  </div>
-  <ion-list>
-    <ion-item *ngFor="let store of stores">
-      <ion-label>
-        <h2>{{ store.store_name }}</h2>
-        <p>{{ store.description }}</p>
-      </ion-label>
-      <ion-button expand="block" (click)="goStorePage(store)">접속</ion-button>
-      <ion-button expand="block" (click)="goEditPage(store)">관리</ion-button>
-    </ion-item>
-  </ion-list>
+    <div class="page-title">점주 페이지</div>
+
+  <app-my-info></app-my-info>
+    <hr style="height: 3px; background-color: #ccc; border: none; margin: 16px auto;" />
+
+  <app-my-stores></app-my-stores>
 </ion-content>
