@@ -65,11 +65,13 @@
         display: inline-block;
         font-size: $typo-body2;
         padding: 10px 15px;
+        margin: 0;
     }
 
     &.small {
         display: inline-block;
         font-size: $typo-body2;
+        margin: 0;
     }
 
     &.symbol {
