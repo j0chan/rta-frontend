@@ -23,6 +23,9 @@ import { EditMyInfoComponent } from './components/edit-my-info/edit-my-info.comp
     MyPageRoutingModule,
     ReviewsModule,
   ],
+  exports: [
+    MyInfoComponent
+  ],
   declarations: [
     MyPagePage,
     EditMyInfoPagePage,

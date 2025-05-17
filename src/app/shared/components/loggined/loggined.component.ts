@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthService } from 'src/app/shared/services/auth.service'
+import { getRoleFromToken } from '../../utils/token.util'
 
 @Component({
   selector: 'app-loggined',
@@ -12,6 +13,7 @@ export class LogginedComponent implements OnInit {
   isLoggined: Boolean = false
   userName: string | null = null
   userProfileImage: string | null = null
+  role: string | null = null
 
   constructor(
     private authService: AuthService,
@@ -28,6 +30,7 @@ export class LogginedComponent implements OnInit {
         this.clearUserInfo(); // 로그아웃 시 사용자 정보 초기화
       }
     })
+    this.role = getRoleFromToken()
     console.log(this.userName)
     console.log(this.userProfileImage)
   }
@@ -53,7 +56,11 @@ export class LogginedComponent implements OnInit {
   }
 
   goMyPage() {
-    console.log('go my page')
-    this.router.navigate(['/my-page'])
+    if (this.role === "MANAGER") {
+      this.router.navigate(['/manager'])
+    } else {
+      console.log('go my page')
+      this.router.navigate(['/my-page'])
+    }
   }
 }
