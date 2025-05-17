@@ -21,7 +21,7 @@ export class MyPageService {
   }
 
   getMyReviews(): Observable<ApiResponseDTO<ReadReview[]>> {
-    return this.http.get<ApiResponseDTO<ReadReview[]>>(`${this.apiUrl}my/reviews`, { headers: this.getAuthHeaders() })
+    return this.http.get<ApiResponseDTO<ReadReview[]>>(`${this.apiUrl}reviews/my-reviews`, { headers: this.getAuthHeaders() })
   }
 
   getMyInfo(): Observable<ApiResponseDTO<ReadUser>> {
