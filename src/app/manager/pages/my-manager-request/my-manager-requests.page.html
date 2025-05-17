@@ -1,11 +1,11 @@
-<ion-header [translucent]="true">
+<ion-header>
   <app-header-bar></app-header-bar>
-  <ion-toolbar>
-    <ion-title>나의 점주신청서 목록</ion-title>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button expand="block" (click)="goCreateManagerRequest()">새로운 점주 신청서</ion-button>
+  <div class="sub-title-bar">
+    <div class="component-title">나의 점주신청서 목록</div>
+  </div>
+  <app-button label="새로운 점주 신청서 작성" variant="tinted-bordered" (click)="goCreateManagerRequest()">새로운 점주 신청서</app-button>
   <app-manager-request-list></app-manager-request-list>
 </ion-content>
