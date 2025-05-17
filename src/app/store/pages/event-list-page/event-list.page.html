@@ -3,7 +3,7 @@
 <!-- Store header -->
 <app-store-header *ngIf="store" [store]="store"></app-store-header>
 
-<!-- 메뉴 목록 출력 -->
+<!-- event 목록 출력 -->
 <ion-content>
   <div *ngIf="events && events.length > 0; else noEvent">
     <div *ngFor="let event of events">

@@ -5,6 +5,7 @@
     padding: 15px;
     border-radius: 10px;
     border: 1px solid var(--light-gray);
+    margin: 10px 0;
   
     &.status-completed, &.status-canceled {
       background-color: var(--background-gray);
