@@ -1,12 +1,11 @@
 <div style="display: flex; align-items: center; gap: 10px;">
-  <span *ngIf="isLoggined">{{ userName }}님, 안녕하세요</span>
+  <span *ngIf="isLoggined"><strong>{{ userName }}</strong>님</span>
 
-  <app-button *ngIf="!isLoggined" label="로그인" variant="bordered-gray" size="fit" (click)="goSignInPage()"></app-button>
+  <app-button *ngIf="!isLoggined" label="로그인" variant="bordered-gray" size="fit-small" (click)="goSignInPage()"></app-button>
 
   <!-- 프로필 이미지 버튼 -->
-  <button *ngIf="isLoggined" color="success" (click)="goMyPage()">
-    <img *ngIf="userProfileImage" [src]="userProfileImage" alt="User Profile Image"
-      style="width: 40px; height: 40px; border-radius: 50%;" />
-    <ion-icon *ngIf="!userProfileImage" name="person-circle-outline"></ion-icon>
+  <button *ngIf="isLoggined" color="success" (click)="goMyPage()"
+    style="background-color: transparent; border: none; padding: 0;">
+    <img *ngIf="userProfileImage" [src]="userProfileImage" alt="User Profile Image" />
   </button>
 </div>

@@ -1,8 +1,22 @@
 <ion-label>
-  <div>
-    <p>가게 {{ request.store_name }}</p>
-    <p>신청일 {{ request.created_at }}</p>
-    <p>상태 {{ request.status }}</p>
-    <p>비고 {{ request.remark }}</p>
+  <div class="container">
+    <div class="info-table typo-body1">
+      <div>
+        <span class="key">가게</span>
+        <span class="value">{{ request.store_name }}</span>
+      </div>
+      <div>
+        <span class="key">신청일</span>
+        <span class="value">{{ request.created_at | date: 'yyyy.MM.dd' }}</span>
+      </div>
+      <div>
+        <span class="key">상태</span>
+        <span class="value">{{ request.status | requestStatusPipe }}</span>
+      </div>
+      <div>
+        <span class="key">비고</span>
+        <span class="value">{{ request.remark }}</span>
+      </div>
+    </div>
   </div>
 </ion-label>

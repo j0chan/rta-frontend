@@ -8,29 +8,11 @@
 }
 
 .profile {
-    display: flex;
-    justify-content: space-between;
+    width: 100%;
     align-items: center;
-    padding: 1rem; // 적절히 조정
-
-    .profile-left {
-        display: flex;
-        align-items: center;
-
-        .profile-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-right: 0.75rem;
-        }
-
-        .profile-text {
-            font-size: 14pt;
-            font-weight: 500;
-        }
-    }
+    display: inline-flex;
+    justify-content: space-between;
 }
-
 
 .profile-img {
     width: 50px;
@@ -44,6 +26,7 @@
     align-items: center;
     display: inline-flex;
     justify-content: space-between;
+    // margin: 10px 0px;
 }
 
 .info-table {

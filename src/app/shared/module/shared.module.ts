@@ -18,6 +18,9 @@ import { ButtonComponent } from '../components/button/button.component'
 import { InputComponent } from '../components/input/input.component'
 import { ReviewComponent } from '../components/review/review.component'
 import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
+import { UserRolePipe } from '../pipes/\buser-role.pipe'
+import { DividerComponent } from '../components/divider/divider.component'
+import { ContainerComponent } from '../components/container/container.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
     CategoryPipe,
     DateFormatPipe,
     RequestStatusPipe,
+    UserRolePipe,
     HeaderBarComponent,
     ButtonComponent,
     RelativeTimePipe,
@@ -35,6 +39,8 @@ import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
     InputComponent,
     ReviewComponent,
     StripHtmlPipe
+    DividerComponent,
+    ContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +54,7 @@ import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
     CategoryPipe,
     DateFormatPipe,
     RequestStatusPipe,
+    UserRolePipe,
     HeaderBarComponent,
     ButtonComponent,
     RelativeTimePipe,
@@ -55,6 +62,8 @@ import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
     InputComponent,
     ReviewComponent,
     StripHtmlPipe
+    DividerComponent,
+    ContainerComponent,
   ],
   providers: [
     {

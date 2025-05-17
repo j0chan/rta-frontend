@@ -1,0 +1,13 @@
+<div class="sub-title-bar">
+  <div class="component-title">나의 가게</div>
+  <app-button label="신청하기" variant="borderless" (click)="goCreateManagerRequestPage()">접속</app-button>
+</div>
+<ion-list>
+  <ion-item *ngFor="let store of stores">
+    <ion-label>
+      <h2 style="font-size: 16px;">{{ store.store_name }}</h2>
+    </ion-label>
+    <app-button label="접속" variant="tinted" (click)="goStorePage(store)" style="margin-right: 8px;" >접속</app-button>
+    <app-button label="관리" (click)="goEditPage(store)">관리</app-button>
+  </ion-item>
+</ion-list>

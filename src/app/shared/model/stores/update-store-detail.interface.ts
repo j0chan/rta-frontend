@@ -3,5 +3,5 @@ export interface UpdateStoreDetail {
     owner_name: string
     category_id: number
     contact_number: string
-    description?: string
+    description: string
 }

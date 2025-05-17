@@ -1,54 +1,58 @@
 <app-header-bar></app-header-bar>
+<app-divider></app-divider>
 
 <ion-content>
-  <div class="page-title">회원가입</div>
-  <form (ngSubmit)="onSubmit()">
-    <!-- 역할 -->
-    <div class="input-container">
-      <div class="component-title">역할</div>
-      <div class="selections">
-        <app-button label="사용자" [variant]="form.role === UserRole.USER ? 'tinted-bordered' : 'bordered-gray'" size="fit"
-          (click)="form.role = UserRole.USER" type="button"></app-button>
+  <app-container>
 
-        <app-button label="점주" [variant]="form.role === UserRole.MANAGER ? 'tinted-bordered' : 'bordered-gray'"
-          size="fit" (click)="form.role = UserRole.MANAGER" type="button"></app-button>
-
-        <app-button label="관리자" [variant]="form.role === UserRole.ADMIN ? 'tinted-bordered' : 'bordered-gray'"
-          size="fit" (click)="form.role = UserRole.ADMIN" type="button"></app-button>
+    <div class="page-title">회원가입</div>
+    <form (ngSubmit)="onSubmit()">
+      <!-- 역할 -->
+      <div class="input-container">
+        <div class="component-title">역할</div>
+        <div class="selections">
+          <app-button label="사용자" [variant]="form.role === UserRole.USER ? 'tinted-bordered' : 'bordered-gray'" size="fit"
+            (click)="form.role = UserRole.USER" type="button"></app-button>
+  
+          <app-button label="점주" [variant]="form.role === UserRole.MANAGER ? 'tinted-bordered' : 'bordered-gray'"
+            size="fit" (click)="form.role = UserRole.MANAGER" type="button"></app-button>
+  
+          <app-button label="관리자" [variant]="form.role === UserRole.ADMIN ? 'tinted-bordered' : 'bordered-gray'"
+            size="fit" (click)="form.role = UserRole.ADMIN" type="button"></app-button>
+        </div>
       </div>
-    </div>
-
-
-    <!-- 이메일 -->
-    <div class="input-container">
-      <div class="component-title">이메일</div>
-      <div class="email-check">
-        <app-input class="email-input" [placeholder]="'이메일'" [(value)]="form.email" aria-required="true"></app-input>
-        <app-button label="중복 확인" variant="filled" size="fit" (click)="duplicateCheck()" type="button"
-          [disabled]="isEmailChecked"></app-button>
+  
+  
+      <!-- 이메일 -->
+      <div class="input-container">
+        <div class="component-title">이메일</div>
+        <div class="email-check">
+          <app-input class="email-input" [placeholder]="'이메일'" [(value)]="form.email" aria-required="true"></app-input>
+          <app-button label="중복 확인" variant="filled" size="fit" (click)="duplicateCheck()" type="button"
+            [disabled]="isEmailChecked"></app-button>
+        </div>
       </div>
-    </div>
-
-    <!-- 비밀번호 -->
-    <div class="input-container">
-      <div class="component-title">비밀번호</div>
-      <app-input [placeholder]="'비밀번호'" [(value)]="form.password" type="password" aria-required="true"></app-input>
-    </div>
-
-    <!-- 닉네임 -->
-    <div class="input-container">
-      <div class="component-title">닉네임</div>
-      <app-input [placeholder]="'닉네임'" [(value)]="form.nickname" aria-required="true"></app-input>
-    </div>
-
-    <!-- 전화번호 -->
-    <div class="input-container">
-      <div class="component-title">전화번호</div>
-      <app-input [placeholder]="'전화번호'" [(value)]="form.phone_number" aria-required="true"></app-input>
-    </div>
-
-    <!-- 회원가입 버튼 -->
-    <app-button label="회원가입" variant="filled" size="full" type="submit"
-      [disabled]="!(isEmailChecked && isEmailUsable)"></app-button>
-  </form>
+  
+      <!-- 비밀번호 -->
+      <div class="input-container">
+        <div class="component-title">비밀번호</div>
+        <app-input [placeholder]="'비밀번호'" [(value)]="form.password" type="password" aria-required="true"></app-input>
+      </div>
+  
+      <!-- 닉네임 -->
+      <div class="input-container">
+        <div class="component-title">닉네임</div>
+        <app-input [placeholder]="'닉네임'" [(value)]="form.nickname" aria-required="true"></app-input>
+      </div>
+  
+      <!-- 전화번호 -->
+      <div class="input-container">
+        <div class="component-title">전화번호</div>
+        <app-input [placeholder]="'전화번호'" [(value)]="form.phone_number" aria-required="true"></app-input>
+      </div>
+  
+      <!-- 회원가입 버튼 -->
+      <app-button label="회원가입" variant="filled" size="full" type="submit"
+        [disabled]="!(isEmailChecked && isEmailUsable)"></app-button>
+    </form>
+  </app-container>
 </ion-content>

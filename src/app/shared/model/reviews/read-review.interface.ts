@@ -10,7 +10,10 @@ export interface ReadReview {
             url: string
         }
     }
-    store_name: string
+    store: {
+        store_id: number
+        store_name: string
+    }
     content: string
     helpful_count: number
     reply?: ReadReply

@@ -4,6 +4,7 @@ import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-m
 @Component({
   selector: 'app-manager-request',
   templateUrl: './manager-request.component.html',
+  styleUrls: ['./manager-request.component.scss'],
   standalone: false,
 })
 export class ManagerRequestComponent implements OnInit {

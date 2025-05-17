@@ -11,13 +11,6 @@ $typo-body1: 16px;
 $typo-body2: 14px;
 $typo-body3: 12px;
 
-// 굵기
-// $font-weight-bold: 700;
-// $font-weight-regular: 400;
-
-// 라인 높이
-// $line-height-base: 1.5;
-
 .page-title {
     font-size: $typo-heading2;
     font-weight: bold;
@@ -28,6 +21,16 @@ $typo-body3: 12px;
     font-weight: bold;
 }
 
+.body1 {
+    font-size: $typo-body1;
+    color: var(--black);
+}
+
+.body1-bold {
+    font-size: $typo-body1;
+    font-weight: bold;
+    color: var(--black);
+}
 .body2 {
     font-size: $typo-body2;
     color: var(--deep-gray);

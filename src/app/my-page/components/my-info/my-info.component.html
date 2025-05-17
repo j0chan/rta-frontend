@@ -3,26 +3,26 @@
   <div class="profile">
     <div class="profile-left">
       <ion-img *ngIf="user && user.profile_image" [src]="user.profile_image" class="profile-img" alt="프로필 이미지" />
-      <span class="nickname">
+      <div class="profile-text">
         <strong>{{ user?.nickname }}</strong>님, 안녕하세요!
-      </span>
+      </div>
     </div>
-    <app-button label="로그아웃" variant="bordered-gray" size="fit-small" (click)="signOut()"></app-button>
+
+    <div class="logout-button">
+      <app-button label="로그아웃" variant="bordered-gray" size="fit-small" (click)="signOut()"></app-button>
+    </div>
   </div>
 
   <!-- 나의 정보 -->
   <div class="container">
     <div class="sub-title-bar">
       <div class="component-title">나의 정보</div>
-      <app-button label="수정" variant="borderless" size="small" (click)="goEditMyInfoPage()"></app-button>
+      <app-button label="수정" variant="borderless" size="fit-small" (click)="goEditMyInfoPage()"></app-button>
+
     </div>
     <div class="info-table typo-body1">
       <div>
-        <span class="key">nickname</span>
-        <span class="value">{{ user?.nickname }}</span>
-      </div>
-      <div>
-        <span class="key">email</span>
+        <span class="key">e-mail</span>
         <span class="value">{{ user?.email }}</span>
       </div>
       <div>
@@ -30,9 +30,13 @@
         <span class="value">{{ user?.phone_number }}</span>
       </div>
       <div>
-        <span class="key">role</span>
-        <span class="value">{{ user?.role }}</span>
+        <span class="key">권한</span>
+        <span class="value">{{ user?.role | userRolePipe }}</span>
       </div>
     </div>
+  </div>
+
+  <div class="footer-button-row">
+
   </div>
 </ion-label>

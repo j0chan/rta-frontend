@@ -14,6 +14,8 @@ import { CreateManagerRequestPage } from './pages/create-manager-request/create-
 import { SearchStoreComponent } from './components/search-store/search-store.component'
 import { SharedModule } from '../shared/module/shared.module'
 import { EditMyStorePage } from './pages/edit-my-store/edit-my-store.page'
+import { MyPageModule } from '../my-page/my-page.module'
+import { MyStoresComponent } from './components/my-stores/my-stores.component'
 
 @NgModule({
   imports: [
@@ -21,7 +23,8 @@ import { EditMyStorePage } from './pages/edit-my-store/edit-my-store.page'
     FormsModule,
     IonicModule,
     ManagerRoutingModule,
-    SharedModule
+    SharedModule,
+    MyPageModule
   ],
   declarations: [
     ManagerPage,
@@ -30,7 +33,8 @@ import { EditMyStorePage } from './pages/edit-my-store/edit-my-store.page'
     ManagerRequestListComponent,
     CreateManagerRequestPage,
     SearchStoreComponent,
-    EditMyStorePage
+    EditMyStorePage,
+    MyStoresComponent,
   ]
 })
 export class ManagerModule { }

@@ -40,7 +40,7 @@ export class HomePage implements OnInit {
     } else {
       localStorage.removeItem('homePageRefreshed')
       this.initMiniMap() // 새로고침 후 로직 실행
-    this.role = this.authService.getUserRole()
+      this.role = this.authService.getUserRole()
     }
   }
 
@@ -97,13 +97,16 @@ export class HomePage implements OnInit {
   goToCreateManagerRequest() {
     this.router.navigate(['/manager/create-manager-request'])
   }
-  
+
   goToMyManagerRequests() {
     this.router.navigate(['/manager/my-manager-requests'])
   }
-  
+
+  goToManagerPage() {
+    this.router.navigate(['/manager'])
+  }
+
   goToManagerRequestPage() {
     this.router.navigate(['/admin/manager-request-page'])
   }
-  
 }

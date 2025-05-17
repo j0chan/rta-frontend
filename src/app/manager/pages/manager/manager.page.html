@@ -1,27 +1,12 @@
-<ion-header [translucent]="true">
+<ion-header>
   <app-header-bar></app-header-bar>
-  <ion-toolbar>
-    <ion-title>manager</ion-title>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <div class="page-title">점주 페이지</div>
 
-  <ion-button expand="block" (click)="goMyManagerRequestsPage()"> 
-    나의 점주 신청서 
-  </ion-button>
+  <app-my-info></app-my-info>
+    <hr style="height: 3px; background-color: #ccc; border: none; margin: 16px auto;" />
 
-  <ion-button expand="block" (click)="goMyStoresPage()"> 
-    나의 가게 관리
-  </ion-button>
-  <ion-list>
-    <ion-item *ngFor="let store of stores">
-      <ion-label>
-        <h2>{{ store.store_name }}</h2>
-        <p>{{ store.description }}</p>
-      </ion-label>
-      <ion-button expand="block" (click)="goStorePage(store)">접속</ion-button>
-      <ion-button expand="block" (click)="goEditPage(store)">관리</ion-button>
-    </ion-item>
-  </ion-list>
+  <app-my-stores></app-my-stores>
 </ion-content>
