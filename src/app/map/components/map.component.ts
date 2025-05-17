@@ -3,6 +3,7 @@ import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { MapsService } from 'src/app/shared/services/maps.service'
 import { ToastController } from '@ionic/angular'
 import { OpenaiService } from 'src/app/shared/services/openai.service'
+import { NaverPlace } from 'src/app/shared/model/maps/naver-place.interface'
 
 @Component({
   selector: 'app-map',
@@ -29,7 +30,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   userWeather: string = ''
   recommendedKeywords: string[] = []
   selectedKeyword: string | null = null
-
+  matchedStores: ReadStore[] = []
+  externalPlaces: NaverPlace[] = []
+  tabMode: 'search' | 'recommend' = 'search'
+  isResultVisible: boolean = true
 
   constructor(
     private mapsService: MapsService,
@@ -178,7 +182,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.previousLng = lng
 
     if (this.map) {
-      const position = new naver.maps.LatLng(lat, lng)
+      const position = new naver.maps.LatLng(36.62112673, 127.2861977)
     
       // 기존 마커 제거
       if (this.currentLocationMarker) {
@@ -425,6 +429,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // 검색
   onSearch(query: string) {
     this.searchQuery = query.trim()
+    this.tabMode = 'search' // 검색 탭으로 전환
+    this.isResultVisible = true // 리스트 펼치기
+
     if (!this.searchQuery) {
       this.filteredStores = this.stores
       return
@@ -489,8 +496,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openaiService.getRecommendedKeywords(prompt).subscribe({
       next: (keywords: string[]) => {
         this.recommendedKeywords = keywords
-        this.selectedKeyword = null // 초기화
-        this.filteredStores = [] // 클릭 전까지 비움
+        // this.selectedKeyword = null // 초기화
+        // this.filteredStores = [] // 클릭 전까지 비움
         console.log('추천 키워드:', keywords)
       },
       error: (err) => {
@@ -500,26 +507,102 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // 키워드 기반 가게 필터링
-  filterStoresByKeywords(keywords: string[]) {
-    console.log('키워드 기반 필터링 시작:', keywords)
-    this.filteredStores = this.stores.filter(store =>
-      keywords.some(keyword =>
-        store.store_name.includes(keyword) ||
-        store.category?.category_name?.includes(keyword)
-      )
-    )
-    console.log(`필터링된 가게 수: ${this.filteredStores.length}`)
-    this.drawMarkers(this.filteredStores)
-  }
+  // filterStoresByKeywords(keywords: string[]) {
+  //   console.log('키워드 기반 필터링 시작:', keywords)
+  //   this.filteredStores = this.stores.filter(store =>
+  //     keywords.some(keyword =>
+  //       store.store_name.includes(keyword) ||
+  //       store.category?.category_name?.includes(keyword)
+  //     )
+  //   )
+  //   console.log(`필터링된 가게 수: ${this.filteredStores.length}`)
+  //   this.drawMarkers(this.filteredStores)
+  // }
 
   // 사용자가 선택한 키워드로 가게를 필터링하고 지도에 표시
   onClickKeyword(keyword: string) {
+    if (!this.currentLat || !this.currentLng) {
+      console.error('현재 위치 정보가 없습니다.')
+      return
+    }
+
     this.selectedKeyword = keyword
-    this.filteredStores = this.stores.filter(store =>
-      store.store_name.includes(keyword) ||
-      store.category?.category_name?.includes(keyword)
-    )
-    this.drawMarkers(this.filteredStores)
+    this.tabMode = 'recommend'
+    this.isResultVisible = true
+
+    this.mapsService.readStoresByKeywordMatch(keyword, this.currentLat, this.currentLng).subscribe({
+      next: (res) => {
+        if (!res || !res.matchedStores || !res.externalPlaces) {
+          console.warn('예상치 못한 응답 형식:', res)
+          this.matchedStores = []
+          this.externalPlaces = []
+          return
+        }
+        this.matchedStores = res.matchedStores
+        this.externalPlaces = res.externalPlaces
+        this.filteredStores = [...res.matchedStores] // 리스트에 둘 다 표시하려면 여기도 합쳐도 됨
+
+        this.drawMixedMarkers(this.matchedStores, this.externalPlaces)
+      },
+      error: (err) => {
+        console.error('키워드 검색 실패:', err)
+      }
+    })
+  }
+
+  drawMixedMarkers(matchedStores: ReadStore[], externalPlaces: any[]): void {
+    if (!this.map) return
+
+    // 기존 마커 제거
+    this.markers.forEach(m => m.setMap(null))
+    this.markers = []
+
+    // DB 마커: 초록색
+    matchedStores.forEach(store => {
+      const lat = store.latitude
+      const lng = store.longitude
+      if (isNaN(lat) || isNaN(lng)) return
+
+      const pos = new naver.maps.LatLng(lat, lng)
+      const marker = new naver.maps.Marker({
+        position: pos,
+        map: this.map,
+        title: store.store_name,
+        icon: {
+          content: `<div style="width: 14px; height: 14px; background: green; border-radius: 50%;"></div>`,
+          anchor: new naver.maps.Point(7, 7)
+        }
+      })
+
+      this.markers.push(marker)
+    })
+
+    // 외부 마커: 회색
+    externalPlaces.forEach(place => {
+      const lat = parseFloat(place.mapy) / 1e7
+      const lng = parseFloat(place.mapx) / 1e7
+      if (isNaN(lat) || isNaN(lng)) return
+
+      const pos = new naver.maps.LatLng(lat, lng)
+      const marker = new naver.maps.Marker({
+        position: pos,
+        map: this.map,
+        title: place.title.replace(/<[^>]*>/g, ''),
+        icon: {
+          content: `<div style="width: 14px; height: 14px; background: gray; border-radius: 50%;"></div>`,
+          anchor: new naver.maps.Point(7, 7)
+        }
+      })
+
+      this.markers.push(marker)
+    })
+  }
+
+  handleSearchTabClick(): void {
+    if (!this.searchQuery?.trim()) return
+    this.tabMode = 'search'
+    this.isResultVisible = true
+    this.onSearch(this.searchQuery) // 현재 검색어로 다시 검색 실행
   }
 
 }

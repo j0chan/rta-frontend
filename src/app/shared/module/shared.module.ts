@@ -17,6 +17,7 @@ import { MapComponent } from 'src/app/map/components/map.component'
 import { ButtonComponent } from '../components/button/button.component'
 import { InputComponent } from '../components/input/input.component'
 import { ReviewComponent } from '../components/review/review.component'
+import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
 import { UserRolePipe } from '../pipes/\buser-role.pipe'
 import { DividerComponent } from '../components/divider/divider.component'
 import { ContainerComponent } from '../components/container/container.component'
@@ -37,6 +38,7 @@ import { ContainerComponent } from '../components/container/container.component'
     MapComponent,
     InputComponent,
     ReviewComponent,
+    StripHtmlPipe
     DividerComponent,
     ContainerComponent,
   ],
@@ -59,6 +61,7 @@ import { ContainerComponent } from '../components/container/container.component'
     MapComponent,
     InputComponent,
     ReviewComponent,
+    StripHtmlPipe
     DividerComponent,
     ContainerComponent,
   ],
