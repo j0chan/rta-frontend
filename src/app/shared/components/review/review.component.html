@@ -21,8 +21,8 @@
     </span>
 
     <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->
-    <!-- <span class="review-action" *ngIf="review.user.id === currentUserId">
+    <span class="review-action" *ngIf="review.user.id === currentUserId">
       <app-button label="삭제" variant="borderless" (click)="deleteReview(review.review_id)"></app-button>
-    </span> -->
+    </span>
   </div>
 </div>

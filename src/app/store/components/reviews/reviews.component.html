@@ -1,10 +1,10 @@
 <ion-list *ngIf="reviews && reviews.length > 0; else noReview">
   <ion-item *ngFor="let review of reviews">
     <app-review [review]="review"></app-review>
-    <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->
-    <span class="review-action" *ngIf="review.user.id === currentUserId">
+    <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 (review.component.ts 로 이동)-->
+    <!-- <span class="review-action" *ngIf="review.user.id === currentUserId">
       <app-button label="삭제" variant="borderless" (click)="deleteReview(review.review_id)"></app-button>
-    </span>
+    </span> -->
   </ion-item>
 </ion-list>
 

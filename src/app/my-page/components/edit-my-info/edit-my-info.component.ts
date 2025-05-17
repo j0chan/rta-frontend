@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { UsersService } from './../../../shared/services/users.service'
 import { ReadUser } from 'src/app/shared/model/users/read-user.interface'
+import { AuthService } from 'src/app/shared/services/auth.service'
 
 @Component({
   selector: 'app-edit-my-info',
@@ -22,7 +23,8 @@ export class EditMyInfoComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private authService: AuthService,
   ) {
     const nav = this.router.getCurrentNavigation()
     this.user = nav?.extras.state?.['user']
@@ -36,7 +38,7 @@ export class EditMyInfoComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.isButtonDisabled) return
 
     const formData = new FormData()
@@ -49,8 +51,9 @@ export class EditMyInfoComponent implements OnInit {
     this.usersService.updateUserById(formData).subscribe({
       next: () => {
         console.log('User Info Updated Successfully')
-        window.alert('변경이 완료되었습니다.')
-        this.router.navigate(['/my-page'])
+        window.alert('변경이 완료되었습니다. 다시 로그인해주세요.')
+        this.authService.signOut()
+        this.router.navigate(['/signin'])
       },
       error: (err) => {
         window.alert('변경 실패.')

@@ -1,95 +1,118 @@
-<h2>가게 정보</h2>
+<ion-content [fullscreen]="true">
+  <app-header-bar></app-header-bar>
 
-<form (ngSubmit)="updateStoreInfo()">
-  <div>
-    <label for="storeName">가게명</label>
-    <input id="storeName" [(ngModel)]="editableStore.store_name" name="store_name" placeholder="가게명" />
-  </div>
+  <!-- 탭 선택 영역 -->
+  <ion-segment [(ngModel)]="activeTab">
+    <ion-segment-button value="store">
+      <ion-label>가게 정보 수정</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="event">
+      <ion-label>이벤트 수정</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-  <div>
-    <label for="ownerName">매니저 이름</label>
-    <input id="ownerName" [(ngModel)]="editableStore.owner_name" name="owner_name" placeholder="매니저 이름" />
-  </div>
-
-  <div>
-    <label for="contactNumber">전화번호</label>
-    <input id="contactNumber" [(ngModel)]="editableStore.contact_number" name="contact_number" placeholder="전화번호" />
-  </div>
-
-  <div>
-    <label for="description">설명</label>
-    <textarea id="description" [(ngModel)]="editableStore.description" name="description" placeholder="설명"></textarea>
-  </div>
-
-  <button type="submit" [disabled]="!isStoreModified()">수정하기</button>
-</form>
-
-<h2>이벤트</h2>
-
-<div *ngFor="let event of editableEvent; let i = index">
-  <div>
-    <label>제목</label>
-    <input [(ngModel)]="editableEvent[i].title" name="title_{{ i }}" placeholder="이벤트 제목" />
-  </div>
-
-  <div>
-    <label>설명</label>
-    <textarea [(ngModel)]="editableEvent[i].description" name="description_{{ i }}" placeholder="이벤트 설명"></textarea>
-  </div>
-
-  <div>
-    <label>시작일</label>
-    <input type="date" [(ngModel)]="editableEvent[i].start_date" name="start_date_{{ i }}" />
-  </div>
-
-  <div>
-    <label>종료일</label>
-    <input type="date" [(ngModel)]="editableEvent[i].end_date" name="end_date_{{ i }}" />
-  </div>
-
-  <div>
-    <label>
-      <input type="checkbox" [(ngModel)]="editableEvent[i].is_canceled" name="is_canceled_{{ i }}" />
-      이벤트 취소하기
-    </label>
-  </div>
-
-  <button (click)="updateEvent(i)" [disabled]="!isEventModified(i)">수정하기</button>
-  <button (click)="deleteEvent(events[i].event_id)">삭제하기</button>
-</div>
-
-<!-- 새 이벤트 생성 토글 -->
-<div>
-  <button (click)="toggleCreateEventForm()">
-    {{ showCreateEventForm ? '이벤트 생성 취소' : '새 이벤트 추가' }}
-  </button>
-</div>
-
-<!-- 새 이벤트 생성 폼 -->
-<div *ngIf="showCreateEventForm">
-  <h3>새 이벤트 생성</h3>
-  <form (ngSubmit)="createEvent()">
+<!-- 가게 정보 수정 -->
+<div *ngIf="activeTab === 'store'" class="store-card">
+  <hr />
+  <form (ngSubmit)="updateStoreInfo()">
     <div>
-      <label for="newTitle">제목</label>
-      <input id="newTitle" [(ngModel)]="newEvent.title" name="new_event_title" placeholder="이벤트 제목" />
+      <div class="component-title">가게명</div>
+      <app-input type="text" area="one-line" placeholder="가게명" [(value)]="editableStore.store_name" />
     </div>
 
     <div>
-      <label for="newDescription">설명</label>
-      <textarea id="newDescription" [(ngModel)]="newEvent.description" name="new_event_description"
-        placeholder="이벤트 설명"></textarea>
+      <div class="component-title">매니저 이름</div>
+      <app-input type="text" area="one-line" placeholder="매니저 이름" [(value)]="editableStore.owner_name" />
     </div>
 
     <div>
-      <label for="newStartDate">시작일</label>
-      <input type="date" id="newStartDate" [(ngModel)]="newEvent.start_date" name="new_event_start_date" />
+      <div class="component-title">전화번호</div>
+      <app-input type="text" area="one-line" placeholder="전화번호" [(value)]="editableStore.contact_number" />
     </div>
 
     <div>
-      <label for="newEndDate">종료일</label>
-      <input type="date" id="newEndDate" [(ngModel)]="newEvent.end_date" name="new_event_end_date" />
+      <div class="component-title">가게 설명</div>
+      <app-input type="textarea" area="box" placeholder="가게 설명" [(value)]="editableStore.description" />
     </div>
 
-    <button type="submit">이벤트 생성</button>
+    <div class="button-group">
+      <app-button label="수정하기" size="fit" [disabled]="!isStoreModified()" (click)="updateStoreInfo()"></app-button>
+    </div>
   </form>
 </div>
+
+  <!-- 이벤트 수정 -->
+  <div *ngIf="activeTab === 'event'">
+    <!-- 새 이벤트 추가 버튼 -->
+    <div class="event-header">
+      <app-button label="새 이벤트 추가" (click)="toggleCreateEventForm()"></app-button>
+    </div>
+
+    <!-- 새 이벤트 생성 카드 -->
+    <div *ngIf="showCreateEventForm" class="event-card full-width">
+      <form (ngSubmit)="createEvent()">
+        <div class="title-bar">
+          <span class="page-title">새 이벤트 생성</span>
+        </div>
+
+        <div>
+          <div class="component-title">이벤트명</div>
+          <app-input type="text" area="one-line" placeholder="이벤트명" [(value)]="newEvent.title" />
+        </div>
+
+        <div>
+          <div class="component-title">이벤트 설명</div>
+          <app-input type="textarea" area="box" placeholder="이벤트 설명" [(value)]="newEvent.description" />
+        </div>
+
+        <div>
+          <div class="component-title">시작일</div>
+          <input type="date" [(ngModel)]="newEvent.start_date" name="new_event_start_date" />
+        </div>
+
+        <div>
+          <div class="component-title">종료일</div>
+          <input type="date" [(ngModel)]="newEvent.end_date" name="new_event_end_date" />
+        </div>
+
+        <div class="button-group">
+          <app-button label="이벤트 생성" size="full" [disabled]="!isNewEventValid()" (click)="createEvent()"></app-button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 기존 이벤트 목록 -->
+    <div *ngFor="let event of editableEvent; let i = index" class="event-card">
+      <div>
+        <div class="component-title">이벤트명</div>
+        <app-input type="text" area="one-line" placeholder="이벤트명" [(value)]="editableEvent[i].title" />
+      </div>
+
+      <div>
+        <div class="component-title">이벤트 설명</div>
+        <app-input type="textarea" area="box" placeholder="이벤트 설명" [(value)]="editableEvent[i].description" />
+      </div>
+
+      <div>
+        <div class="component-title">시작일</div>
+        <input type="date" [(ngModel)]="editableEvent[i].start_date" name="start_date_{{ i }}" />
+      </div>
+
+      <div>
+        <div class="component-title">종료일</div>
+        <input type="date" [(ngModel)]="editableEvent[i].end_date" name="end_date_{{ i }}" />
+      </div>
+
+      <div>
+        <div class="component-title">이벤트 취소하기</div>
+        <ion-toggle [(ngModel)]="editableEvent[i].is_canceled" name="is_canceled_{{ i }}" [checked]="editableEvent[i].is_canceled"></ion-toggle>
+      </div>
+
+      <div class="button-group">
+        <app-button label="수정하기" size="fit" [disabled]="!isEventModified(i)" (click)="updateEvent(i)"></app-button>
+        <div style="width: 8px;"></div>
+        <app-button label="삭제하기" size="fit" variant="bordered-gray" (click)="deleteEvent(events[i].event_id)"></app-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

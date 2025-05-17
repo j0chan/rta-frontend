@@ -12,6 +12,6 @@ export interface ReadStore {
     latitude: number // 위도
     longitude: number // 경도
     contact_number: string // 전화번호
-    description?: string // 설명 (선택적)
+    description: string // 설명 (선택적)
     area: string
 }

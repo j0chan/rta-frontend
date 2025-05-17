@@ -17,6 +17,7 @@ import { MapComponent } from 'src/app/map/components/map.component'
 import { ButtonComponent } from '../components/button/button.component'
 import { InputComponent } from '../components/input/input.component'
 import { ReviewComponent } from '../components/review/review.component'
+import { UserRolePipe } from '../pipes/\buser-role.pipe'
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ReviewComponent } from '../components/review/review.component'
     CategoryPipe,
     DateFormatPipe,
     RequestStatusPipe,
+    UserRolePipe,
     HeaderBarComponent,
     ButtonComponent,
     RelativeTimePipe,
@@ -46,6 +48,7 @@ import { ReviewComponent } from '../components/review/review.component'
     CategoryPipe,
     DateFormatPipe,
     RequestStatusPipe,
+    UserRolePipe,
     HeaderBarComponent,
     ButtonComponent,
     RelativeTimePipe,

@@ -28,6 +28,8 @@ export class LogginedComponent implements OnInit {
         this.clearUserInfo(); // 로그아웃 시 사용자 정보 초기화
       }
     })
+    console.log(this.userName)
+    console.log(this.userProfileImage)
   }
 
   clearUserInfo() {
