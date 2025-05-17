@@ -18,6 +18,7 @@ import { ButtonComponent } from '../components/button/button.component'
 import { InputComponent } from '../components/input/input.component'
 import { ReviewComponent } from '../components/review/review.component'
 import { UserRolePipe } from '../pipes/\buser-role.pipe'
+import { DividerComponent } from '../components/divider/divider.component'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UserRolePipe } from '../pipes/\buser-role.pipe'
     MapComponent,
     InputComponent,
     ReviewComponent,
+    DividerComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { UserRolePipe } from '../pipes/\buser-role.pipe'
     MapComponent,
     InputComponent,
     ReviewComponent,
+    DividerComponent,
   ],
   providers: [
     {
