@@ -1,7 +1,7 @@
 <!-- 최신 이벤트 -->
-<div *ngIf="event" class="event-container">
+<div *ngIf="event" class="event-container" [ngClass]="getEventStatusClass()">
   <div class="event-title-bar">
-    <div class="event-status" [ngClass]="getEventStatusClass(event.event_status)">
+    <div class="event-status" [ngClass]="getEventStatusClass()">
       {{ event.event_status | eventStatusPipe }}
     </div>    
     <div class="body1-bold"> {{ event.title }}</div>

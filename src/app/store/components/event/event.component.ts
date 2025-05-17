@@ -12,8 +12,8 @@ export class EventComponent {
   @Input() event!: ReadEvent
   EventStatus = EventStatus
 
-  getEventStatusClass(status: EventStatus): string {
-    switch (status) {
+  getEventStatusClass(): string {
+    switch (this.event.event_status) {
       case EventStatus.ONGOING:
         return 'status-ongoing'
       case EventStatus.COMPLETED:

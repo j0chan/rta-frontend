@@ -5,7 +5,12 @@
     padding: 15px;
     border-radius: 10px;
     border: 1px solid var(--light-gray);
-}
+  
+    &.status-completed, &.status-canceled {
+      background-color: var(--background-gray);
+    }
+  }
+  
 
 .event-title-bar {
     display: flex;
@@ -14,20 +19,20 @@
 
 .event-status {
     font-weight: bold;
-}
 
-.status-ongoing {
-    color: var(--primary-blue)
-}
+    &.status-ongoing {
+        color: var(--primary-blue);
+    }
 
-.status-completed {
-    color: var(--deep-gray)
-}
+    &.status-completed {
+        color: var(--deep-gray);
+    }
 
-.status-upcoming {
-    color: var(--deep-gray)
-}
+    &.status-upcoming {
+        color: var(--deep-gray);
+    }
 
-.status-canceled {
-    color: var(--deep-gray)
+    &.status-canceled {
+        color: var(--deep-gray);
+    }
 }
