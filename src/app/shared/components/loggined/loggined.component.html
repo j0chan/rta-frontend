@@ -4,9 +4,8 @@
   <app-button *ngIf="!isLoggined" label="로그인" variant="bordered-gray" size="fit" (click)="goSignInPage()"></app-button>
 
   <!-- 프로필 이미지 버튼 -->
-<button *ngIf="isLoggined" color="success" (click)="goMyPage()"
-  style="background-color: transparent; border: none; padding: 0;">
-  <img *ngIf="userProfileImage" [src]="userProfileImage" alt="User Profile Image"
-    style="width: 40px; height: 40px; border-radius: 100%; background-color: transparent;" />
-</button>
+  <button *ngIf="isLoggined" color="success" (click)="goMyPage()"
+    style="background-color: transparent; border: none; padding: 0;">
+    <img *ngIf="userProfileImage" [src]="userProfileImage" alt="User Profile Image" />
+  </button>
 </div>
