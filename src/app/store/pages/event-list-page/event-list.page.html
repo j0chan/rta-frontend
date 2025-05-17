@@ -5,14 +5,17 @@
 
 <!-- event 목록 출력 -->
 <ion-content>
-  <div *ngIf="events && events.length > 0; else noEvent">
-    <div *ngFor="let event of events">
-      <app-event [event]="event"></app-event>
+  <app-container>
+    <div *ngIf="events && events.length > 0; else noEvent">
+      <div *ngFor="let event of events">
+        <app-event [event]="event"></app-event>
+      </div>
     </div>
-  </div>
+
+    <ng-template #noEvent>
+      <p>등록된 이벤트가 없습니다.</p>
+    </ng-template>
+  </app-container>
 
   <!-- 이벤트가 없는 경우 표시 -->
-  <ng-template #noEvent>
-    <p>등록된 이벤트가 없습니다.</p>
-  </ng-template>
 </ion-content>
