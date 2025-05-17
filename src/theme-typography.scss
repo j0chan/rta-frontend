@@ -28,6 +28,16 @@ $typo-body3: 12px;
     font-weight: bold;
 }
 
+.body1 {
+    font-size: $typo-body1;
+    color: var(--black);
+}
+
+.body1-bold {
+    font-size: $typo-body1;
+    font-weight: bold;
+    color: var(--black);
+}
 .body2 {
     font-size: $typo-body2;
     color: var(--deep-gray);

@@ -1,30 +1,18 @@
+<app-header-bar></app-header-bar>
+
 <!-- Store header -->
 <app-store-header *ngIf="store" [store]="store"></app-store-header>
 
 <!-- 메뉴 목록 출력 -->
 <ion-content>
-  <ng-container *ngIf="events && events.length > 0; else noEvent">
-    <ion-list>
-      <ion-item *ngFor="let event of events">
-        <ion-label>
-          <h2>{{ event.title }}</h2>
-          <p>아이디: {{ event.event_id }}</p>
-          <p>설명: {{ event.description }}</p>
-          <p>시작일: {{ event.start_date | dateFormatPipe }}</p>
-          <p>종료일: {{ event.end_date | dateFormatPipe }}</p>
-          <p>상태: {{ event.event_status | eventStatusPipe }}</p>
-          <p>작성일: {{ event.created_at | dateFormatPipe }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ng-container>
+  <div *ngIf="events && events.length > 0; else noEvent">
+    <div *ngFor="let event of events">
+      <app-event [event]="event"></app-event>
+    </div>
+  </div>
 
   <!-- 이벤트가 없는 경우 표시 -->
   <ng-template #noEvent>
-    <ion-card>
-      <ion-card-content>
-        <p>등록된 이벤트가 없습니다.</p>
-      </ion-card-content>
-    </ion-card>
+    <p>등록된 이벤트가 없습니다.</p>
   </ng-template>
 </ion-content>
