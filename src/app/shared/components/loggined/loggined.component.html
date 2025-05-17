@@ -1,5 +1,5 @@
 <div style="display: flex; align-items: center; gap: 10px;">
-  <span *ngIf="isLoggined">{{ userName }}님, 안녕하세요</span>
+  <span *ngIf="isLoggined"><strong>{{ userName }}</strong>님</span>
 
   <app-button *ngIf="!isLoggined" label="로그인" variant="bordered-gray" size="fit" (click)="goSignInPage()"></app-button>
 
