@@ -1,44 +1,82 @@
 <div class="search-wrapper">
-    <app-search-bar (searchEvent)="onSearch($event)" (clearEvent)="onClearSearch()"></app-search-bar>
+  <app-search-bar (searchEvent)="onSearch($event)" (clearEvent)="onClearSearch()"></app-search-bar>
 </div>
 
-<!-- 사용자 날씨 입력창 추가 (예: 맑음, 흐림, 비) -->
+<!-- 사용자 날씨 입력창 -->
 <div class="weather-input-wrapper">
-    <input [(ngModel)]="userWeather" placeholder="오늘 날씨는 어떤가요? "/>
-    <button (click)="generateKeywordRecommendations()">추천받기</button>
+  <input [(ngModel)]="userWeather" placeholder="오늘 날씨는 어떤가요? " />
+  <button (click)="generateKeywordRecommendations()">추천받기</button>
 </div>
 
-<!-- 추천 키워드 버튼 리스트 -->
-<div *ngIf="recommendedKeywords.length > 0" class="keyword-chips">
-  <p>추천 키워드</p>
-  <div class="chip-list">
-    <button
-      *ngFor="let keyword of recommendedKeywords"
-      class="chip"
-      [class.active]="selectedKeyword === keyword"
-      (click)="onClickKeyword(keyword)">
-      {{ keyword }}
-    </button>
+<!-- 검색/추천 결과 전체 묶음 -->
+<div *ngIf="searchQuery || selectedKeyword || recommendedKeywords.length > 0">
+
+  <!-- 닫힌 상태일 때: 다시 보기 버튼 -->
+  <div *ngIf="!isResultVisible" class="result-toggle-btn">
+    <button (click)="isResultVisible = true">🔍 결과 다시 보기</button>
+  </div>
+
+  <!-- 열린 상태일 때 -->
+  <div *ngIf="isResultVisible">
+
+    <!-- 추천 키워드 버튼 리스트 -->
+    <div *ngIf="recommendedKeywords.length > 0" class="keyword-chips">
+      <p>추천 키워드</p>
+      <div class="chip-list">
+        <button
+          *ngFor="let keyword of recommendedKeywords"
+          class="chip"
+          [class.active]="selectedKeyword === keyword"
+          (click)="onClickKeyword(keyword)">
+          {{ keyword }}
+        </button>
+      </div>
+    </div>
+
+    <!-- 탭 버튼 -->
+    <div class="result-tabs">
+      <button
+        class="tab-btn"
+        [class.active]="tabMode === 'search'"
+        [disabled]="!searchQuery"
+        (click)="handleSearchTabClick()">
+        검색 결과
+      </button>
+      <button
+        class="tab-btn"
+        [class.active]="tabMode === 'recommend'"
+        [disabled]="!selectedKeyword"
+        (click)="tabMode = 'recommend'">
+        추천 결과
+      </button>
+      <button class="tab-close" (click)="isResultVisible = false">✖ 닫기</button>
+    </div>
+
+    <!-- 검색 결과 탭 -->
+    <div *ngIf="tabMode === 'search' && filteredStores.length > 0" class="search-result-list">
+      <ul class="store-list">
+        <li *ngFor="let store of filteredStores" class="store-item db" (click)="focusStoreOnMap(store)">
+          <div class="store-name" data-badge="DB">{{ store.store_name }}</div>
+          <div class="store-address">{{ store.address }}</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 추천 키워드 탭 -->
+    <div *ngIf="tabMode === 'recommend' && (matchedStores.length > 0 || externalPlaces.length > 0)" class="search-result-list">
+      <ul class="store-list">
+        <li *ngFor="let store of matchedStores" class="store-item db" (click)="focusStoreOnMap(store)">
+          <div class="store-name" data-badge="DB">{{ store.store_name }}</div>
+          <div class="store-address">{{ store.address }}</div>
+        </li>
+        <li *ngFor="let place of externalPlaces" class="store-item external">
+          <div class="store-name" data-badge="외부">{{ place.title | stripHtml }}</div>
+          <div class="store-address">{{ place.address }}</div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
-<!-- 위치 추적 토글 버튼 -->
-<!-- <div class="tracking-toggle">
-    <button (click)="toggleTracking()">
-        {{ isTracking ? '실시간 위치 추적 중지' : '실시간 위치 추적 시작' }}
-    </button>
-</div> -->
-
-<!-- 검색 결과가 있을 때 리스트 표시 -->
-<div *ngIf="searchQuery && filteredStores.length > 0" class="search-result-list">
-    <h3>검색 결과</h3>
-    <ul class="store-list">
-        <li *ngFor="let store of filteredStores" class="store-item" (click)="focusStoreOnMap(store)">
-        <div class="store-name">{{ store.store_name }}</div>
-        <div class="store-address">{{ store.address }}</div>
-        </li>
-    </ul>
-</div>
-
-<!-- 지도 표시 -->
+<!-- 지도 -->
 <div id="map" class="map-container"></div>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ReadStore } from 'src/app/shared/model/stores/read-store.interface'
 import { ApiResponseDTO } from '../model/common/api-response.interface'
+import { KeywordMatchResult } from '../model/maps/keyword-match-result.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,14 @@ export class MapsService {
     }).pipe(
       map(response => response.data ?? [])
     )
+  }
+
+  // naver API 기반 키워드 검색 + DB 매칭
+  readStoresByKeywordMatch(keyword: string, lat: number, lng: number): Observable<KeywordMatchResult> {
+    return this.http.get<KeywordMatchResult>(`${this.mapApiUrl}naver-match`, {
+      params: { keyword, lat: lat.toString(), lng: lng.toString() },
+      headers: this.getAuthHeaders()
+    })
   }
   
 }
