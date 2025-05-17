@@ -44,11 +44,6 @@ export class LogginedComponent implements OnInit {
     console.log('username: ', this.userName)
   }
 
-  // async signOut() {
-  //   this.authService.signOut()
-  //   await this.router.navigate(['/signin'])
-  // }
-
   /* 페이지 이동 */
   goSignInPage() {
     console.log('go sign in page')
