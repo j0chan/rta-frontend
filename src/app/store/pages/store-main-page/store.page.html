@@ -3,11 +3,11 @@
 <app-divider></app-divider>
 
 <ion-content>
+  <app-container>
   <div *ngIf="store" class="page-title">{{ store.store_name }}</div>
-
-  <ion-list>
+  
+  <!-- <ion-list> -->
     <!-- store-info -->
-    <app-container>
       <app-store-info *ngIf="store" [store]="store"></app-store-info>
     </app-container>
     <app-divider></app-divider>
@@ -40,5 +40,5 @@
       <!-- review-list -->
       <app-reviews *ngIf="reviews" [reviews]="reviews"></app-reviews>
     </app-container>
-  </ion-list>
+  <!-- </ion-list> -->
 </ion-content>

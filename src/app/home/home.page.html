@@ -1,25 +1,22 @@
 <app-header-bar></app-header-bar>
 
-<ion-content [fullscreen]="false">
-  <!-- 내부 내용 -->
-  <div>
-    <ng-container *ngIf="role === 'MANAGER'">
-      <app-button label="매니저 요청 생성" variant="tinted-bordered" size="full"
-        (click)="goToCreateManagerRequest()"></app-button>
-      <app-button label="내 요청 목록" variant="tinted-bordered" size="full" (click)="goToMyManagerRequests()"></app-button>
-      <app-button label="내 매장 관리" variant="tinted-bordered" size="full" (click)="goToManagerPage()"></app-button>
-    </ng-container>
+<!-- 내부 내용 -->
+<div>
+  <ng-container *ngIf="role === 'MANAGER'">
+    <app-button label="매니저 요청 생성" variant="tinted-bordered" size="full"
+      (click)="goToCreateManagerRequest()"></app-button>
+    <app-button label="내 요청 목록" variant="tinted-bordered" size="full" (click)="goToMyManagerRequests()"></app-button>
+    <app-button label="내 매장 관리" variant="tinted-bordered" size="full" (click)="goToManagerPage()"></app-button>
+  </ng-container>
 
-    <ng-container *ngIf="role === 'ADMIN'">
-      <ion-button expand="block" (click)="goToManagerRequestPage()">
-        매니저 요청 페이지 (관리자용)
-      </ion-button>
-    </ng-container>
-  </div>
+  <ng-container *ngIf="role === 'ADMIN'">
+    <ion-button expand="block" (click)="goToManagerRequestPage()">
+      매니저 요청 페이지 (관리자용)
+    </ion-button>
+  </ng-container>
+</div>
 
-  <!-- 지도 컴포넌트 -->
-  <app-container>
-    <app-map></app-map>
-  </app-container>
-
-</ion-content>
+<!-- 지도 컴포넌트 -->
+<app-container>
+  <app-map></app-map>
+</app-container>
