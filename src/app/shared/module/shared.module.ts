@@ -38,7 +38,7 @@ import { ContainerComponent } from '../components/container/container.component'
     MapComponent,
     InputComponent,
     ReviewComponent,
-    StripHtmlPipe
+    StripHtmlPipe,
     DividerComponent,
     ContainerComponent,
   ],
@@ -61,7 +61,7 @@ import { ContainerComponent } from '../components/container/container.component'
     MapComponent,
     InputComponent,
     ReviewComponent,
-    StripHtmlPipe
+    StripHtmlPipe,
     DividerComponent,
     ContainerComponent,
   ],
