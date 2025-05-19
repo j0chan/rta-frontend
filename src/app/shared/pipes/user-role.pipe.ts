@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core'
-import { Category } from '../model/stores/category.enum'
 import { UserRole } from '../model/users/user-role.enum'
 
 @Pipe({
