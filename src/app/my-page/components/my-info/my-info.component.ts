@@ -33,7 +33,7 @@ export class MyInfoComponent implements OnInit {
         console.error('Error fetching reviews: ', err)
       },
       complete: () => {
-        console.error('Fetching reviews request completed')
+        console.log('Fetching reviews request completed')
       }
     })
   }

@@ -63,4 +63,8 @@ export class MyStoresComponent implements OnInit {
   goCreateManagerRequestPage() {
     this.router.navigate(['/manager/create-manager-request'])
   }
+
+  goMyManagerRequestPage() {
+    this.router.navigate(['/manager/my-manager-requests'])
+  }
 }
