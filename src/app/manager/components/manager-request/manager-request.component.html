@@ -1,22 +1,17 @@
 <ion-label>
   <div class="container">
-    <div class="info-table typo-body1">
-      <div>
-        <span class="key">가게</span>
-        <span class="value">{{ request.store_name }}</span>
-      </div>
-      <div>
-        <span class="key">신청일</span>
-        <span class="value">{{ request.created_at | date: 'yyyy.MM.dd' }}</span>
-      </div>
-      <div>
-        <span class="key">상태</span>
-        <span class="value">{{ request.status | requestStatusPipe }}</span>
-      </div>
-      <div>
-        <span class="key">비고</span>
-        <span class="value">{{ request.remark }}</span>
-      </div>
+    <div>
+      <span class="status-badge" [ngClass]="{
+        'submitted': request.status === 'SUBMITTED',
+        'rejected': request.status === 'REJECTED'
+      }">
+        {{ request.status === 'SUBMITTED' ? '대기' : request.status === 'REJECTED' ? '거절' : '기타' }}
+      </span>
+      <span class="store-name">{{ request.store_name }}</span>
+    </div>
+    <div class="date">{{ request.created_at | date: 'yyyy년 MM월 dd일' }}</div>
+    <div class="remark" *ngIf="request.status === 'REJECTED'">
+      사유 : {{ request.remark }}
     </div>
   </div>
 </ion-label>

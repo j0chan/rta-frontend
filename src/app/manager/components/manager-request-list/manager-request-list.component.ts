@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { RequestStatus } from 'src/app/shared/model/common/request-status.enum'
 import { ReadManagerRequest } from 'src/app/shared/model/manager-requests/read-manager-request.interface'
 import { ManagerRequestsService } from 'src/app/shared/services/manager-requests.service'
 
@@ -22,7 +23,10 @@ export class ManagerRequestListComponent implements OnInit {
     this.managerRequestsService.getMyManagerRequests().subscribe({
       next: response => {
         if (response.success) {
-          this.requests = response.data || []
+          this.requests = (response.data || []).filter(req =>
+            req.status === RequestStatus.SUBMITTED ||
+            req.status === RequestStatus.REJECTED
+          )
         } else {
           console.error(response.message)
         }
