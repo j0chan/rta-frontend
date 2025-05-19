@@ -18,9 +18,9 @@ import { ButtonComponent } from '../components/button/button.component'
 import { InputComponent } from '../components/input/input.component'
 import { ReviewComponent } from '../components/review/review.component'
 import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
-import { UserRolePipe } from '../pipes/\buser-role.pipe'
 import { DividerComponent } from '../components/divider/divider.component'
 import { ContainerComponent } from '../components/container/container.component'
+import { UserRolePipe } from '../pipes/user-role.pipe'
 
 @NgModule({
   declarations: [
@@ -31,7 +31,6 @@ import { ContainerComponent } from '../components/container/container.component'
     CategoryPipe,
     DateFormatPipe,
     RequestStatusPipe,
-    UserRolePipe,
     HeaderBarComponent,
     ButtonComponent,
     RelativeTimePipe,
@@ -41,6 +40,7 @@ import { ContainerComponent } from '../components/container/container.component'
     StripHtmlPipe,
     DividerComponent,
     ContainerComponent,
+    UserRolePipe,
   ],
   imports: [
     CommonModule,
@@ -64,6 +64,7 @@ import { ContainerComponent } from '../components/container/container.component'
     StripHtmlPipe,
     DividerComponent,
     ContainerComponent,
+    UserRolePipe,
   ],
   providers: [
     {
