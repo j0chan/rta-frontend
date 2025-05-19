@@ -11,35 +11,35 @@
     </ion-segment-button>
   </ion-segment>
 
-<!-- 가게 정보 수정 -->
-<div *ngIf="activeTab === 'store'" class="store-card">
-  <hr />
-  <form (ngSubmit)="updateStoreInfo()">
-    <div>
-      <div class="component-title">가게명</div>
-      <app-input type="text" area="one-line" placeholder="가게명" [(value)]="editableStore.store_name" />
-    </div>
+  <!-- 가게 정보 수정 -->
+  <div *ngIf="activeTab === 'store'" class="store-card">
+    <hr />
+    <form (ngSubmit)="updateStoreInfo()">
+      <div>
+        <div class="component-title">가게명</div>
+        <app-input type="text" area="one-line" placeholder="가게명" [(value)]="editableStore.store_name" />
+      </div>
 
-    <div>
-      <div class="component-title">매니저 이름</div>
-      <app-input type="text" area="one-line" placeholder="매니저 이름" [(value)]="editableStore.owner_name" />
-    </div>
+      <div>
+        <div class="component-title">매니저 이름</div>
+        <app-input type="text" area="one-line" placeholder="매니저 이름" [(value)]="editableStore.owner_name" />
+      </div>
 
-    <div>
-      <div class="component-title">전화번호</div>
-      <app-input type="text" area="one-line" placeholder="전화번호" [(value)]="editableStore.contact_number" />
-    </div>
+      <div>
+        <div class="component-title">전화번호</div>
+        <app-input type="text" area="one-line" placeholder="전화번호" [(value)]="editableStore.contact_number" />
+      </div>
 
-    <div>
-      <div class="component-title">가게 설명</div>
-      <app-input type="textarea" area="box" placeholder="가게 설명" [(value)]="editableStore.description" />
-    </div>
+      <div>
+        <div class="component-title">가게 설명</div>
+        <app-input type="textarea" area="box" placeholder="가게 설명" [(value)]="editableStore.description" />
+      </div>
 
-    <div class="button-group">
-      <app-button label="수정하기" size="fit" [disabled]="!isStoreModified()" (click)="updateStoreInfo()"></app-button>
-    </div>
-  </form>
-</div>
+      <div class="button-group">
+        <app-button label="수정하기" size="fit" [disabled]="!isStoreModified()" (click)="updateStoreInfo()"></app-button>
+      </div>
+    </form>
+  </div>
 
   <!-- 이벤트 수정 -->
   <div *ngIf="activeTab === 'event'">
@@ -51,10 +51,6 @@
     <!-- 새 이벤트 생성 카드 -->
     <div *ngIf="showCreateEventForm" class="event-card full-width">
       <form (ngSubmit)="createEvent()">
-        <div class="title-bar">
-          <span class="page-title">새 이벤트 생성</span>
-        </div>
-
         <div>
           <div class="component-title">이벤트명</div>
           <app-input type="text" area="one-line" placeholder="이벤트명" [(value)]="newEvent.title" />
@@ -105,13 +101,15 @@
 
       <div>
         <div class="component-title">이벤트 취소하기</div>
-        <ion-toggle [(ngModel)]="editableEvent[i].is_canceled" name="is_canceled_{{ i }}" [checked]="editableEvent[i].is_canceled"></ion-toggle>
+        <ion-toggle [(ngModel)]="editableEvent[i].is_canceled" name="is_canceled_{{ i }}"
+          [checked]="editableEvent[i].is_canceled"></ion-toggle>
       </div>
 
       <div class="button-group">
         <app-button label="수정하기" size="fit" [disabled]="!isEventModified(i)" (click)="updateEvent(i)"></app-button>
         <div style="width: 8px;"></div>
-        <app-button label="삭제하기" size="fit" variant="bordered-gray" (click)="deleteEvent(events[i].event_id)"></app-button>
+        <app-button label="삭제하기" size="fit" variant="bordered-gray"
+          (click)="deleteEvent(events[i].event_id)"></app-button>
       </div>
     </div>
   </div>
