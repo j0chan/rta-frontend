@@ -182,7 +182,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.previousLng = lng
 
     if (this.map) {
-      const position = new naver.maps.LatLng(36.62112673, 127.2861977)
+      const position = new naver.maps.LatLng(lat, lng)
     
       // 기존 마커 제거
       if (this.currentLocationMarker) {
@@ -486,8 +486,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // OpenAI 키워드 요청
   generateKeywordRecommendations() {
-    const today = new Date().toLocaleDateString('ko-KR')
+    this.selectedKeyword = ''
+    this.recommendedKeywords = []
 
+    this.tabMode = 'recommend'
+    this.isResultVisible = true
+
+    const today = new Date().toLocaleDateString('ko-KR')
     const prompt = `
       오늘은 ${today}이고 날씨는 ${this.userWeather}입니다.
       이런 조건에서 사람들이 좋아할 만한 음식 키워드 3개만 추천해줘. (예: 냉면, 파스타, 삼계탕)
@@ -604,5 +609,71 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isResultVisible = true
     this.onSearch(this.searchQuery) // 현재 검색어로 다시 검색 실행
   }
+
+  focusExternalPlaceOnMap(place: NaverPlace): void {
+  if (!this.map) return
+
+  const lat = parseFloat(place.mapy) / 1e7 // Naver API는 정수로 제공됨
+  const lng = parseFloat(place.mapx) / 1e7
+  const position = new naver.maps.LatLng(lat, lng)
+
+  const marker = new naver.maps.Marker({
+    position,
+    map: this.map,
+    title: place.title.replace(/<[^>]*>/g, '') // 태그 제거
+  })
+
+  const infoHtml = `
+    <div style="
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      max-width: 280px;
+      font-family: 'Segoe UI', sans-serif;
+      position: relative;
+    ">
+      <div style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 4px;">
+        ${place.title.replace(/<[^>]*>/g, '')}
+      </div>
+      <div style="font-size: 13px; color: #666; margin-bottom: 6px;">
+        ${place.category || '카테고리 정보 없음'}
+      </div>
+      <div style="font-size: 13px; color: #444; margin-bottom: 6px;">
+        🏠 ${place.roadAddress || place.address}
+      </div>
+      ${place.telephone ? `<div style="font-size: 13px; color: #444; margin-bottom: 6px;">📞 ${place.telephone}</div>` : ''}
+      ${place.link ? `
+        <a href="${place.link}" target="_blank" style="
+          display: inline-block;
+          margin-top: 8px;
+          padding: 6px 10px;
+          background: #4caf50;
+          color: white;
+          font-size: 13px;
+          border-radius: 8px;
+          text-decoration: none;
+        ">🔗 더보기</a>
+      ` : ''}
+    </div>
+  `
+
+  const infoWindow = new naver.maps.InfoWindow({
+    content: infoHtml,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    disableAnchor: true
+  })
+
+  infoWindow.open(this.map, marker)
+
+  this.map.setCenter(position)
+  this.map.setZoom(17)
+
+  // 기존 마커/창 정리하고 리스트에 넣어 관리해도 됨 (선택)
+  this.markers.push(marker)
+  this.infoWindows.push(infoWindow)
+}
+
 
 }
