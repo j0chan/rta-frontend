@@ -69,7 +69,7 @@
           <div class="store-name" data-badge="DB">{{ store.store_name }}</div>
           <div class="store-address">{{ store.address }}</div>
         </li>
-        <li *ngFor="let place of externalPlaces" class="store-item external">
+        <li *ngFor="let place of externalPlaces" class="store-item external" (click)="focusExternalPlaceOnMap(place)">
           <div class="store-name" data-badge="외부">{{ place.title | stripHtml }}</div>
           <div class="store-address">{{ place.address }}</div>
         </li>

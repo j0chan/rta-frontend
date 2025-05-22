@@ -13,7 +13,7 @@ import { LogginedComponent } from 'src/app/shared/components/loggined/loggined.c
 import { HeaderBarComponent } from '../components/header-bar/header-bar.component'
 import { RelativeTimePipe } from '../pipes/relativeTime.pipe'
 import { DateFormatPipe } from '../pipes/dateFormat.pipe'
-import { MapComponent } from 'src/app/map/components/map.component'
+import { MapComponent } from 'src/app/map/components/map/map.component'
 import { ButtonComponent } from '../components/button/button.component'
 import { InputComponent } from '../components/input/input.component'
 import { ReviewComponent } from '../components/review/review.component'
@@ -21,6 +21,7 @@ import { StripHtmlPipe } from '../pipes/stripHtml.pipe'
 import { DividerComponent } from '../components/divider/divider.component'
 import { ContainerComponent } from '../components/container/container.component'
 import { UserRolePipe } from '../pipes/user-role.pipe'
+import { MapPreviewComponent } from 'src/app/map/components/map-preview/map-preview.component'
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { UserRolePipe } from '../pipes/user-role.pipe'
     DividerComponent,
     ContainerComponent,
     UserRolePipe,
+    MapPreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +67,7 @@ import { UserRolePipe } from '../pipes/user-role.pipe'
     DividerComponent,
     ContainerComponent,
     UserRolePipe,
+    MapPreviewComponent,
   ],
   providers: [
     {
