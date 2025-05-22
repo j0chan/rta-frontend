@@ -65,6 +65,8 @@ export class MapPreviewComponent implements AfterViewInit {
     } else {
         console.warn('좌표 변환 실패로 마커 생략')
     }
+
+    this.addCurrentLocationMarker()
   }
 
   // 좌표 변환
@@ -86,4 +88,88 @@ export class MapPreviewComponent implements AfterViewInit {
   
     return null
   }
+
+  private addCurrentLocationMarker(): void {
+    if (!navigator.geolocation) return
+
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+        const lat = pos.coords.latitude
+        const lng = pos.coords.longitude
+        const position = new naver.maps.LatLng(lat, lng)
+
+        new naver.maps.Marker({
+            position,
+            map: this.map,
+            title: '현재 위치',
+            icon: {
+            content: `
+                <div style="
+                position: relative;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                ">
+                <!-- pulse -->
+                <div style="
+                    position: absolute;
+                    width: 48px;
+                    height: 48px;
+                    background: rgba(255, 100, 100, 0.3);
+                    border-radius: 50%;
+                    animation: pulse 1.5s ease-out infinite;
+                "></div>
+
+                <!-- 중앙 원 -->
+                <div style="
+                    width: 28px;
+                    height: 28px;
+                    background: linear-gradient(135deg, #ff6b6b, #ff4d4d);
+                    border: 4px solid white;
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+                    z-index: 2;
+                    position: relative;
+                ">
+                    <div style="
+                    content: '';
+                    position: absolute;
+                    width: 8px;
+                    height: 8px;
+                    background: white;
+                    border-radius: 50%;
+                    top: 5px;
+                    left: 5px;
+                    opacity: 0.5;
+                    "></div>
+                </div>
+
+                <!-- pulse animation -->
+                <style>
+                    @keyframes pulse {
+                    0% {
+                        transform: scale(0.6);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: scale(1.6);
+                        opacity: 0;
+                    }
+                    }
+                </style>
+                </div>
+            `,
+            anchor: new naver.maps.Point(24, 24)
+            }
+        })
+        },
+        (err) => {
+        console.warn('현위치 가져오기 실패:', err)
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    )
+  }
+
 }
