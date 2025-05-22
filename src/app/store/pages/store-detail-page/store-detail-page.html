@@ -7,10 +7,7 @@
 <app-store-header *ngIf="store" [store]="store"></app-store-header>
 
 <!-- 지도 미리보기 -->
-<div class="mini-map-wrapper">
-    <!-- 미니맵 iframe -->
-    <iframe id="mini-map-iframe" src="assets/naver-map/index.html" width="100%" height="500" style=" border: none;"></iframe>
-</div>
+<app-map-preview *ngIf="store" [lat]="store.latitude ?? null" [lng]="store.longitude ?? null"></app-map-preview>
 
 <!-- 가게 정보 -->
 <!-- <app-store-info *ngIf="store" [store]="store"></app-store-info> -->

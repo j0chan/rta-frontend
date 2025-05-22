@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular'
 
 import { SharedModule } from '../shared/module/shared.module'
 import { MapPage } from './pages/map.page'
-import { MapComponent } from './components/map.component'
+import { MapComponent } from './components/map/map.component'
 import { MapRoutingModule } from './map-routing.module'
 
 @NgModule({
