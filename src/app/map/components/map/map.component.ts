@@ -66,6 +66,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       )
     }
+
+    //this.generateKeywordRecommendations(); // 추가: 컴포넌트 로드시 AI 키워드 추천 실행
   }
 
   ngAfterViewInit(): void {
@@ -86,7 +88,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       next: (res) => {
         const script = document.createElement('script')
         script.id = 'naver-map-script'
-        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${res.clientId}`
+        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${res.clientId}`
         script.onload = () => this.initMap()
         document.body.appendChild(script)
       },
