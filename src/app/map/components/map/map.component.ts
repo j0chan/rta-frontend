@@ -494,10 +494,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tabMode = 'recommend'
     this.isResultVisible = true
 
-    const today = new Date().toLocaleDateString('ko-KR')
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    
     const prompt = `
-      오늘은 ${today}이고 날씨는 ${this.userWeather}입니다.
-      이런 조건에서 사람들이 좋아할 만한 음식 키워드 3개만 추천해줘. (예: 냉면, 파스타, 삼계탕)
+      한국 ${month}월 날씨에 맞게 메뉴 3개만 추천해줘. 번호는 붙이지 말고. (예: 냉면, 파스타, 김치찌개)
     `
 
     this.openaiService.getRecommendedKeywords(prompt).subscribe({
