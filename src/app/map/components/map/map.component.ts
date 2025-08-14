@@ -126,13 +126,33 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           pos.coords.longitude, 
           pos.coords.accuracy // 정확도 값 (미터 단위)
         ),
-        (err) => console.error('위치 정보 실패:', err),
+        (err) => {
+          switch (err.code) {
+            case err.PERMISSION_DENIED:
+              console.error("위치 권한 거부됨");
+              break;
+            case err.POSITION_UNAVAILABLE:
+              console.error("위치 정보를 가져올 수 없음");
+              break;
+            case err.TIMEOUT:
+              console.error("위치 정보 가져오기 시간 초과");
+              break;
+            default:
+              console.error("알 수 없는 위치 오류:", err);
+          }
+        },
         { 
-          enableHighAccuracy: true, // 고정밀 위치 요청
-          timeout: 10000, // 10초 안에 위치 못 찾으면 실패 처리
-          maximumAge: 0 // 이전 위치 캐시 사용 금지 (항상 새 위치 요청)
+          enableHighAccuracy: false,  // 속도 문제로 false 지정 (true일 경우 정확도↑ 속도↓)
+          timeout: 20000,             // 20초까지 대기
+          maximumAge: 0               // 이전 위치 캐시 금지
         }
-      )
+      );
+
+      // 기존 watchPosition이 있으면 먼저 해제
+      if (this.watchId) {
+        navigator.geolocation.clearWatch(this.watchId);
+        this.watchId = null;
+      }
 
       // 실시간 위치 추적 (토글 없이 항상 활성화)
       this.watchId = navigator.geolocation.watchPosition(
@@ -149,9 +169,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.handlePositionChange(newLat, newLng, pos.coords.accuracy)
         },
-        (err) => console.error('위치 추적 실패:', err),
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-      )
+        (err) => {
+          switch (err.code) {
+            case err.PERMISSION_DENIED:
+              console.error("실시간 위치 권한 거부됨");
+              break;
+            case err.POSITION_UNAVAILABLE:
+              console.error("실시간 위치 정보를 가져올 수 없음");
+              break;
+            case err.TIMEOUT:
+              console.error("실시간 위치 가져오기 시간 초과");
+              break;
+            default:
+              console.error("알 수 없는 실시간 위치 오류:", err);
+          }
+        },
+        { 
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
     }
   }
 
@@ -172,6 +210,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handlePositionChange(lat: number, lng: number, accuracy: number): void {
+    
+    console.log(`[update] lat: ${lat}, lng: ${lng}, accuracy: ${accuracy}m`);
+    
     // 정확도 기준 판단 (150m 이상은 경고)
     if (accuracy > 150) {
       // alert('현재 위치의 정확도가 낮습니다. Wi-Fi 대신 GPS 환경을 권장합니다.')
@@ -185,6 +226,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.map) {
       const position = new naver.maps.LatLng(lat, lng)
+      //const position = new naver.maps.LatLng(36.62112673, 127.2861977)
     
       // 기존 마커 제거
       if (this.currentLocationMarker) {
@@ -263,6 +305,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.mapsService.readStoreByCurrentLocation(lat, lng).subscribe(
+    //this.mapsService.readStoreByCurrentLocation(36.62112673, 127.2861977).subscribe(
       (stores) => {
         this.stores = stores
         this.filteredStores = stores
@@ -614,69 +657,77 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   focusExternalPlaceOnMap(place: NaverPlace): void {
-  if (!this.map) return
+    if (!this.map) return
 
-  const lat = parseFloat(place.mapy) / 1e7 // Naver API는 정수로 제공됨
-  const lng = parseFloat(place.mapx) / 1e7
-  const position = new naver.maps.LatLng(lat, lng)
+    const lat = parseFloat(place.mapy) / 1e7 // Naver API는 정수로 제공됨
+    const lng = parseFloat(place.mapx) / 1e7
+    const position = new naver.maps.LatLng(lat, lng)
 
-  const marker = new naver.maps.Marker({
-    position,
-    map: this.map,
-    title: place.title.replace(/<[^>]*>/g, '') // 태그 제거
-  })
+    const marker = new naver.maps.Marker({
+      position,
+      map: this.map,
+      title: place.title.replace(/<[^>]*>/g, '') // 태그 제거
+    })
 
-  const infoHtml = `
-    <div style="
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      max-width: 280px;
-      font-family: 'Segoe UI', sans-serif;
-      position: relative;
-    ">
-      <div style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 4px;">
-        ${place.title.replace(/<[^>]*>/g, '')}
+    const infoHtml = `
+      <div style="
+        background: white;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        max-width: 280px;
+        font-family: 'Segoe UI', sans-serif;
+        position: relative;
+      ">
+        <div style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 4px;">
+          ${place.title.replace(/<[^>]*>/g, '')}
+        </div>
+        <div style="font-size: 13px; color: #666; margin-bottom: 6px;">
+          ${place.category || '카테고리 정보 없음'}
+        </div>
+        <div style="font-size: 13px; color: #444; margin-bottom: 6px;">
+          🏠 ${place.roadAddress || place.address}
+        </div>
+        ${place.telephone ? `<div style="font-size: 13px; color: #444; margin-bottom: 6px;">📞 ${place.telephone}</div>` : ''}
+        ${place.link ? `
+          <a href="${place.link}" target="_blank" style="
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 10px;
+            background: #4caf50;
+            color: white;
+            font-size: 13px;
+            border-radius: 8px;
+            text-decoration: none;
+          ">🔗 더보기</a>
+        ` : ''}
       </div>
-      <div style="font-size: 13px; color: #666; margin-bottom: 6px;">
-        ${place.category || '카테고리 정보 없음'}
-      </div>
-      <div style="font-size: 13px; color: #444; margin-bottom: 6px;">
-        🏠 ${place.roadAddress || place.address}
-      </div>
-      ${place.telephone ? `<div style="font-size: 13px; color: #444; margin-bottom: 6px;">📞 ${place.telephone}</div>` : ''}
-      ${place.link ? `
-        <a href="${place.link}" target="_blank" style="
-          display: inline-block;
-          margin-top: 8px;
-          padding: 6px 10px;
-          background: #4caf50;
-          color: white;
-          font-size: 13px;
-          border-radius: 8px;
-          text-decoration: none;
-        ">🔗 더보기</a>
-      ` : ''}
-    </div>
-  `
+    `
 
-  const infoWindow = new naver.maps.InfoWindow({
-    content: infoHtml,
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    disableAnchor: true
-  })
+    const infoWindow = new naver.maps.InfoWindow({
+      content: infoHtml,
+      backgroundColor: 'transparent',
+      borderWidth: 0,
+      disableAnchor: true
+    })
 
-  infoWindow.open(this.map, marker)
+    infoWindow.open(this.map, marker)
 
-  this.map.setCenter(position)
-  this.map.setZoom(17)
+    this.map.setCenter(position)
+    this.map.setZoom(17)
 
-  // 기존 마커/창 정리하고 리스트에 넣어 관리해도 됨 (선택)
-  this.markers.push(marker)
-  this.infoWindows.push(infoWindow)
-}
+    // 기존 마커/창 정리하고 리스트에 넣어 관리해도 됨 (선택)
+    this.markers.push(marker)
+    this.infoWindows.push(infoWindow)
+  }
 
+  // 현위치 재검색
+  refreshCurrentLocation(): void {
+    if (this.watchId) {
+      navigator.geolocation.clearWatch(this.watchId);
+      this.watchId = null;
+    }
+    this.requestGeolocation();
+  }
 
 }
