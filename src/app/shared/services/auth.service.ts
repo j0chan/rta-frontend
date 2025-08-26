@@ -35,6 +35,7 @@ export class AuthService {
 
   signOut(): void {
     localStorage.removeItem('accessToken') // 로그아웃 시 토큰 삭제
+    localStorage.removeItem('homePageRefreshed')
     this.isLoggedInSubject.next(false)
   }
 

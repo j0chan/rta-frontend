@@ -9,6 +9,11 @@
     <app-button label="내 매장 관리" variant="tinted-bordered" size="full" (click)="goToManagerPage()"></app-button>
   </ng-container> -->
 
+  <!-- 캐싱 테스트 코드 -->
+  <!-- <ng-container *ngIf="true">
+    <p>role 값: {{ role }}</p>
+  </ng-container> -->
+
   <ng-container *ngIf="role === 'ADMIN'">
     <ion-button expand="block" (click)="goToManagerRequestPage()">
       매니저 요청 페이지 (관리자용)
