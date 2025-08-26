@@ -35,6 +35,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   tabMode: 'search' | 'recommend' = 'search'
   isResultVisible: boolean = true
 
+  isFixedLocation: boolean = false
+  fixedLat: number = 36.62112673
+  fixedLng: number = 127.2861977
+
   constructor(
     private mapsService: MapsService,
     private toastController: ToastController,
@@ -210,6 +214,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handlePositionChange(lat: number, lng: number, accuracy: number): void {
+
+    // 토글(개발모드)이 켜져있으면 항상 fixedLat/Lng 사용
+    if (this.isFixedLocation) {
+      lat = this.fixedLat
+      lng = this.fixedLng
+      accuracy = 0
+    }
     
     console.log(`[update] lat: ${lat}, lng: ${lng}, accuracy: ${accuracy}m`);
     
@@ -226,7 +237,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.map) {
       const position = new naver.maps.LatLng(lat, lng)
-      //const position = new naver.maps.LatLng(36.62112673, 127.2861977)
     
       // 기존 마커 제거
       if (this.currentLocationMarker) {
@@ -305,7 +315,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.mapsService.readStoreByCurrentLocation(lat, lng).subscribe(
-    //this.mapsService.readStoreByCurrentLocation(36.62112673, 127.2861977).subscribe(
       (stores) => {
         this.stores = stores
         this.filteredStores = stores
@@ -728,6 +737,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.watchId = null;
     }
     this.requestGeolocation();
+  }
+
+  // 개발 모드 토글 버튼 눌렀을 때
+  toggleFixedLocation(): void {
+    this.isFixedLocation = !this.isFixedLocation
+
+    if (this.isFixedLocation) {
+      console.log("개발 모드 ON: 좌표 고정됨")
+      // 고정 좌표로 바로 위치 갱신
+      this.handlePositionChange(this.fixedLat, this.fixedLng, 0)
+    } else {
+      console.log("개발 모드 OFF: 실제 위치 추적 재개")
+      this.refreshCurrentLocation()
+    }
   }
 
 }
