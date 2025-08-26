@@ -29,6 +29,7 @@ export class HomePage implements OnInit {
 
   async signOut() {
     this.authService.signOut()
+    this.role = null // 로그아웃 시 role 초기화
     await this.router.navigate(['/signin'])
   }
 
@@ -40,7 +41,18 @@ export class HomePage implements OnInit {
     } else {
       localStorage.removeItem('homePageRefreshed')
       this.initMiniMap() // 새로고침 후 로직 실행
+
+      // 기존 role 읽기 유지
       this.role = this.authService.getUserRole()
+
+      // 로그인 상태 변화 시마다 role 업데이트
+      this.isLoggedIn$.subscribe((isLoggedIn) => {
+        if (isLoggedIn) {
+          this.role = this.authService.getUserRole()
+        } else {
+          this.role = null
+        }
+      })
     }
   }
 
