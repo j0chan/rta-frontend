@@ -1,0 +1,138 @@
+:host {
+    --card-width: 92vw;
+    --card-max-width: 520px;
+    --card-radius: 16px;
+    --shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    --btn-height: 56px;
+}
+
+.page-body {
+    position: relative;
+    padding: 0;
+    min-height: 100dvh;
+    padding-bottom: calc(var(--btn-height) + env(safe-area-inset-bottom) + 20px);
+}
+
+/* 네이티브 가로 스크롤을 막고(overflow-x: hidden), 제스처는 우리가 처리 */
+.carousel {
+    display: flex;
+    gap: 14px;
+    overflow-x: hidden;
+    /* ← 가로 스크롤 차단 */
+    overflow-y: hidden;
+    padding: 8px 16px 0;
+    /* scroll-snap 제거: 수동 한 칸 스냅을 코드로 처리 */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    /* 수직 스크롤은 브라우저에 맡김 */
+    overscroll-behavior-x: contain;
+
+    /* 혹시 남는 스크롤바 완전 숨김(안전장치) */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.carousel::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+.gift-card {
+    position: relative;
+    flex: 0 0 var(--card-width);
+    max-width: var(--card-max-width);
+    background: #fff;
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 12px;
+}
+
+/* 카드 우상단 카운터 (한 칸 넘어갈 때만 2초 표시) */
+.counter {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 4px 8px;
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+.image-box {
+    height: 160px;
+    background: #f0f0f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.info {
+    padding: 12px 14px 8px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.meta {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 4px;
+
+    .label {
+        font-size: 13px;
+        opacity: 0.7;
+        min-width: 32px;
+    }
+
+    .value {
+        font-size: 16px;
+        font-weight: 600;
+    }
+}
+
+.barcode-box {
+    margin: 12px 14px 16px;
+    height: 56px;
+    border: 1.5px dashed #c9c9cf;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1.2px;
+    color: #666;
+}
+
+/* 하단 고정 새로고침 버튼 (이전 그대로) */
+.refresh-wrap {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(env(safe-area-inset-bottom) + 8px);
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+}
+
+.refresh-btn {
+    width: var(--card-width);
+    max-width: var(--card-max-width);
+    height: var(--btn-height);
+    border-radius: 12px;
+    border: 1px solid #e3e3e7;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+    font-weight: 700;
+}

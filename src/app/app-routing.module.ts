@@ -49,10 +49,12 @@ const routes: Routes = [
   },
   {
     path: 'search',
-    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
-  }
-
-
+    loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
+  },
+  {
+    path: 'my-gift-card',
+    loadChildren: () => import('./gift-card/my-gift-card.module').then(m => m.MyGiftCardModule)
+  },
 ]
 
 @NgModule({
