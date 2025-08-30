@@ -1,19 +1,37 @@
 <ion-list>
-  미승인된 요청
-  <ion-item *ngFor="let request of getNotConfirmedRequests()">
-    <ion-label>
-      <ng-container>
-        <app-manager-request [request]="request"></app-manager-request>
-      </ng-container>
-    </ion-label>
-  </ion-item>
-  처리 완료된 요청
-  <ion-item *ngFor="let request of getConfirmedRequests()">
-    <ion-label>
-      <ng-container>
-        <app-manager-request [request]="request"></app-manager-request>
-      </ng-container>
-    </ion-label>
-  </ion-item>
+  <!-- 미승인된 요청 -->
+  <div class="section">
+    <div class="section-title">미승인된 요청</div>
+    <app-divider></app-divider>
 
+    <ng-container *ngIf="getNotConfirmedRequests().length > 0; else noPending">
+      <ion-item *ngFor="let request of getNotConfirmedRequests()">
+        <ion-label>
+          <app-manager-request [request]="request"></app-manager-request>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-template #noPending>
+      <div class="empty-text">현재 미승인된 요청이 없습니다</div>
+    </ng-template>
+  </div>
+
+  <!-- 처리 완료된 요청 -->
+  <div class="section">
+    <div class="section-title">처리 완료된 요청</div>
+    <app-divider></app-divider>
+
+    <ng-container *ngIf="getConfirmedRequests().length > 0; else noCompleted">
+      <ion-item *ngFor="let request of getConfirmedRequests()">
+        <ion-label>
+          <app-manager-request [request]="request"></app-manager-request>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-template #noCompleted>
+      <div class="empty-text">아직 처리 완료된 요청이 없습니다</div>
+    </ng-template>
+  </div>
 </ion-list>
