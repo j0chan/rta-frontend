@@ -31,7 +31,11 @@
   <!-- 비고 -->
   <div class="input-container">
     <div class="component-title">비고</div>
-    <app-input [placeholder]="'관리자 메모를 입력하세요'" [(value)]="remark" area="one-line">
+    <app-input
+      [placeholder]="'관리자 메모를 입력하세요'"
+      [value]="request.remark"
+      (valueChange)="request.remark = $event"
+      area="one-line">
     </app-input>
   </div>
 
@@ -48,5 +52,5 @@
   </div>
 
   <!-- 완료 -->
-  <app-button label="완료" variant="filled" size="full" (click)="updateManagerRequest()"> </app-button>
+  <app-button label="완료" variant="filled" size="full" (click)="confirmAndUpdate()"> </app-button>
 </app-container>
