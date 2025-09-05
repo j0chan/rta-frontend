@@ -1,37 +1,40 @@
 <div class="search-bar">
-  <app-search-bar (searchEvent)="onSearch($event)" (clearEvent)="onClearSearch()"></app-search-bar>
+  <app-search-bar 
+    (searchEvent)="onSearch($event)" 
+    (clearEvent)="onClearSearch()">
+  </app-search-bar>
 </div>
 
 <!-- 사용자 날씨 입력창 -->
-<div class="weather-input-wrapper">
-  <input [(ngModel)]="userWeather" placeholder="오늘 날씨는 어떤가요? " />
+<!-- <div class="weather-input-wrapper">
+  <input [(ngModel)]="userWeather" placeholder="오늘 날씨는 어떤가요?" />
   <button (click)="generateKeywordRecommendations()">추천받기</button>
+</div> -->
+
+<!-- 추천 키워드 버튼 리스트 (항상 표시) -->
+<div *ngIf="recommendedKeywords.length > 0" class="keyword-chips">
+  <p>추천 키워드</p>
+  <div class="chip-list">
+    <button
+      *ngFor="let keyword of recommendedKeywords"
+      class="chip"
+      [class.active]="selectedKeyword === keyword"
+      (click)="onClickKeyword(keyword)">
+      {{ keyword }}
+    </button>
+  </div>
 </div>
 
-<!-- 검색/추천 결과 전체 묶음 -->
+<!-- 검색/추천 결과 영역 -->
 <div *ngIf="searchQuery || selectedKeyword || recommendedKeywords.length > 0">
 
   <!-- 닫힌 상태일 때: 다시 보기 버튼 -->
-  <div *ngIf="!isResultVisible" class="result-toggle-btn">
+  <!-- <div *ngIf="!isResultVisible" class="result-toggle-btn">
     <button (click)="isResultVisible = true">🔍 결과 다시 보기</button>
-  </div>
+  </div> -->
 
-  <!-- 열린 상태일 때 -->
+  <!-- 열린 상태일 때: 탭 + 결과 목록 -->
   <div *ngIf="isResultVisible">
-
-    <!-- 추천 키워드 버튼 리스트 -->
-    <div *ngIf="recommendedKeywords.length > 0" class="keyword-chips">
-      <p>추천 키워드</p>
-      <div class="chip-list">
-        <button
-          *ngFor="let keyword of recommendedKeywords"
-          class="chip"
-          [class.active]="selectedKeyword === keyword"
-          (click)="onClickKeyword(keyword)">
-          {{ keyword }}
-        </button>
-      </div>
-    </div>
 
     <!-- 탭 버튼 -->
     <div class="result-tabs">
@@ -62,7 +65,7 @@
       </ul>
     </div>
 
-    <!-- 추천 키워드 탭 -->
+    <!-- 추천 결과 탭 -->
     <div *ngIf="tabMode === 'recommend' && (matchedStores.length > 0 || externalPlaces.length > 0)" class="search-result-list">
       <ul class="store-list">
         <li *ngFor="let store of matchedStores" class="store-item db" (click)="focusStoreOnMap(store)">
