@@ -17,6 +17,15 @@
     </label>
   </div>
 
+  <!-- 기본 프로필로 -->
+   <app-button
+    label="기본 프로필로"
+    variant="filled"
+    size="fit"
+    [disabled]="isRevertedToDefault" 
+    (click)="revertToDefaultProfileImage()">
+  </app-button>
+
   <!-- 닉네임 입력창 -->
   <app-input 
     type="text" 
