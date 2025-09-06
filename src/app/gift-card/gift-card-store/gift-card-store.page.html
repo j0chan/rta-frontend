@@ -1,0 +1,55 @@
+<div class="page-wrap">
+    <!-- ✅ 사용자 맞춤 추천 슬라이더 -->
+    <section class="section section-reco">
+        <div class="reco-wrap">
+            <div #recoCarousel class="reco-carousel">
+                <div #recoCard class="reco-card" *ngFor="let r of recoItems; let i = index">
+                    <div class="reco-image">{{ r.imageText }}</div>
+                    <div class="reco-title">사용자 맞춤 추천</div>
+                    <div class="reco-desc">최근 인기 • {{ i + 1 }}번 카드</div>
+                </div>
+            </div>
+
+            <div class="reco-counter" *ngIf="showRecoCounter">
+                {{ recoIndex + 1 }}/{{ recoItems.length }}
+            </div>
+        </div>
+    </section>
+
+    <!-- 카테고리 선택 바 -->
+    <section class="section section-categories">
+        <div class="category-bar">
+            <button class="cat-chip" [class.active]="selectedCategory === c.id" *ngFor="let c of categories"
+                (click)="selectCategory(c.id)">
+                {{ c.label }}
+            </button>
+        </div>
+    </section>
+
+    <!-- 상태 메시지 -->
+    <section class="section" *ngIf="loading || errorMsg">
+        <div class="state" *ngIf="loading">불러오는 중…</div>
+        <div class="state error" *ngIf="!loading && errorMsg">{{ errorMsg }}</div>
+    </section>
+
+    <!-- 상품권 리스트 -->
+    <section class="section" *ngIf="!loading && !errorMsg">
+        <div class="grid">
+            <article class="card card-item" *ngFor="let item of items; trackBy: trackById" (click)="goDetail(item)"
+                role="button">
+                <div class="thumb" [class.placeholder]="!item.image_url">
+                    <img *ngIf="item.image_url" [src]="item.image_url" alt="gift" (error)="onImgError($event)">
+                    <span *ngIf="!item.image_url">이미지</span>
+                </div>
+                <div class="card-body">
+                    <div class="brand">{{ item.brand || '브랜드' }}</div>
+                    <div class="title" [title]="item.name">{{ item.name }}</div>
+                    <div class="price">{{ item.amount | number: '1.0-0' }}원</div>
+                    <div class="desc" *ngIf="item.shortDesc" [title]="item.shortDesc">
+                        {{ item.shortDesc }}
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
