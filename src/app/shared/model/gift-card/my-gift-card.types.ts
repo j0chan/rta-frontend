@@ -1,12 +1,24 @@
-// src/app/shared/model/gift-card/my-gift-card.types.ts
 export type GiftCardType = 'EXCHANGE' | 'AMOUNT';
+
+export type GiftCategoryCode =
+    | 'CHICKEN_BURGER'
+    | 'COFFEE_DRINK'
+    | 'BAKERY_DESSERT'
+    | 'APPAREL'
+    | 'ETC';
 
 export interface GiftCard {
     gift_card_id: number;
     name: string;
     type: GiftCardType;
-    exchange_item_name?: string;
+    amount: number;
+    category: GiftCategoryCode;
     image_url?: string | null;
+    // 필요시 확장 필드 (브랜드/설명 등)
+    brand?: string;
+    title?: string;
+    shortDesc?: string;
+    longDesc?: string;
 }
 
 export interface GiftCardPocket {
@@ -31,10 +43,9 @@ export interface GiftCardUsageHistory {
     pocket_id: number;
     amount_used?: number | null;
     store: string;
-    used_at: string; // ISO datetime
+    used_at: string;
 }
 
-/** ✅ 백엔드에서 쓰는 공용 래퍼 구조 */
 export interface ApiResponseDTO<T> {
     success: boolean;
     statusCode: number;

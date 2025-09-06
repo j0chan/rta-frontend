@@ -1,11 +1,7 @@
 <main class="page-body">
   <div #carousel class="carousel">
-    <article
-      #cardRef
-      class="gift-card"
-      *ngFor="let p of visiblePockets; let i = index; trackBy: trackByPocket"
-      aria-label="gift card"
-    >
+    <article #cardRef class="gift-card" *ngFor="let p of visiblePockets; let i = index; trackBy: trackByPocket"
+      aria-label="gift card">
       <div class="counter" *ngIf="showCounter && i === currentIndex">
         {{ displayIndex }}
       </div>
@@ -17,7 +13,7 @@
 
         <div class="meta" *ngIf="p.giftCard.type === 'EXCHANGE'">
           <span class="label">상품</span>
-          <span class="value">{{ p.giftCard.exchange_item_name || '상품 정보' }}</span>
+          <span class="value">{{ p.giftCard.name || '상품권' }}</span>
         </div>
 
         <div class="meta" *ngIf="p.giftCard.type === 'AMOUNT'">
