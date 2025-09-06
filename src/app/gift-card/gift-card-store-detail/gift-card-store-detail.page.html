@@ -1,0 +1,36 @@
+<div class="detail-wrap">
+    <section class="section" *ngIf="loading || errorMsg">
+        <div class="state" *ngIf="loading">불러오는 중…</div>
+        <div class="state error" *ngIf="!loading && errorMsg">{{ errorMsg }}</div>
+    </section>
+
+    <ng-container *ngIf="!loading && !errorMsg && item">
+        <!-- 상단 큰 카드 - 이미지 텍스트 박스 -->
+        <section class="section">
+            <div class="card">
+                <div class="card-body pad2">
+                    <div class="hero" [class.placeholder]="!item.image_url">
+                        <img *ngIf="item.image_url" [src]="item.image_url" alt="gift" (error)="onImgError($event)" />
+                        <span *ngIf="!item.image_url">이미지</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 설명 -->
+        <section class="section">
+            <div class="brand">{{ item.category }}</div>
+            <h1 class="title">{{ item.name }}</h1>
+            <div class="price">{{ item.amount | number:'1.0-0' }}원</div>
+            <p class="desc short" *ngIf="item.shortDesc">{{ item.shortDesc }}</p>
+            <p class="desc long" *ngIf="item.longDesc">{{ item.longDesc }}</p>
+        </section>
+    </ng-container>
+</div>
+
+<!-- 하단 고정 구매 바 -->
+<div class="purchase-bar">
+    <button class="btn-primary" [disabled]="submitting || loading || !!errorMsg" (click)="purchase()">
+        {{ submitting ? '구매 중…' : '구매하기' }}
+    </button>
+</div>
