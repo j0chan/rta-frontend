@@ -53,7 +53,17 @@ const routes: Routes = [
   },
   {
     path: 'my-gift-card',
-    loadChildren: () => import('./gift-card/my-gift-card.module').then(m => m.MyGiftCardModule)
+    loadChildren: () => import('./gift-card/my-gift-card/my-gift-card.module').then(m => m.MyGiftCardModule)
+  },
+  {
+    path: 'gift-card-store',
+    loadChildren: () =>
+      import('./gift-card/gift-card-store/gift-card-store.module').then(m => m.GiftCardStoreModule),
+  },
+  {
+    path: 'gift-card-store-detail/:id',
+    loadChildren: () =>
+      import('./gift-card/gift-card-store-detail/gift-card-store-detail.module').then(m => m.GiftCardStoreDetailModule),
   },
 ]
 
