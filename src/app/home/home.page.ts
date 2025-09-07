@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   currentLng: number | null = null
   stores: ReadStore[] = []
   role: string | null = null
+  
 
   constructor(
     private authService: AuthService,
@@ -41,6 +42,18 @@ export class HomePage implements OnInit {
     } else {
       localStorage.removeItem('homePageRefreshed')
       this.initMiniMap() // 새로고침 후 로직 실행
+
+      // 기존 role 읽기 유지
+      this.role = this.authService.getUserRole()
+
+      // 로그인 상태 변화 시마다 role 업데이트
+      this.isLoggedIn$.subscribe((isLoggedIn) => {
+        if (isLoggedIn) {
+          this.role = this.authService.getUserRole()
+        } else {
+          this.role = null
+        }
+      })
 
       // 기존 role 읽기 유지
       this.role = this.authService.getUserRole()
@@ -118,7 +131,5 @@ export class HomePage implements OnInit {
     this.router.navigate(['/manager'])
   }
 
-  goToManagerRequestPage() {
-    this.router.navigate(['/admin/manager-request-page'])
-  }
+  
 }

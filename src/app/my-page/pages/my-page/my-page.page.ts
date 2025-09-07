@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { AuthService } from 'src/app/shared/services/auth.service'
 
 @Component({
   selector: 'app-my-page',
@@ -6,7 +8,15 @@ import { Component, OnInit } from '@angular/core'
   standalone: false,
 })
 export class MyPagePage implements OnInit {
-  constructor() { }
+  role: string | null = null
 
-  ngOnInit() { }
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.role = this.authService.getUserRole()
+  }
+
+  goToManagerRequestPage() {
+    this.router.navigate(['/admin/manager-request-page'])
+  }
 }
