@@ -29,4 +29,12 @@ export class UsersService {
       { headers: this.getAuthHeaders() }
     )
   }
+
+  // 기본 프로필로 되돌리기
+  revertToDefaultProfileImage(): Observable<ApiResponseDTO<void>> {
+    return this.http.delete<ApiResponseDTO<void>>(
+      `${this.apiUrl}profile-image`,
+      { headers: this.getAuthHeaders() }
+    )
+  }
 }

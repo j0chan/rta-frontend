@@ -444,7 +444,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           <p style="margin: 4px 0; font-size: 14px;">ℹ️ 설명: ${store.description || '설명 없음'}</p>
         </div>
   
-        <a href="http://localhost:8100/stores/${store.store_id}" target="_self" style="display: block; margin-top: 12px; text-align: center; text-decoration: none;">
+        <a href="http://localhost:4200/stores/${store.store_id}" target="_self" style="display: block; margin-top: 12px; text-align: center; text-decoration: none;">
           <button style="
             background-color: #4CAF50;
             color: #fff;

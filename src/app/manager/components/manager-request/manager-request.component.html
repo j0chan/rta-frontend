@@ -11,7 +11,7 @@
     </div>
     <div class="date">{{ request.created_at | date: 'yyyy년 MM월 dd일' }}</div>
     <div class="remark" *ngIf="request.status === 'REJECTED'">
-      사유 : {{ request.remark }}
+      사유: {{ request.remark }}
     </div>
   </div>
 </ion-label>

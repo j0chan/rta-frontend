@@ -1,7 +1,5 @@
-<div class="page-title">미승인 요청</div>
-
 <ion-list>
-  <ion-item *ngFor="let request of requests">
+  <ion-item *ngFor="let request of requests; let i = index" [class.no-border]="i === requests.length - 1">
     <ion-label>
       <ng-container>
         <app-manager-request [request]="request"></app-manager-request>

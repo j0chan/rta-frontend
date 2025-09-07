@@ -1,4 +1,4 @@
-<app-container>
+<app-container class="manager-request">
   <div class="page-title">{{ request.store_name }}</div>
 
   <!-- 신청자 -->
@@ -32,7 +32,7 @@
   <div class="input-container">
     <div class="component-title">비고</div>
     <app-input
-      [placeholder]="'관리자 메모를 입력하세요'"
+      placeholder="관리자 메모를 입력하세요"
       [value]="request.remark"
       (valueChange)="request.remark = $event"
       area="one-line">

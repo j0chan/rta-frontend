@@ -1,10 +1,12 @@
-.page-title {
-  margin-bottom: 16px;
-}
-
 .input-container {
   margin-bottom: 16px; /* 블록 간 간격 통일 */
   line-height: 1.6; /* 텍스트 줄간격 */
+}
+
+.input-container.no-border {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .input-container.inline {

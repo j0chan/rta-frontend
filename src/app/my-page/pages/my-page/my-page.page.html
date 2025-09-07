@@ -1,9 +1,20 @@
-<ion-content [fullscreen]="true">
+<ion-header [translucent]="false">
   <app-header-bar></app-header-bar>
+</ion-header>
 
-  <div class="page-title">마이페이지</div>
+
+<ion-content [fullscreen]="true">
+
   <app-my-info></app-my-info>
-  <hr style="height: 3px; background-color: #ccc; border: none; margin: 16px auto;" />
 
-  <app-my-review-list></app-my-review-list>
+  <ng-container *ngIf="role === 'ADMIN'">
+    <ion-button expand="block" (click)="goToManagerRequestPage()">
+      매니저 요청 관리
+    </ion-button>
+  </ng-container>
+
+  <ng-container *ngIf="role !== 'ADMIN'">
+    <hr style="height: 3px; background-color: #ccc; border: none; margin: 16px auto;" />
+    <app-my-review-list></app-my-review-list>
+  </ng-container>
 </ion-content>
