@@ -3,44 +3,40 @@
     <span class="page-title">내 정보 수정</span>
   </div>
 
-  <!-- 이미지 -->
-  <div class="image-box">
-    <!-- 미리보기 -->
-    <span *ngIf="previewUrls.length > 0">
-      <img *ngFor="let url of previewUrls" [src]="url" class="preview-img" />
-    </span>
+  <div class="edit-my-info-container">
+    <div class="profile-image-section">
+      <div class="section-title">프로필 사진</div>
+      <div class="image-box">
+        <!-- 미리보기 -->
+        <span *ngIf="previewUrls.length > 0">
+          <img *ngFor="let url of previewUrls" [src]="url" class="preview-img" />
+        </span>
 
-    <!-- 업로드 -->
-    <label class="upload-button">
-      <ion-icon name="add" class="upload-icon"></ion-icon>
-      <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
-    </label>
+        <!-- 업로드 -->
+        <label class="upload-button">
+          <ion-icon name="add" class="upload-icon"></ion-icon>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+        </label>
+      </div>
+      <app-button label="프로필 사진 삭제" variant="tinted" size="fit-small" [disabled]="isRevertedToDefault"
+        (click)="revertToDefaultProfileImage()">
+      </app-button>
+    </div>
   </div>
+  
+  <app-divider></app-divider>
 
-  <!-- 기본 프로필로 -->
-   <app-button
-    label="기본 프로필로"
-    variant="filled"
-    size="fit"
-    [disabled]="isRevertedToDefault" 
-    (click)="revertToDefaultProfileImage()">
-  </app-button>
+  <div class="edit-my-info-container">
+    <div class="nickname-section">
+      <div class="section-title">닉네임</div>
+      <app-input type="text" placeholder="새 닉네임" area="one-line" [(value)]="new_nickname"
+        (valueChange)="onNicknameChange()">
+      </app-input>
+    </div>
 
-  <!-- 닉네임 입력창 -->
-  <app-input 
-    type="text" 
-    placeholder="새 닉네임" 
-    area="one-line" 
-    [(value)]="new_nickname" 
-    (valueChange)="onNicknameChange()">
-  </app-input>
-
-  <!-- 제출 버튼 -->
-  <app-button 
-    label="변경 완료" 
-    variant="filled" 
-    size="full" 
-    [disabled]="isButtonDisabled" 
-    (click)="onSubmit()">
-  </app-button>
+    <div class="submit-section">
+      <app-button label="변경 완료" variant="filled" size="full" [disabled]="isButtonDisabled" (click)="onSubmit()">
+      </app-button>
+    </div>
+  </div>
 </ion-content>
