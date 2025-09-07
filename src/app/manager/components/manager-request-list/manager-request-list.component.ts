@@ -6,6 +6,7 @@ import { ManagerRequestsService } from 'src/app/shared/services/manager-requests
 @Component({
   selector: 'app-manager-request-list',
   templateUrl: './manager-request-list.component.html',
+  styleUrls: ['./manager-request-list.component.scss'],
   standalone: false,
 })
 export class ManagerRequestListComponent implements OnInit {
