@@ -1,19 +1,29 @@
-<div class="sub-title-bar">
-  <div class="component-title">나의 가게</div>
-  <app-button label="신청하기" variant="borderless" (click)="goCreateManagerRequestPage()"></app-button>
-</div>
-
 <ion-list>
-  <ion-item *ngFor="let store of stores">
-    <ion-label>
-      <h2 style="font-size: 16px;">{{ store.store_name }}</h2>
-    </ion-label>
-    <app-button label="접속" variant="tinted" (click)="goStorePage(store)" style="margin-right: 8px;"></app-button>
-    <app-button label="관리" (click)="goEditPage(store)"></app-button>
-  </ion-item>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">내 가게</div>
+      <app-button label="신청하기" variant="borderless" size="fit-small"
+        (click)="goCreateManagerRequestPage()"></app-button>
+    </div>
+
+    <div class="store-list">
+      <ion-item *ngFor="let store of stores; let i = index" [class.no-border]="i === stores.length - 1">
+        <ion-label>
+          <h2 style="font-size: 16px;">{{ store.store_name }}</h2>
+        </ion-label>
+        <app-button label="접속" variant="tinted" size="fit-small" (click)="goStorePage(store)" style="margin-right: 8px;"></app-button>
+        <app-button label="관리" size="fit-small" (click)="goEditPage(store)"></app-button>
+      </ion-item>
+    </div>
+
+  </div>
 </ion-list>
 
-<div class="sub-title-bar">
-  <div class="component-title">미승인 요청</div>
-  <app-button label="관리" variant="borderless" (click)="goMyManagerRequestPage()"></app-button>
+<app-divider></app-divider>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">미승인 요청</div>
+    <app-button label="관리" variant="borderless" size="fit-small" (click)="goMyManagerRequestPage()"></app-button>
+  </div>
 </div>

@@ -5,12 +5,14 @@ import { AuthService } from 'src/app/shared/services/auth.service'
 @Component({
   selector: 'app-my-page',
   templateUrl: './my-page.page.html',
+  styleUrls: ['./my-page.page.scss'],
+
   standalone: false,
 })
 export class MyPagePage implements OnInit {
   role: string | null = null
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.role = this.authService.getUserRole()

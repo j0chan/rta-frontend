@@ -11,6 +11,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-left: 10px;
     padding: 1rem; // 적절히 조정
 
     .profile-left {
@@ -25,10 +26,28 @@
         }
 
         .profile-text {
-            font-size: 14pt;
+            font-size: 11pt;
             font-weight: 500;
         }
     }
+}
+
+.section {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 12px 10px 8px 10px;
+    color: #222;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #888;
+    padding: 12px;
+    text-align: center;
 }
 
 
@@ -49,6 +68,7 @@
 .info-table {
     display: flex;
     flex-direction: column;
+    margin: 12px 10px 8px 30px;
     gap: 10px;
 }
 
