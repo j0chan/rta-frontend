@@ -42,15 +42,10 @@
   <!-- 승인/거절 -->
   <div class="button-group">
     <app-button label="승인" variant="filled" size="full"
-      [ngClass]="{ 'active': selectedStatus === RequestStatus.APPROVED }"
-      (click)="toggleStatus(RequestStatus.APPROVED)">
+      (click)="confirmAndUpdate(RequestStatus.APPROVED)">
     </app-button>
     <app-button label="거절" variant="tinted" size="full"
-      [ngClass]="{ 'active': selectedStatus === RequestStatus.REJECTED }"
-      (click)="toggleStatus(RequestStatus.REJECTED)">
+      (click)="confirmAndUpdate(RequestStatus.REJECTED)">
     </app-button>
   </div>
-
-  <!-- 완료 -->
-  <app-button label="완료" variant="filled" size="full" (click)="confirmAndUpdate()"> </app-button>
 </app-container>

@@ -34,11 +34,8 @@ export class ManagerRequestComponent implements OnInit {
     }
   }
 
-  toggleStatus(status: RequestStatus) {
+  async confirmAndUpdate(status: RequestStatus) {
     this.selectedStatus = status
-  }
-
-  async confirmAndUpdate() {
     if (!this.request_id || !this.selectedStatus) return
 
     // 알림창 띄우기
@@ -67,7 +64,7 @@ export class ManagerRequestComponent implements OnInit {
 
     const updateData: UpdateManagerRequest = {
       status: this.selectedStatus,
-      remark: this.request.remark
+      remark: this.request.remark,
     }
 
     this.managerRequestsService.updateManagerRequest(this.request_id, updateData).subscribe({
