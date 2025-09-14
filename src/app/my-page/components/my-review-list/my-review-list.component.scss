@@ -1,0 +1,101 @@
+.footer-button-row {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px; // 버튼 사이 간격
+    z-index: 100;
+}
+
+.profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+    padding: 1rem; // 적절히 조정
+
+    .profile-left {
+        display: flex;
+        align-items: center;
+
+        .profile-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+
+        .profile-text {
+            font-size: 11pt;
+            font-weight: 500;
+        }
+    }
+}
+
+.section {
+    margin-bottom: 0px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 12px 10px 8px 10px;
+    color: #222;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #888;
+    padding: 12px;
+    text-align: center;
+}
+
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sub-title-bar {
+    width: 100%;
+    align-items: center;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.info-table {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+    gap: 0;
+}
+
+.divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 8px 0;
+}
+
+.key {
+    display: inline-block;
+    width: 20%;
+    color: var(--deep-gray);
+    font-size: 18px;
+}
+
+.value {
+    color: var(--black);
+    font-size: 18px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nickname {
+    margin: 10px;
+}

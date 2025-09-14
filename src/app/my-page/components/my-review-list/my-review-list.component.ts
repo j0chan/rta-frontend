@@ -5,6 +5,7 @@ import { MyPageService } from 'src/app/shared/services/my-page.service'
 @Component({
   selector: 'app-my-review-list',
   templateUrl: './my-review-list.component.html',
+  styleUrls: ['./my-review-list.component.scss'],
   standalone: false,
 })
 export class MyReviewListComponent implements OnInit {
