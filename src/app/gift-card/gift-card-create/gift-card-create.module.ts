@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GiftCardCreateRoutingModule } from './gift-card-create-routing.module';
 import { GiftCardCreatePage } from './gift-card-create.page';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
     declarations: [GiftCardCreatePage],
@@ -14,6 +16,8 @@ import { GiftCardCreatePage } from './gift-card-create.page';
         RouterModule,
         HttpClientModule,
         GiftCardCreateRoutingModule,
+        SharedModule,
+        IonicModule,
     ],
 })
 export class GiftCardCreateModule { }
