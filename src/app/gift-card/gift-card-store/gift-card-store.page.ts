@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core'
-import { Router } from '@angular/router'
-import { Subscription, timer } from 'rxjs'
-import { GiftCard } from 'src/app/shared/model/gift-card/my-gift-card.types'
-import { GiftCardStoreService, GiftCategoryCode } from 'src/app/shared/services/gift-card-store.service'
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { GiftCard } from 'src/app/shared/model/gift-card/my-gift-card.types';
+import { GiftCardStoreService, GiftCategoryCode } from 'src/app/shared/services/gift-card-store.service';
 
 type UiCategory = { id: GiftCategoryCode | 'ALL'; label: string };
 
@@ -27,22 +27,25 @@ export class GiftCardStorePage implements OnInit, AfterViewInit, OnDestroy {
     errorMsg = '';
     items: GiftCard[] = [];
 
-    // ✅ 추천 슬라이더
+    /* ===== 추천 캐러셀 ===== */
     @ViewChild('recoCarousel', { static: false }) recoCarouselRef?: ElementRef<HTMLDivElement>;
     @ViewChildren('recoCard') recoCardRefs?: QueryList<ElementRef<HTMLDivElement>>;
 
+    // 이미지 전용
     recoItems = [
-        { imageText: '추천 1' },
-        { imageText: '추천 2' },
-        { imageText: '추천 3' },
+        { image_url: '', imageText: '추천 1' },
+        { image_url: '', imageText: '추천 2' },
+        { image_url: '', imageText: '추천 3' },
     ];
     recoIndex = 0;
+
+    // 카운터는 항상 표시
     showRecoCounter = true;
-    private recoTimer?: any;         // setInterval 핸들
+
+    private recoTimer?: any;     // setInterval 핸들
     private recoTouching = false;
     private startX = 0;
     private lastX = 0;
-    private touchStartAt = 0;
 
     private subList?: Subscription;
     private subLoad?: Subscription;
@@ -53,44 +56,22 @@ export class GiftCardStorePage implements OnInit, AfterViewInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        this.subList = this.storeSvc.getCatalog().subscribe((list) => {
-            this.items = list ?? [];
-        });
-        this.fetch(); // 최초
+        this.subList = this.storeSvc.getCatalog().subscribe((list) => this.items = list ?? []);
+        this.fetch();
     }
-
-    ngAfterViewInit(): void {
-        // 자동 슬라이드
-        this.startAutoSlide();
-
-        // 제스처(드래그 후 1장 이동)
-        const el = this.recoCarouselRef?.nativeElement;
-        if (!el) return;
-        el.addEventListener('touchstart', this.onTouchStart, { passive: false });
-        el.addEventListener('touchmove', this.onTouchMove, { passive: false });
-        el.addEventListener('touchend', this.onTouchEnd, { passive: true });
-    }
-
+    ngAfterViewInit(): void { this.startAutoSlide(); }
     ngOnDestroy(): void {
         this.subList?.unsubscribe();
         this.subLoad?.unsubscribe();
         this.stopAutoSlide();
-
-        const el = this.recoCarouselRef?.nativeElement;
-        if (el) {
-            el.removeEventListener('touchstart', this.onTouchStart as any);
-            el.removeEventListener('touchmove', this.onTouchMove as any);
-            el.removeEventListener('touchend', this.onTouchEnd as any);
-        }
     }
 
-    // --- 데이터 로드 ---
+    /* ===== 데이터 로드 ===== */
     selectCategory(id: UiCategory['id']) {
         if (this.selectedCategory === id) return;
         this.selectedCategory = id;
         this.fetch();
     }
-
     private fetch() {
         this.loading = true;
         this.errorMsg = '';
@@ -99,84 +80,69 @@ export class GiftCardStorePage implements OnInit, AfterViewInit, OnDestroy {
         const category = this.selectedCategory === 'ALL' ? undefined : (this.selectedCategory as GiftCategoryCode);
         this.subLoad = this.storeSvc.refreshCatalog({ category, sort: 'LATEST' }).subscribe({
             next: () => (this.loading = false),
-            error: (err) => {
-                console.error(err);
-                this.errorMsg = '상품권 목록을 불러오지 못했습니다.';
-                this.loading = false;
-            },
+            error: (err) => { console.error(err); this.errorMsg = '상품권 목록을 불러오지 못했습니다.'; this.loading = false; },
         });
     }
 
-    trackById(_: number, item: GiftCard) {
-        return item.gift_card_id;
-    }
-    goDetail(item: GiftCard) {
-        this.router.navigate(['/gift-card-store-detail', item.gift_card_id]);
-    }
+    trackById(_: number, item: GiftCard) { return item.gift_card_id; }
+    goDetail(item: GiftCard) { this.router.navigate(['/gift-card-store-detail', item.gift_card_id]); }
+    onImgError(e: Event) { (e.target as HTMLImageElement).style.display = 'none'; }
 
-    onImgError(e: Event) {
-        const t = e.target as HTMLImageElement;
-        t.style.display = 'none';
-    }
-
-    // --- 추천 슬라이더 로직 ---
+    /* ===== 캐러셀 로직 ===== */
     private startAutoSlide() {
         this.stopAutoSlide();
-        this.recoTimer = setInterval(() => {
-            this.slideTo(this.recoIndex + 1);
-        }, 4000); // 4초 간격
+        this.recoTimer = setInterval(() => this.slideTo(this.recoIndex + 1), 4000);
     }
     private stopAutoSlide() {
         if (this.recoTimer) clearInterval(this.recoTimer);
-        this.recoTimer = null;
+        this.recoTimer = undefined;
     }
+    private getCardGap(): number {
+        const el = this.recoCarouselRef?.nativeElement;
+        if (!el) return 12;
+        const gap = getComputedStyle(el).gap || '12px';
+        const n = parseFloat(gap);
+        return isNaN(n) ? 12 : n;
+    }
+    /** index로 이동 (마지막→첫, 첫→마지막 루프) */
     private slideTo(idx: number) {
         const el = this.recoCarouselRef?.nativeElement;
-        const card = this.recoCardRefs?.get(0)?.nativeElement; // 폭 계산 용
-        if (!el || !card) return;
+        const card = this.recoCardRefs?.get(0)?.nativeElement;
+        if (!el || !card || this.recoItems.length === 0) return;
 
         const last = this.recoItems.length - 1;
-        const target = Math.max(0, Math.min(last, idx));
-        this.recoIndex = target;
-        const offset = target * (card.offsetWidth + 12 /*gap*/);
+        if (idx > last) idx = 0;
+        if (idx < 0) idx = last;
+
+        this.recoIndex = idx;
+
+        const offset = idx * (card.offsetWidth + this.getCardGap());
         el.scrollTo({ left: offset, behavior: 'smooth' });
-        this.flashCounter();
-    }
-    private flashCounter() {
-        this.showRecoCounter = true;
-        // 2초 뒤 자동 숨김
-        timer(2000).subscribe(() => (this.showRecoCounter = false));
     }
 
-    // 드래그 제스처 (항상 한 칸만 이동, 드래그 중 이동 없음)
-    private onTouchStart = (e: TouchEvent) => {
+    // 수동 스와이프 (템플릿 바인딩용 public)
+    public onTouchStart = (e: TouchEvent) => {
         this.stopAutoSlide();
         this.recoTouching = true;
         this.startX = e.touches[0].clientX;
         this.lastX = this.startX;
-        this.touchStartAt = Date.now();
     };
-    private onTouchMove = (e: TouchEvent) => {
+    public onTouchMove = (e: TouchEvent) => {
         if (!this.recoTouching) return;
-        e.preventDefault(); // 콘텐츠 이동 방지
+        e.preventDefault();
         this.lastX = e.touches[0].clientX;
     };
-    private onTouchEnd = () => {
+    public onTouchEnd = (_e: TouchEvent) => {
         if (!this.recoTouching) return;
         this.recoTouching = false;
 
         const dx = this.startX - this.lastX;
-        const dt = Math.max(1, Date.now() - this.touchStartAt);
-        const v = Math.abs(dx) / dt; // px/ms
-
         const THRESH_PX = 40;
-        const THRESH_V = 0.45;
 
         let target = this.recoIndex;
-        if (Math.abs(dx) > THRESH_PX || v > THRESH_V) {
-            target = this.recoIndex + (dx > 0 ? 1 : -1);
-        }
+        if (Math.abs(dx) > THRESH_PX) target = this.recoIndex + (dx > 0 ? 1 : -1);
+
         this.slideTo(target);
-        this.startAutoSlide(); // 제스처 끝나면 다시 자동슬라이드
+        this.startAutoSlide();
     };
 }

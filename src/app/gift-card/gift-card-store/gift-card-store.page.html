@@ -1,55 +1,78 @@
-<div class="page-wrap">
-    <!-- ✅ 사용자 맞춤 추천 슬라이더 -->
-    <section class="section section-reco">
-        <div class="reco-wrap">
-            <div #recoCarousel class="reco-carousel">
-                <div #recoCard class="reco-card" *ngFor="let r of recoItems; let i = index">
-                    <div class="reco-image">{{ r.imageText }}</div>
-                    <div class="reco-title">사용자 맞춤 추천</div>
-                    <div class="reco-desc">최근 인기 • {{ i + 1 }}번 카드</div>
-                </div>
-            </div>
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
 
-            <div class="reco-counter" *ngIf="showRecoCounter">
-                {{ recoIndex + 1 }}/{{ recoItems.length }}
-            </div>
+<!-- Divider 바로 아래: 컨테이너 안에 요소 직접 배치 -->
+<app-container>
+    <!-- ✅ 추천 캐러셀 (섹션이 컨테이너) -->
+    <section class="section section-reco reco-carousel" *ngIf="recoItems?.length" #recoCarousel
+        (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd($event)"
+        aria-label="추천 캐러셀">
+        <div #recoCard class="reco-card" *ngFor="let r of recoItems; let i = index" role="img"
+            [attr.aria-label]="'추천 이미지 ' + (i+1)">
+            <img *ngIf="r.image_url" [src]="r.image_url" alt="" />
+            <div class="placeholder" *ngIf="!r.image_url">{{ r.imageText || '이미지' }}</div>
         </div>
     </section>
 
-    <!-- 카테고리 선택 바 -->
+    <!-- ✅ 캐러셀 ‘밖’에 두고 섹션을 기준으로 우측 상단 고정 -->
+    <div class="reco-counter" *ngIf="showRecoCounter">
+        {{ recoIndex + 1 }}/{{ recoItems.length }}
+    </div>
+
+    <!-- 카테고리 -->
     <section class="section section-categories">
-        <div class="category-bar">
+        <div class="category-bar" role="tablist" aria-label="카테고리">
             <button class="cat-chip" [class.active]="selectedCategory === c.id" *ngFor="let c of categories"
-                (click)="selectCategory(c.id)">
+                (click)="selectCategory(c.id)" role="tab" [attr.aria-selected]="selectedCategory === c.id">
                 {{ c.label }}
             </button>
         </div>
     </section>
 
-    <!-- 상태 메시지 -->
+    <!-- 로딩/에러 -->
     <section class="section" *ngIf="loading || errorMsg">
         <div class="state" *ngIf="loading">불러오는 중…</div>
         <div class="state error" *ngIf="!loading && errorMsg">{{ errorMsg }}</div>
     </section>
 
-    <!-- 상품권 리스트 -->
+    <!-- 상품 리스트 (2열) -->
     <section class="section" *ngIf="!loading && !errorMsg">
-        <div class="grid">
-            <article class="card card-item" *ngFor="let item of items; trackBy: trackById" (click)="goDetail(item)"
-                role="button">
+        <div class="grid" *ngIf="items?.length; else emptyState">
+            <article class="card item-card" *ngFor="let item of items; trackBy: trackById" (click)="goDetail(item)"
+                role="button" tabindex="0">
                 <div class="thumb" [class.placeholder]="!item.image_url">
-                    <img *ngIf="item.image_url" [src]="item.image_url" alt="gift" (error)="onImgError($event)">
+                    <img *ngIf="item.image_url" [src]="item.image_url" alt="gift" (error)="onImgError($event)" />
                     <span *ngIf="!item.image_url">이미지</span>
                 </div>
-                <div class="card-body">
-                    <div class="brand">{{ item.brand || '브랜드' }}</div>
-                    <div class="title" [title]="item.name">{{ item.name }}</div>
-                    <div class="price">{{ item.amount | number: '1.0-0' }}원</div>
-                    <div class="desc" *ngIf="item.shortDesc" [title]="item.shortDesc">
-                        {{ item.shortDesc }}
+
+                <div class="body">
+                    <div class="top-row">
+                        <span class="brand">{{ item.brand || '브랜드' }}</span>
+                        <span class="type-badge" *ngIf="item.type">
+                            {{ item.type === 'EXCHANGE' ? '교환권' : '금액권' }}
+                        </span>
                     </div>
+
+                    <h3 class="title" [title]="item.name">{{ item.name }}</h3>
+
+                    <div class="price-row">
+                        <div class="price">
+                            {{ item.amount | number: '1.0-0' }}<span class="won">원</span>
+                        </div>
+                        <div class="cta">자세히</div>
+                    </div>
+
+                    <p class="desc" *ngIf="item.shortDesc" [title]="item.shortDesc">
+                        {{ item.shortDesc }}
+                    </p>
                 </div>
             </article>
         </div>
+
+        <ng-template #emptyState>
+            <div class="empty">조건에 맞는 상품권이 없습니다.</div>
+        </ng-template>
     </section>
-</div>
+
+    <div class="safe-bottom-space"></div>
+</app-container>
