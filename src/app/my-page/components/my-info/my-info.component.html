@@ -1,32 +1,34 @@
 <ion-label>
-  <!-- 나의 프로필 -->
-  <div class="profile">
-    <div class="profile-left">
-      <ion-img *ngIf="user && user.profile_image" [src]="user.profile_image" class="profile-img" alt="프로필 이미지" />
-      <div class="profile-text">
-        <strong>{{ user?.nickname }}</strong>님, 안녕하세요!
+  <!-- 나의 프로필/로그아웃 -->
+    <div class="profile">
+      <div class="profile-left">
+        <ion-img *ngIf="user && user.profile_image" [src]="user.profile_image" class="profile-img" alt="프로필 이미지" />
+        <div class="profile-text">
+          <strong>{{ user?.nickname }}</strong>님, 안녕하세요!
+        </div>
+      </div>
+
+      <div class="logout-button">
+        <app-button label="로그아웃" variant="bordered-gray" size="fit-small" (click)="signOut()"></app-button>
       </div>
     </div>
 
-    <div class="logout-button">
-      <app-button label="로그아웃" variant="bordered-gray" size="fit-small" (click)="signOut()"></app-button>
-    </div>
-  </div>
+  <app-divider></app-divider>
 
   <!-- 나의 정보 -->
-  <div class="container">
+  <div class="section">
     <div class="sub-title-bar">
-      <div class="component-title">나의 정보</div>
+      <div class="section-title">내 정보</div>
       <app-button label="수정" variant="borderless" size="fit-small" (click)="goEditMyInfoPage()"></app-button>
-
     </div>
+
     <div class="info-table typo-body1">
       <div>
-        <span class="key">e-mail</span>
+        <span class="key">이메일</span>
         <span class="value">{{ user?.email }}</span>
       </div>
       <div>
-        <span class="key">phone</span>
+        <span class="key">휴대폰</span>
         <span class="value">{{ user?.phone_number }}</span>
       </div>
       <div>
@@ -36,7 +38,7 @@
     </div>
   </div>
 
-  <div class="footer-button-row">
+  <app-divider></app-divider>
 
-  </div>
+
 </ion-label>

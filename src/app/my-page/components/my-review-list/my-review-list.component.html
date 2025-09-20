@@ -1,5 +1,10 @@
-<div class="component-title">내가 작성한 리뷰</div>
-<div *ngFor="let review of reviews">
-  <app-review [review]="review"></app-review>
-<hr style="height: 1px; background-color: #ccc; border: none; margin: 16px auto;" />
+<div class="section">
+  <div class="sub-title-bar">
+    <div class="section-title">내가 작성한 리뷰</div>
+  </div>
+
+  <div class="info-table" *ngFor="let review of reviews; let last = last">
+    <app-review [review]="review"></app-review>
+    <div *ngIf="!last" class="divider"></div>
+  </div>
 </div>

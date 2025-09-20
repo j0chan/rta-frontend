@@ -1,0 +1,27 @@
+.section {
+    margin-bottom: 24px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 10px 8px 10px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+ion-item {
+    --inner-border-width: 0;
+    border-bottom: 1px solid #ddd;
+    margin: 0 20px;
+}
+
+ion-item.no-border {
+  --inner-border-width: 0;
+  border-bottom: none !important;
+}

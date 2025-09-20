@@ -71,7 +71,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       )
     }
 
-    //this.generateKeywordRecommendations(); // 추가: 컴포넌트 로드시 AI 키워드 추천 실행
+    //this.generateKeywordRecommendations() // 추가: 컴포넌트 로드시 AI 키워드 추천 실행
   }
 
   ngAfterViewInit(): void {
@@ -133,16 +133,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         (err) => {
           switch (err.code) {
             case err.PERMISSION_DENIED:
-              console.error("위치 권한 거부됨");
-              break;
+              console.error("위치 권한 거부됨")
+              break
             case err.POSITION_UNAVAILABLE:
-              console.error("위치 정보를 가져올 수 없음");
-              break;
+              console.error("위치 정보를 가져올 수 없음")
+              break
             case err.TIMEOUT:
-              console.error("위치 정보 가져오기 시간 초과");
-              break;
+              console.error("위치 정보 가져오기 시간 초과")
+              break
             default:
-              console.error("알 수 없는 위치 오류:", err);
+              console.error("알 수 없는 위치 오류:", err)
           }
         },
         { 
@@ -150,12 +150,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           timeout: 20000,             // 20초까지 대기
           maximumAge: 0               // 이전 위치 캐시 금지
         }
-      );
+      )
 
       // 기존 watchPosition이 있으면 먼저 해제
       if (this.watchId) {
-        navigator.geolocation.clearWatch(this.watchId);
-        this.watchId = null;
+        navigator.geolocation.clearWatch(this.watchId)
+        this.watchId = null
       }
 
       // 실시간 위치 추적 (토글 없이 항상 활성화)
@@ -176,16 +176,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         (err) => {
           switch (err.code) {
             case err.PERMISSION_DENIED:
-              console.error("실시간 위치 권한 거부됨");
-              break;
+              console.error("실시간 위치 권한 거부됨")
+              break
             case err.POSITION_UNAVAILABLE:
-              console.error("실시간 위치 정보를 가져올 수 없음");
-              break;
+              console.error("실시간 위치 정보를 가져올 수 없음")
+              break
             case err.TIMEOUT:
-              console.error("실시간 위치 가져오기 시간 초과");
-              break;
+              console.error("실시간 위치 가져오기 시간 초과")
+              break
             default:
-              console.error("알 수 없는 실시간 위치 오류:", err);
+              console.error("알 수 없는 실시간 위치 오류:", err)
           }
         },
         { 
@@ -193,7 +193,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           timeout: 10000,
           maximumAge: 0
         }
-      );
+      )
     }
   }
 
@@ -222,7 +222,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       accuracy = 0
     }
     
-    console.log(`[update] lat: ${lat}, lng: ${lng}, accuracy: ${accuracy}m`);
+    console.log(`[update] lat: ${lat}, lng: ${lng}, accuracy: ${accuracy}m`)
     
     // 정확도 기준 판단 (150m 이상은 경고)
     if (accuracy > 150) {
@@ -444,7 +444,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           <p style="margin: 4px 0; font-size: 14px;">ℹ️ 설명: ${store.description || '설명 없음'}</p>
         </div>
   
-        <a href="http://localhost:8100/stores/${store.store_id}" target="_self" style="display: block; margin-top: 12px; text-align: center; text-decoration: none;">
+        <a href="http://localhost:4200/stores/${store.store_id}" target="_self" style="display: block; margin-top: 12px; text-align: center; text-decoration: none;">
           <button style="
             background-color: #4CAF50;
             color: #fff;
@@ -546,8 +546,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tabMode = 'recommend'
     this.isResultVisible = true
 
-    const today = new Date();
-    const month = today.getMonth() + 1;
+    const today = new Date()
+    const month = today.getMonth() + 1
     
     const prompt = `
       한국 ${month}월 날씨에 맞게 메뉴 3개만 추천해줘. 번호는 붙이지 말고. (예: 냉면, 파스타, 김치찌개)
@@ -733,10 +733,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // 현위치 재검색
   refreshCurrentLocation(): void {
     if (this.watchId) {
-      navigator.geolocation.clearWatch(this.watchId);
-      this.watchId = null;
+      navigator.geolocation.clearWatch(this.watchId)
+      this.watchId = null
     }
-    this.requestGeolocation();
+    this.requestGeolocation()
   }
 
   // 개발 모드 토글 버튼 눌렀을 때

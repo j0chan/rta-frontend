@@ -77,6 +77,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./gift-card/gift-card-used/gift-card-used.module').then(m => m.GiftCardUsedModule),
   },
+   {
+    path: 'point',
+    loadChildren: () => import('./point/point.module').then( m => m.PointPageMudule)
+  }
 ]
 
 @NgModule({

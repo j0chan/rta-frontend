@@ -1,0 +1,85 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<ion-content>
+    <app-container>
+        <div class="page-title">포인트</div>
+
+        <!-- 잔액 카드: 새로고침 버튼 우상단 고정, 잔액은 크게 -->
+        <section class="wallet" *ngIf="summary">
+            <div class="refresh-btn">
+                <app-button label="새로고침" variant="bordered-gray" size="fit" type="button" aria-label="포인트 새로고침"
+                    (click)="fetchAll()">
+                </app-button>
+            </div>
+
+            <div class="wallet-top">
+                <div class="label">현재 잔액</div>
+                <div class="balance">
+                    {{ krw(displayBalance) }}
+                </div>
+            </div>
+        </section>
+
+        <!-- 필터/검색 -->
+        <section class="toolbar">
+            <div class="chips">
+                <app-button label="전체" [variant]="filter==='ALL' ? 'tinted-bordered' : 'bordered-gray'" size="fit"
+                    type="button" (click)="setFilter('ALL')">
+                </app-button>
+
+                <app-button label="적립"
+                    [variant]="filter===PointTransactionType.EARN ? 'tinted-bordered' : 'bordered-gray'" size="fit"
+                    type="button" (click)="setFilter(PointTransactionType.EARN)">
+                </app-button>
+
+                <app-button label="사용"
+                    [variant]="filter===PointTransactionType.USE ? 'tinted-bordered' : 'bordered-gray'" size="fit"
+                    type="button" (click)="setFilter(PointTransactionType.USE)">
+                </app-button>
+            </div>
+
+            <div class="search">
+                <app-input [placeholder]="'상호/사유 검색'" [(value)]="q" (valueChange)="onSearchChange()">
+                </app-input>
+            </div>
+        </section>
+
+        <!-- 에러 -->
+        <div class="inline-error" *ngIf="error">{{ error }}</div>
+
+        <!-- 거래 내역 -->
+        <section class="groups" *ngIf="!loading">
+            <ng-container *ngFor="let g of groups">
+                <div class="date-sep">{{ g.dateLabel }}</div>
+
+                <div class="tx" *ngFor="let t of g.items; trackBy: trackByTx"
+                    [class.use]="t.type===PointTransactionType.USE" [class.earn]="t.type===PointTransactionType.EARN">
+
+                    <div class="leftbar"></div>
+
+                    <div class="tx-main">
+                        <div class="title">{{ t.reason }}</div>
+                        <div class="meta">
+                            <span class="pill" [class.use]="t.type===PointTransactionType.USE"
+                                [class.earn]="t.type===PointTransactionType.EARN">
+                                {{ t.type === PointTransactionType.EARN ? '적립' : '사용' }}
+                            </span>
+                            <span class="time">{{ timeHHMM(t.created_at) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="tx-amount" [class.minus]="t.type===PointTransactionType.USE"
+                        [class.plus]="t.type===PointTransactionType.EARN">
+                        {{ signByType(t.type) }}{{ krw(t.amount) }}
+                        <div class="running">잔액 {{ krw(t.runningBalance ?? 0) }}</div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="empty" *ngIf="groups.length === 0">
+                조건에 맞는 내역이 없습니다.
+            </div>
+        </section>
+    </app-container>
+</ion-content>

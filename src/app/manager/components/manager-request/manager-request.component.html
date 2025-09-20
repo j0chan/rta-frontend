@@ -1,17 +1,15 @@
-<ion-label>
-  <div class="container">
-    <div>
-      <span class="status-badge" [ngClass]="{
+<div class="container">
+  <div>
+    <span class="status-badge" [ngClass]="{
         'submitted': request.status === 'SUBMITTED',
         'rejected': request.status === 'REJECTED'
       }">
-        {{ request.status === 'SUBMITTED' ? '대기' : request.status === 'REJECTED' ? '거절' : '기타' }}
-      </span>
-      <span class="store-name">{{ request.store_name }}</span>
-    </div>
-    <div class="date">{{ request.created_at | date: 'yyyy년 MM월 dd일' }}</div>
-    <div class="remark" *ngIf="request.status === 'REJECTED'">
-      사유 : {{ request.remark }}
-    </div>
+      {{ request.status === 'SUBMITTED' ? '대기' : request.status === 'REJECTED' ? '거절' : '기타' }}
+    </span>
+    <span class="store-name">{{ request.store_name }}</span>
   </div>
-</ion-label>
+  <div class="date">{{ request.created_at | date: 'yyyy년 MM월 dd일' }}</div>
+  <div class="remark" *ngIf="request.status === 'REJECTED'">
+    사유: {{ request.remark }}
+  </div>
+</div>

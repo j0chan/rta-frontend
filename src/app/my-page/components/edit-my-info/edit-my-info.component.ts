@@ -20,6 +20,7 @@ export class EditMyInfoComponent implements OnInit {
 
   // 버튼 활성화 여부
   isButtonDisabled: boolean = true
+  isRevertedToDefault: boolean = false
 
   constructor(
     private router: Router,
@@ -34,7 +35,7 @@ export class EditMyInfoComponent implements OnInit {
     if (this.user) {
       this.new_nickname = this.user.nickname
       this.original_nickname = this.user.nickname
-      this.original_image = this.user.profile_image.url // 사용자 정보에 프로필 이미지 URL이 있다면 저장
+      this.original_image = this.user?.profile_image?.url ?? ''
     }
   }
 
@@ -86,11 +87,32 @@ export class EditMyInfoComponent implements OnInit {
   checkIfButtonShouldBeEnabled() {
     if (
       (this.new_nickname !== this.original_nickname) || // 닉네임이 변경되었을 때
-      (this.selectedFile) // 이미지가 선택되었을 때
+      (this.selectedFile) || // 이미지가 선택되었을 때
+      (this.isRevertedToDefault) // 기본 프로필로 변경 버튼을 눌렀을 때
     ) {
       this.isButtonDisabled = false
     } else {
       this.isButtonDisabled = true
     }
+  }
+
+  onRevertButtonClicked() {
+    this.isRevertedToDefault = true
+    this.selectedFile = undefined
+    this.previewUrls = []
+    this.checkIfButtonShouldBeEnabled()
+  }
+
+  revertToDefaultProfileImage() {
+    this.usersService.revertToDefaultProfileImage().subscribe({
+      next: () => {
+        console.log('기본 프로필 사진으로 변경되었습니다.')
+        this.onRevertButtonClicked()
+      },
+      error: (err) => {
+        window.alert('변경 실패.')
+        console.error(err)
+      }
+    })
   }
 }

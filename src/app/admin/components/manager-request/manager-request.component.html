@@ -1,27 +1,51 @@
-<ion-label>
-  <div>
-    <p>신청자 {{ request.user_name }}</p>
-    <p>가게 {{ request.store_name }}</p>
-    <p>신청일 {{ request.created_at | dateFormatPipe }}</p>
-    <p>상태 {{ request.status | requestStatusPipe }}</p>
-    
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-button expand="block" color="success" (click)="status = RequestStatus.APPROVED">
-            승인
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button expand="block" color="danger" (click)="status = RequestStatus.REJECTED">
-            거절
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    
-    <ion-input label="비고" [(ngModel)]="remark"></ion-input>
-    
-    <ion-button (click)="updateManagerRequest()">완료</ion-button>
+<app-container class="manager-request">
+  <div class="page-title">{{ request.store_name }}</div>
+
+  <!-- 신청자 -->
+  <div class="input-container inline">
+    <div class="component-title">신청자</div>
+    <div class="value">{{ request.user_name }}</div>
   </div>
-</ion-label>
+
+  <!-- 신청일 -->
+  <div class="input-container">
+    <div class="component-title">신청일</div>
+    <div class="value">{{ request.created_at | dateFormatPipe }}</div>
+  </div>
+
+  <!-- 상태 -->
+  <div class="input-container inline">
+    <div class="component-title">상태</div>
+    <span
+      class="badge"
+      [ngClass]="{
+        'badge-pending': request.status === RequestStatus.SUBMITTED,
+        'badge-success': request.status === RequestStatus.APPROVED,
+        'badge-danger': request.status === RequestStatus.REJECTED
+      }"
+    >
+      {{ request.status | requestStatusPipe }}
+    </span>
+  </div>
+
+  <!-- 비고 -->
+  <div class="input-container">
+    <div class="component-title">비고</div>
+    <app-input
+      placeholder="관리자 메모를 입력하세요"
+      [value]="request.remark"
+      (valueChange)="request.remark = $event"
+      area="one-line">
+    </app-input>
+  </div>
+
+  <!-- 승인/거절 -->
+  <div class="button-group">
+    <app-button label="승인" variant="filled" size="full"
+      (click)="confirmAndUpdate(RequestStatus.APPROVED)">
+    </app-button>
+    <app-button label="거절" variant="tinted" size="full"
+      (click)="confirmAndUpdate(RequestStatus.REJECTED)">
+    </app-button>
+  </div>
+</app-container>
