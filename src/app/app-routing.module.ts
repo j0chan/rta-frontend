@@ -72,6 +72,11 @@ const routes: Routes = [
       import('./gift-card/gift-card-create/gift-card-create.module').then(m => m.GiftCardCreateModule),
       canMatch: [AdminGuard],
   },
+  {
+    path: 'gift-card-used',
+    loadChildren: () =>
+      import('./gift-card/gift-card-used/gift-card-used.module').then(m => m.GiftCardUsedModule),
+  },
 ]
 
 @NgModule({

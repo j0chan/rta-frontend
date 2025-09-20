@@ -1,0 +1,52 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<app-container>
+    <main class="page-body">
+        <!-- 상단 요약 -->
+        <section class="summary">
+            <div class="summary-title">사용 완료 상품권</div>
+            <div class="summary-meta">총 {{ totalCount }}개</div>
+        </section>
+
+        <!-- 리스트 -->
+        <section class="list">
+            <article class="row" *ngFor="let p of usedPockets; trackBy: trackByPocket" aria-label="used gift card row">
+                <div class="left">
+                    <div class="title">
+                        {{ p.giftCard?.name || '상품권' }}
+                    </div>
+                    <div class="badges">
+                        <span class="type">{{ getTypeLabel(p) }}</span>
+                    </div>
+                    <div class="dates">
+                        <div class="date">
+                            <span class="label">구매</span>
+                            <span class="value">{{ getPurchasedAt(p) }}</span>
+                        </div>
+                        <div class="date">
+                            <span class="label done">사용완료</span>
+                            <span class="value">{{ getUsedAt(p) }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <div class="price">{{ formatKRW(getPrice(p)) }}</div>
+                    <div class="status">
+                        ✅ 완료
+                    </div>
+                </div>
+            </article>
+
+            <div class="empty" *ngIf="totalCount === 0">
+                사용 완료한 상품권이 없습니다.
+            </div>
+        </section>
+
+        <!-- 하단 고정: 새로고침 버튼 -->
+        <div class="refresh-wrap">
+            <button class="refresh-btn" (click)="onRefresh()">새로고침</button>
+        </div>
+    </main>
+</app-container>
