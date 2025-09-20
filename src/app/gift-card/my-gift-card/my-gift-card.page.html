@@ -1,37 +1,42 @@
-<main class="page-body">
-  <div #carousel class="carousel">
-    <article #cardRef class="gift-card" *ngFor="let p of visiblePockets; let i = index; trackBy: trackByPocket"
-      aria-label="gift card">
-      <div class="counter" *ngIf="showCounter && i === currentIndex">
-        {{ displayIndex }}
-      </div>
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
 
-      <div class="image-box">모바일</div>
-
-      <div class="info">
-        <div class="title">{{ p.giftCard.name }}</div>
-
-        <div class="meta" *ngIf="p.giftCard.type === 'EXCHANGE'">
-          <span class="label">상품</span>
-          <span class="value">{{ p.giftCard.name || '상품권' }}</span>
+<app-container>
+  <main class="page-body">
+    <div #carousel class="carousel">
+      <article #cardRef class="gift-card" *ngFor="let p of visiblePockets; let i = index; trackBy: trackByPocket"
+        aria-label="gift card">
+        <div class="counter" *ngIf="showCounter && i === currentIndex">
+          {{ displayIndex }}
         </div>
 
-        <div class="meta" *ngIf="p.giftCard.type === 'AMOUNT'">
-          <span class="label">잔액</span>
-          <span class="value">{{ formatKRW(p.remaining_amount) }}</span>
+        <div class="image-box">모바일</div>
+
+        <div class="info">
+          <div class="title">{{ p.giftCard.name }}</div>
+
+          <div class="meta" *ngIf="p.giftCard.type === 'EXCHANGE'">
+            <span class="label">상품</span>
+            <span class="value">{{ p.giftCard.name || '상품권' }}</span>
+          </div>
+
+          <div class="meta" *ngIf="p.giftCard.type === 'AMOUNT'">
+            <span class="label">잔액</span>
+            <span class="value">{{ formatKRW(p.remaining_amount) }}</span>
+          </div>
         </div>
-      </div>
 
-      <div class="barcode-box">바코드</div>
-    </article>
-  </div>
+        <div class="barcode-box">바코드</div>
+      </article>
+    </div>
 
-  <div class="empty" *ngIf="totalCount === 0">
-    사용 가능한 상품권이 없습니다.
-  </div>
+    <div class="empty" *ngIf="totalCount === 0">
+      사용 가능한 상품권이 없습니다.
+    </div>
 
-  <!-- 하단 고정: 새로고침 버튼 -->
-  <div class="refresh-wrap">
-    <button class="refresh-btn" (click)="onRefresh()">새로고침</button>
-  </div>
-</main>
+    <!-- 하단 고정: 새로고침 버튼 -->
+    <div class="refresh-wrap">
+      <button class="refresh-btn" (click)="onRefresh()">새로고침</button>
+    </div>
+  </main>
+</app-container>

@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http'
 import { MyGiftCardPage } from './my-gift-card.page'
 import { MyGiftCardRoutingModule } from './my-gift-card-routing.module'
+import { SharedModule } from 'src/app/shared/module/shared.module'
+import { IonicModule } from '@ionic/angular'
 
 @NgModule({
     imports: [
@@ -11,6 +13,8 @@ import { MyGiftCardRoutingModule } from './my-gift-card-routing.module'
         RouterModule,
         HttpClientModule,     // 백엔드 연결
         MyGiftCardRoutingModule,
+        SharedModule,
+        IonicModule,
     ],
 
     declarations: [
