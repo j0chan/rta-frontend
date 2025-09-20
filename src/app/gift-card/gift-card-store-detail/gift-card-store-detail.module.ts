@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http'
 import { GiftCardStoreDetailRoutingModule } from './gift-card-store-detail-routing.module'
 import { GiftCardStoreDetailPage } from './gift-card-store-detail.page'
+import { SharedModule } from 'src/app/shared/module/shared.module'
+import { IonicModule } from '@ionic/angular'
 
 @NgModule({
     declarations: [
@@ -13,7 +15,9 @@ import { GiftCardStoreDetailPage } from './gift-card-store-detail.page'
         CommonModule,
         RouterModule,
         HttpClientModule,
-        GiftCardStoreDetailRoutingModule
+        GiftCardStoreDetailRoutingModule,
+        SharedModule,
+        IonicModule,
     ],
 })
 export class GiftCardStoreDetailModule { }

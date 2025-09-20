@@ -1,113 +1,214 @@
-$page-padding: 16px;
-$radius-card: 12px;
-$bg-page: #f6f7fb;
-$bg-card: #ffffff;
-$border: #e6e8ef;
-$text-strong: #1f2430;
-$text-muted: #6b7280;
-$primary: #3772ff;
-
-.detail-wrap {
-    min-height: 100%;
-    background: $bg-page;
-    padding: $page-padding;
-    padding-bottom: 110px; // 하단 버튼 영역 확보
+:host {
+    --pullup: 12px;
+    /* 내용 위로 당기는 정도 (0~16px 조절) */
+    --pad-x: 16px;
+    --cta-h: 56px;
+    /* 하단 바의 시각적 높이 */
+    --shadow: 0 6px 18px rgba(0, 0, 0, .08);
+    --primary: #5b7cff;
+    --text-weak: #8a8f98;
 }
 
-.section {
-    margin-bottom: 16px;
+/* 헤더 아래 선만 얇게 (헤더는 그대로) */
+:host ::ng-deep app-divider {
+    display: block;
+    height: 1px;
+    background: #eef0f3;
+    margin: 0;
 }
 
-.card {
-    background: $bg-card;
-    border: 1px solid $border;
-    border-radius: $radius-card;
+/* 페이지 레이아웃 */
+.gc-detail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+/* 본문: 위로 당기고, 하단 바와 겹치지 않게 패딩 */
+.gc-body {
+    flex: 1 1 auto;
+    margin-top: calc(-1 * var(--pullup));
+    /* ← 핵심 */
+    padding: 8px var(--pad-x) calc(var(--cta-h) + env(safe-area-inset-bottom) + 16px);
+}
+
+/* 상단 이미지 */
+.hero {
+    margin: 0;
+    /* 어떤 상단 마진도 제거 */
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .04);
-
-    .card-body.pad2 {
-        padding: 12px;
-    }
+    background: #f4f6f8;
+    box-shadow: var(--shadow);
 }
 
-.hero.placeholder {
-    aspect-ratio: 16 / 9;
-    background: #f0f2f7;
-    border: 2px dashed #e0e4ef;
-    border-radius: 12px;
+.hero img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.hero-fallback {
+    height: 180px;
     display: grid;
     place-items: center;
-    font-weight: 800;
-    color: #9aa3b2;
-    user-select: none;
-    min-height: 220px;
+    color: #9aa3af;
+    font-weight: 700;
 }
 
-.brand {
-    font-size: 13px;
-    color: $text-muted;
-    margin-bottom: 4px;
+/* 정보 */
+.info {
+    padding: 14px 2px 0;
 }
 
 .title {
-    font-size: 20px;
-    color: $text-strong;
-    margin: 2px 0 8px;
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.35;
 }
 
 .price {
+    font-size: 22px;
     font-weight: 800;
-    margin-bottom: 8px;
+}
+
+.price .won {
+    margin-left: 2px;
+    font-size: 14px;
+    color: var(--text-weak);
+    font-weight: 700;
 }
 
 .desc {
-    color: $text-strong;
+    margin-top: 10px;
+    color: #4b5563;
+    white-space: pre-line;
+}
 
-    &.short {
-        color: $text-muted;
+/* 사용 안내 */
+.notice {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #fafbff;
+    border: 1px solid #eef1ff;
+}
+
+.notice h3 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.notice ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.notice li {
+    margin: 6px 0;
+    color: #6b7280;
+}
+
+/* 빈 상태 & 로딩 */
+.state-wrap {
+    padding: 16px var(--pad-x);
+}
+
+.empty {
+    padding: 24px var(--pad-x);
+    color: #8a8f98;
+    text-align: center;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f2f4f7 25%, #e9edf2 37%, #f2f4f7 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 12px;
+}
+
+.skeleton.hero {
+    height: 180px;
+    margin-bottom: 14px;
+}
+
+.skeleton.line {
+    height: 16px;
+    margin: 8px 0;
+}
+
+.skeleton.line.short {
+    width: 60%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
     }
 }
 
-.purchase-bar {
+/* 하단 고정 바: 좌측 금액 + 우측 구매 버튼 */
+.cta-bar {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
-    background: #fff;
-    border-top: 1px solid $border;
-    padding: 12px 16px;
-    display: grid;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: saturate(180%) blur(10px);
+    border-top: 1px solid #eceff3;
+    z-index: 30;
 }
 
-.btn-primary {
+/* 내부는 2열 그리드(금액 / 버튼) */
+.cta-inner {
+    display: grid;
+    grid-template-columns: 1fr 140px;
+    /* 금액 / 버튼 */
+    align-items: center;
+    gap: 12px;
+    padding: 12px var(--pad-x);
+    height: var(--cta-h);
+    box-sizing: content-box;
+}
+
+.total .label {
+    font-size: 12px;
+    color: var(--text-weak);
+    margin-right: 8px;
+}
+
+.total .value {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.cta-btn {
     width: 100%;
-    border: none;
-    border-radius: 10px;
-    background: $primary;
+    height: 46px;
+    border-radius: 12px;
+    border: 0;
+    background: var(--primary);
     color: #fff;
     font-weight: 800;
-    padding: 14px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(55, 114, 255, .25);
-    transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
-
-    &:active {
-        transform: translateY(1px);
-        box-shadow: 0 4px 10px rgba(55, 114, 255, .2);
-    }
-
-    &:disabled {
-        opacity: .6;
-        cursor: not-allowed;
-    }
+    letter-spacing: .2px;
+    box-shadow: 0 10px 20px rgba(91, 124, 255, .22);
 }
 
-.state {
-    text-align: center;
-    color: $text-muted;
+.cta-btn:disabled {
+    opacity: .5;
+    box-shadow: none;
+}
 
-    &.error {
-        color: #d93025;
-    }
+/* 첫 요소 방어: 상단 마진이 생기지 않도록 */
+.gc-body> :first-child {
+    margin-top: 0 !important;
 }

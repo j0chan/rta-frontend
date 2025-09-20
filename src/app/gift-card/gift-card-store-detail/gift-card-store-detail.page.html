@@ -1,36 +1,68 @@
-<div class="detail-wrap">
-    <section class="section" *ngIf="loading || errorMsg">
-        <div class="state" *ngIf="loading">불러오는 중…</div>
-        <div class="state error" *ngIf="!loading && errorMsg">{{ errorMsg }}</div>
-    </section>
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
 
-    <ng-container *ngIf="!loading && !errorMsg && item">
-        <!-- 상단 큰 카드 - 이미지 텍스트 박스 -->
-        <section class="section">
-            <div class="card">
-                <div class="card-body pad2">
-                    <div class="hero" [class.placeholder]="!item.image_url">
-                        <img *ngIf="item.image_url" [src]="item.image_url" alt="gift" (error)="onImgError($event)" />
-                        <span *ngIf="!item.image_url">이미지</span>
-                    </div>
-                </div>
+<app-container class="gc-detail">
+    <main class="gc-body">
+        <!-- 로딩/에러 -->
+        <section *ngIf="loading || errorMsg" class="state-wrap">
+            <div class="state" *ngIf="loading">
+                <div class="skeleton hero"></div>
+                <div class="skeleton line"></div>
+                <div class="skeleton line short"></div>
             </div>
+            <div class="state error" *ngIf="!loading && errorMsg">{{ errorMsg }}</div>
         </section>
 
-        <!-- 설명 -->
-        <section class="section">
-            <div class="brand">{{ item.category }}</div>
-            <h1 class="title">{{ item.name }}</h1>
-            <div class="price">{{ item.amount | number:'1.0-0' }}원</div>
-            <p class="desc short" *ngIf="item.shortDesc">{{ item.shortDesc }}</p>
-            <p class="desc long" *ngIf="item.longDesc">{{ item.longDesc }}</p>
-        </section>
-    </ng-container>
-</div>
+        <!-- 본문 -->
+        <ng-container *ngIf="!loading && !errorMsg && item">
+            <!-- 상단 이미지 -->
+            <section class="hero">
+                <ng-container *ngIf="item.image_url; else noimg">
+                    <img [src]="item.image_url" alt="gift" (error)="onImgError($event)" />
+                </ng-container>
+                <ng-template #noimg>
+                    <div class="hero-fallback">이미지</div>
+                </ng-template>
+            </section>
 
-<!-- 하단 고정 구매 바 -->
-<div class="purchase-bar">
-    <button class="btn-primary" [disabled]="submitting || loading || !!errorMsg" (click)="purchase()">
-        {{ submitting ? '구매 중…' : '구매하기' }}
-    </button>
-</div>
+            <!-- 정보 -->
+            <section class="info">
+                <h1 class="title">{{ item.name }}</h1>
+                <div class="price">
+                    {{ item.amount | number:'1.0-0' }}<span class="won">원</span>
+                </div>
+
+                <div class="desc" *ngIf="item.shortDesc || item.longDesc">
+                    {{ item.longDesc || item.shortDesc }}
+                </div>
+
+                <div class="notice">
+                    <h3>사용 안내</h3>
+                    <ul>
+                        <li>교환/금액권 유형과 금액은 결제 전에 다시 확인해 주세요.</li>
+                        <li>구매 후 내 “상품권”에서 바코드/QR로 사용 가능합니다.</li>
+                        <li>유효기간 및 환불 규정은 가맹 기준을 따릅니다.</li>
+                    </ul>
+                </div>
+            </section>
+        </ng-container>
+
+        <div class="empty" *ngIf="!loading && !errorMsg && !item">
+            상품권 정보를 불러오지 못했습니다.
+        </div>
+    </main>
+
+    <!-- 하단 고정 구매 바 -->
+    <footer class="cta-bar has-total">
+        <div class="cta-inner">
+            <div class="total" *ngIf="item && !errorMsg">
+                <span class="label">결제금액</span>
+                <span class="value">{{ item.amount | number:'1.0-0' }}원</span>
+            </div>
+
+            <button class="cta-btn" [disabled]="submitting || loading || !!errorMsg" (click)="purchase()">
+                {{ submitting ? '구매 중…' : '구매하기' }}
+            </button>
+        </div>
+    </footer>
+</app-container>
