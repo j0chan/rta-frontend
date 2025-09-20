@@ -1,0 +1,285 @@
+/* ===== 기본 토큰 ===== */
+:host {
+    --primary: #3d5afe;
+    --text-strong: #1a1e27;
+    --text: #495057;
+    --weak: #b0b6bd;
+    --bg: #fff;
+    --border: #e9ecef;
+    --surface: #fff;
+    --radius: 16px;
+    --shadow-sm: 0 6px 18px rgba(0, 0, 0, .08);
+
+    /* ✅ 비율 변수: 추천 카드 높이 대비 가로가 넓은 느낌(≈ 2:1) */
+    --product-thumb-ar: 2 / 1;
+    /* 필요 시 1.9/1 ~ 2.2/1 사이로 조절 */
+}
+
+:host ::ng-deep app-container {
+    flex: 1;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--bg);
+    padding: 10px 12px 20px;
+}
+
+.section {
+    padding: 6px 0;
+}
+
+/* ===== 추천 캐러셀 (섹션이 컨테이너) ===== */
+.section-reco.reco-carousel {
+    display: flex;
+    gap: 12px;
+    overflow: hidden;
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 8px;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.reco-card {
+    flex: 0 0 88vw;
+    max-width: 520px;
+    height: 160px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #f0f0f5;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.reco-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.reco-card .placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: #b9bec6;
+    font-weight: 800;
+}
+
+/* ✅ 카운터: 캐러셀 밖(섹션 다음 형제)이지만 섹션 오른쪽 위에 오버레이 */
+.reco-counter {
+    position: sticky;
+    /* 스크롤해도 상단 영역에 붙어있음 */
+    top: calc(10px + 8px);
+    /* 컨테이너 padding + 여백만큼 내림 */
+    margin-left: auto;
+    /* 오른쪽 정렬 */
+    width: max-content;
+    transform: translateY(-46px);
+    /* 섹션 안쪽 우측 상단에 겹쳐 보이도록 */
+    z-index: 2;
+
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    background: rgba(0, 0, 0, .28);
+    padding: 4px 10px;
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+/* ===== 카테고리 ===== */
+.section-categories {
+    padding: 4px 0 8px;
+}
+
+.category-bar {
+    display: flex;
+    gap: 10px;
+    overflow: auto;
+    padding-bottom: 4px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.category-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.cat-chip {
+    border: 1px solid var(--border);
+    background: #fff;
+    color: #1a1e27;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: .9rem;
+    white-space: nowrap;
+}
+
+.cat-chip.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(61, 90, 254, .25);
+}
+
+/* ===== 상품 2열 그리드 ===== */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.card.item-card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.card.item-card:hover,
+.card.item-card:focus-within {
+    transform: translateY(-2px);
+}
+
+/* ✅ 썸네일 비율을 추천 카드 느낌으로 (가로가 더 긴 2:1) */
+.item-card .thumb {
+    aspect-ratio: var(--product-thumb-ar);
+    background: #f0f0f5;
+    position: relative;
+    overflow: hidden;
+}
+
+.item-card .thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-card .thumb span {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #c7cbd1;
+    font-weight: 700;
+}
+
+/* 본문 */
+.item-card .body {
+    padding: 8px 10px 10px;
+}
+
+.top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+
+.brand {
+    color: var(--weak);
+    font-weight: 800;
+    font-size: .8rem;
+    letter-spacing: .02em;
+}
+
+.type-badge {
+    font-size: .68rem;
+    font-weight: 800;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: #f3f4ff;
+    color: #3d5afe;
+}
+
+.title {
+    margin: 3px 0 4px;
+    color: #1a1e27;
+    font-size: .92rem;
+    font-weight: 900;
+    line-height: 1.35;
+    height: 2.7em;
+    overflow: hidden;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
+.price {
+    color: #111;
+    font-weight: 900;
+    font-size: 1rem;
+}
+
+.price .won {
+    margin-left: 2px;
+    font-size: .9rem;
+    font-weight: 800;
+    color: #111;
+}
+
+.cta {
+    padding: 6px 10px;
+    font-size: .72rem;
+    border-radius: 10px;
+    border: 1.5px dashed #c9c9cf;
+    background: #fff;
+    color: #666;
+    text-align: center;
+}
+
+.desc {
+    margin-top: 6px;
+    color: #495057;
+    font-size: .78rem;
+    line-height: 1.35;
+    max-height: 1.35em;
+    overflow: hidden;
+}
+
+.state {
+    text-align: center;
+    padding: 32px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.state.error {
+    color: #e11d48;
+}
+
+.empty {
+    text-align: center;
+    padding: 40px 0;
+    color: #9aa0a6;
+    font-weight: 600;
+}
+
+.safe-bottom-space {
+    height: 16px;
+}
+
+@media (max-width:360px) {
+    .grid {
+        gap: 8px;
+    }
+
+    :host ::ng-deep app-container {
+        padding: 8px 10px 18px;
+    }
+}

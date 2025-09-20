@@ -1,0 +1,74 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<app-container>
+    <div class="detail-wrap">
+        <!-- 상단 미리보기(디테일 UI) -->
+        <section class="section">
+            <div class="card">
+                <div class="card-body pad2">
+                    <div class="hero" [class.placeholder]="!form.image_url">
+                        <img *ngIf="form.image_url" [src]="form.image_url" alt="gift" (error)="onImgError($event)" />
+                        <span *ngIf="!form.image_url">이미지</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 미리보기 텍스트 -->
+        <section class="section">
+            <div class="brand">
+                {{ categoryLabel(form.category) || '카테고리' }}
+                <span class="type" *ngIf="typeLabel(form.type)">• {{ typeLabel(form.type) }}</span>
+            </div>
+            <h1 class="title">{{ form.name || '상품권 이름' }}</h1>
+            <div class="price">{{ (form.amount || 0) | number:'1.0-0' }}원</div>
+        </section>
+
+        <!-- 입력 폼 -->
+        <section class="section form">
+            <label class="field">
+                <span class="label">이미지 URL</span>
+                <input type="url" [(ngModel)]="form.image_url" placeholder="https://...">
+            </label>
+
+            <label class="field">
+                <span class="label">상품권 이름</span>
+                <input type="text" [(ngModel)]="form.name" placeholder="예: 스타커피 아메리카노">
+            </label>
+
+            <label class="field">
+                <span class="label">가격(원)</span>
+                <input type="number" min="0" [(ngModel)]="form.amount" placeholder="예: 4500">
+            </label>
+
+            <label class="field">
+                <span class="label">종류</span>
+                <select [(ngModel)]="form.type">
+                    <option [ngValue]="''" disabled selected>종류 선택</option>
+                    <option *ngFor="let t of typeOptions" [ngValue]="t.value">{{ t.label }}</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span class="label">카테고리</span>
+                <select [(ngModel)]="form.category">
+                    <option [ngValue]="''" disabled selected>카테고리 선택</option>
+                    <option *ngFor="let c of categoryOptions" [ngValue]="c.value">{{ c.label }}</option>
+                </select>
+            </label>
+        </section>
+
+        <!-- 에러 -->
+        <section class="section" *ngIf="errorMsg">
+            <div class="state error">{{ errorMsg }}</div>
+        </section>
+    </div>
+
+    <!-- 하단 고정: 생성 버튼 -->
+    <div class="purchase-bar">
+        <button class="btn-primary" [disabled]="submitting || !isValid()" (click)="create()">
+            {{ submitting ? '생성 중…' : '생성하기' }}
+        </button>
+    </div>
+</app-container>

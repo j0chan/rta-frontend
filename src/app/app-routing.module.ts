@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
+import { AdminGuard } from './shared/admin/admin.guard'
 
 const routes: Routes = [
   {
@@ -49,14 +50,37 @@ const routes: Routes = [
   },
   {
     path: 'search',
-    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
+    loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
+  },
+  {
+    path: 'my-gift-card',
+    loadChildren: () => import('./gift-card/my-gift-card/my-gift-card.module').then(m => m.MyGiftCardModule)
+  },
+  {
+    path: 'gift-card-store',
+    loadChildren: () =>
+      import('./gift-card/gift-card-store/gift-card-store.module').then(m => m.GiftCardStoreModule),
+  },
+  {
+    path: 'gift-card-store-detail/:id',
+    loadChildren: () =>
+      import('./gift-card/gift-card-store-detail/gift-card-store-detail.module').then(m => m.GiftCardStoreDetailModule),
+  },
+  {
+    path: 'gift-card-create',
+    loadChildren: () =>
+      import('./gift-card/gift-card-create/gift-card-create.module').then(m => m.GiftCardCreateModule),
+      canMatch: [AdminGuard],
+  },
+  {
+    path: 'gift-card-used',
+    loadChildren: () =>
+      import('./gift-card/gift-card-used/gift-card-used.module').then(m => m.GiftCardUsedModule),
   },
    {
     path: 'point',
     loadChildren: () => import('./point/point.module').then( m => m.PointPageMudule)
   }
-
-
 ]
 
 @NgModule({
