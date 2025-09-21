@@ -1,0 +1,190 @@
+:root {
+    --ink: #0f172a;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --card: #ffffff;
+    --bg: #fafafa;
+    --deposit: #0ea5e9;
+    /* 충전 */
+    --withdraw: #ef4444;
+    /* 인출 */
+    --use: #f59e0b;
+    /* 사용(결제) - 구분 위해 주황 */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.page-title {
+    margin: 6px 4px 14px;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -.2px;
+}
+
+/* 잔액 카드 */
+.wallet {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 8px 24px rgba(0, 0, 0, .04);
+
+    .refresh-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 1;
+    }
+
+    .wallet-top {
+        .label {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .balance {
+            margin-top: 4px;
+            font-size: clamp(36px, 6vw, 52px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.5px;
+            word-break: keep-all;
+        }
+    }
+}
+
+/* 툴바/검색 */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+
+    .chips {
+        display: flex;
+        gap: 8px;
+    }
+
+    .search {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+/* 에러 */
+.inline-error {
+    color: #b91c1c;
+    margin: 8px 4px;
+}
+
+/* 리스트 */
+.groups {
+    margin-top: 4px;
+}
+
+.date-sep {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 800;
+    margin: 14px 4px 6px;
+}
+
+.tx {
+    display: grid;
+    grid-template-columns: 6px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin: 6px 0;
+
+    .leftbar {
+        width: 6px;
+        height: 100%;
+        border-radius: 6px;
+        background: #e5e7eb;
+    }
+
+    &.deposit .leftbar {
+        background: rgba(14, 165, 233, .25);
+    }
+
+    &.withdraw .leftbar {
+        background: rgba(239, 68, 68, .25);
+    }
+
+    &.use .leftbar {
+        background: rgba(245, 158, 11, .25);
+    }
+
+    .tx-main {
+        .title {
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .meta {
+            margin-top: 4px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 12px;
+
+            .pill {
+                padding: 2px 8px;
+                border-radius: 999px;
+                border: 1px solid var(--line);
+                font-weight: 700;
+            }
+
+            .pill.deposit {
+                color: var(--deposit);
+                border-color: rgba(14, 165, 233, .35);
+            }
+
+            .pill.withdraw {
+                color: var(--withdraw);
+                border-color: rgba(239, 68, 68, .35);
+            }
+
+            .pill.use {
+                color: var(--use);
+                border-color: rgba(245, 158, 11, .35);
+            }
+        }
+    }
+
+    .tx-amount {
+        font-weight: 900;
+        text-align: right;
+
+        &.plus {
+            color: var(--deposit);
+        }
+
+        &.minus {
+            color: var(--withdraw);
+        }
+
+        .running {
+            margin-top: 2px;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--muted);
+        }
+    }
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 24px 0;
+}
