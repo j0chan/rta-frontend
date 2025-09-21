@@ -16,8 +16,8 @@ export class HeaderBarComponent  implements OnInit {
   ngOnInit() {}
 
   /* 페이지 이동 */
-  goHomePage() {
-    console.log('go home page')
-    this.router.navigate(['/home'])
+  goMainPage() {
+    console.log('go main page')
+    this.router.navigate(['/main'])
   }
 }

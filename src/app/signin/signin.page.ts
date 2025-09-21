@@ -35,7 +35,7 @@ export class SigninPage implements OnInit {
       next: (response) => {
         console.log(response)
         alert('로그인 성공')
-        this.router.navigate(['/home'])
+        this.router.navigate(['/main'])
       },
       error: (err) => {
         console.error('로그인 오류', err)
