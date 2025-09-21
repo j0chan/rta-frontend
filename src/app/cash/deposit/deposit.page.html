@@ -1,0 +1,39 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<app-container>
+    <div class="page-wrap">
+        <header class="page-head">
+            <h1>여민전 충전</h1>
+            <p class="helper">보유중인 여민전 {{ formatKRW(owned) }}</p>
+        </header>
+
+        <!-- 금액 카드 -->
+        <section class="form-card">
+            <label class="field">
+                <input class="amount-input" type="tel" inputmode="numeric" autocomplete="off" autocapitalize="off"
+                    spellcheck="false" [value]="amount || ''" (input)="onAmountInput($any($event.target).value)"
+                    placeholder="">
+            </label>
+
+            <div class="quick-rows">
+                <button type="button" class="chip" (click)="add(1000)">+1,000</button>
+                <button type="button" class="chip" (click)="add(5000)">+5,000</button>
+                <button type="button" class="chip" (click)="add(10000)">+10,000</button>
+                <button type="button" class="chip" (click)="add(30000)">+30,000</button>
+            </div>
+        </section>
+
+        <!-- 에러 메시지(선택사항) -->
+        <p *ngIf="errorMsg" class="error-text">{{ errorMsg }}</p>
+
+        <div class="bottom-safe"></div>
+    </div>
+</app-container>
+
+<!-- 하단 고정 바 -->
+<div class="bottom-bar">
+    <button class="cta" type="button" [disabled]="amount <= 0 || loading" (click)="onSubmit()">
+        {{ loading ? '처리중...' : '충전하기' }}
+    </button>
+</div>
