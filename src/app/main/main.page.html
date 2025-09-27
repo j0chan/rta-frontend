@@ -4,7 +4,7 @@
 <app-container>
     <div class="page-wrap">
         <!-- 여민전 잔액 카드 -->
-        <section class="section">
+        <section class="section" (click)="goTransactionPage()">
             <button class="balance-card" (click)="gotoCashDetail()" [disabled]="loading$ | async">
                 <div class="balance-top">
                     <span class="brand">여민전</span>

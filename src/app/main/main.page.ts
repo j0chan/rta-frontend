@@ -126,14 +126,19 @@ export class MainPage implements OnInit, AfterViewInit, OnDestroy {
     }
 
     goDepositPage() {
-    console.log('go deposit page')
-    this.router.navigate(['/deposit'])
-  }
+        console.log('go deposit page')
+        this.router.navigate(['/deposit'])
+    }
 
-  goWithdrawPage() {
-    console.log('go withdraw page')
-    this.router.navigate(['/withdraw'])
-  }
+    goWithdrawPage() {
+        console.log('go withdraw page')
+        this.router.navigate(['/withdraw'])
+    }
+
+    goTransactionPage() {
+        console.log('go transaction page')
+        this.router.navigate(['/transaction'])
+    }
     // ===== 추후 기능 연결용 예시 핸들러 (지금은 사용 안 함) =====
     // onTopUp() { /* 충전 페이지로 이동 로직 */ }
     // onWithdraw() { /* 인출 페이지로 이동 로직 */ }
