@@ -6,12 +6,12 @@ import { CashService } from '../../shared/services/cash.service';
 export enum CashTransactionType {
     DEPOSIT = 'DEPOSIT',
     WITHDRAW = 'WITHDRAW',
-    USE = 'USE',
+    PAYMENT = 'PAYMENT',
 }
 
 export interface CashTransaction {
     cash_transaction_id: string | number;
-    type: CashTransactionType;   // 'DEPOSIT' | 'WITHDRAW' | 'USE'
+    type: CashTransactionType;   // 'DEPOSIT' | 'WITHDRAW' | 'PAYMENT'
     amount: number;              // 양수
     reason: string;              // 상호/사유
     created_at: string;          // ISO

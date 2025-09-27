@@ -5,7 +5,7 @@
     <app-container>
         <div class="page-title">여민전</div>
 
-        <!-- 잔액 카드 -->
+        <!-- 잔액 카드: 새로고침 버튼 우상단 고정, 잔액은 크게 -->
         <section class="wallet" *ngIf="summary">
             <div class="refresh-btn">
                 <app-button label="새로고침" variant="bordered-gray" size="fit" type="button" aria-label="캐쉬 새로고침"
@@ -33,14 +33,14 @@
                     type="button" (click)="setFilter(CashTransactionType.DEPOSIT)">
                 </app-button>
 
+                <app-button label="사용"
+                    [variant]="filter===CashTransactionType.PAYMENT ? 'tinted-bordered' : 'bordered-gray'" size="fit"
+                    type="button" (click)="setFilter(CashTransactionType.PAYMENT)">
+                </app-button>
+
                 <app-button label="인출"
                     [variant]="filter===CashTransactionType.WITHDRAW ? 'tinted-bordered' : 'bordered-gray'" size="fit"
                     type="button" (click)="setFilter(CashTransactionType.WITHDRAW)">
-                </app-button>
-
-                <app-button label="사용"
-                    [variant]="filter===CashTransactionType.USE ? 'tinted-bordered' : 'bordered-gray'" size="fit"
-                    type="button" (click)="setFilter(CashTransactionType.USE)">
                 </app-button>
             </div>
 
@@ -58,10 +58,11 @@
             <ng-container *ngFor="let g of groups">
                 <div class="date-sep">{{ g.dateLabel }}</div>
 
+                <!-- 포인트 페이지 패턴 동일 적용 -->
                 <div class="tx" *ngFor="let t of g.items; trackBy: trackByTx"
                     [class.deposit]="t.type===CashTransactionType.DEPOSIT"
                     [class.withdraw]="t.type===CashTransactionType.WITHDRAW"
-                    [class.use]="t.type===CashTransactionType.USE">
+                    [class.payment]="t.type===CashTransactionType.PAYMENT">
 
                     <div class="leftbar"></div>
 
@@ -70,13 +71,15 @@
                         <div class="meta">
                             <span class="pill" [class.deposit]="t.type===CashTransactionType.DEPOSIT"
                                 [class.withdraw]="t.type===CashTransactionType.WITHDRAW"
-                                [class.use]="t.type===CashTransactionType.USE">
-                                {{ typeLabel(t.type) }}
+                                [class.payment]="t.type===CashTransactionType.PAYMENT">
+                                {{ t.type == CashTransactionType.PAYMENT ? '사용' : t.type == CashTransactionType.DEPOSIT
+                                ? '충전' : '인출' }}
                             </span>
                             <span class="time">{{ timeHHMM(t.created_at) }}</span>
                         </div>
                     </div>
 
+                    <!-- 금액 + 러닝 잔액 -->
                     <div class="tx-amount" [class.plus]="t.type===CashTransactionType.DEPOSIT"
                         [class.minus]="t.type!==CashTransactionType.DEPOSIT">
                         {{ signByType(t.type) }}{{ krw(t.amount) }}

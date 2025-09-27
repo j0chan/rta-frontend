@@ -5,11 +5,8 @@
     --card: #ffffff;
     --bg: #fafafa;
     --deposit: #0ea5e9;
-    /* 충전 */
     --withdraw: #ef4444;
-    /* 인출 */
-    --use: #f59e0b;
-    /* 사용(결제) - 구분 위해 주황 */
+    --payment: #f59e0b;
 }
 
 * {
@@ -117,11 +114,11 @@
     }
 
     &.withdraw .leftbar {
-        background: rgba(239, 68, 68, .25);
+        background: rgba(245, 158, 11, .25);
     }
 
-    &.use .leftbar {
-        background: rgba(245, 158, 11, .25);
+    &.payment .leftbar {
+        background: rgba(239, 68, 68, .25);
     }
 
     .tx-main {
