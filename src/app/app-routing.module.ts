@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core'
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
-import { AdminGuard } from './shared/admin/admin.guard'
+import { AdminGuard } from './shared/guard/admin.guard'
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'main',
     pathMatch: 'full'
+  },
+  {
+    path: 'main',
+    loadChildren: () => import('./main/main.module').then(m => m.MainModule),
   },
   {
     path: 'signin',
@@ -70,17 +74,30 @@ const routes: Routes = [
     path: 'gift-card-create',
     loadChildren: () =>
       import('./gift-card/gift-card-create/gift-card-create.module').then(m => m.GiftCardCreateModule),
-      canMatch: [AdminGuard],
+    canMatch: [AdminGuard],
   },
   {
     path: 'gift-card-used',
     loadChildren: () =>
       import('./gift-card/gift-card-used/gift-card-used.module').then(m => m.GiftCardUsedModule),
   },
-   {
+  {
     path: 'point',
-    loadChildren: () => import('./point/point.module').then( m => m.PointPageMudule)
-  }
+    loadChildren: () => import('./point/point.module').then(m => m.PointPageMudule)
+  },
+  {
+    path: 'deposit',
+    loadChildren: () => import('./cash/deposit/deposit.module').then(m => m.DepositModule)
+  },
+  {
+    path: 'withdraw',
+    loadChildren: () => import('./cash/withdraw/withdraw.module').then(m => m.WithdrawModule)
+  },
+  {
+    path: 'transaction',
+    loadChildren: () => import('./cash/transaction/transaction.module').then(m => m.CashTransactionModule)
+  },
+
 ]
 
 @NgModule({

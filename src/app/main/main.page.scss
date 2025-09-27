@@ -1,0 +1,382 @@
+/* 기본 래퍼 */
+.page-wrap {
+    padding: 12px 12px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ✅ 첫 번째 섹션(잔액+충전/인출)과 바로 아래 요소(4개 메뉴) 사이 간격을 2배로 */
+.section:first-of-type {
+    margin-bottom: 12px;
+    /* 기존 page-wrap gap 12px + 여기 12px = 총 24px */
+}
+
+.section {
+    margin: 0;
+}
+
+/* ===== 잔액 카드 ===== */
+.balance-card {
+    position: relative;
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    padding: 14px 16px;
+    background: #f7f8ff;
+    box-shadow: 0 8px 18px rgba(19, 33, 69, 0.06);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    row-gap: 6px;
+    min-height: 148px;
+    text-align: left;
+
+    &:disabled {
+        opacity: .88;
+    }
+}
+
+.balance-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .brand {
+        font-size: 15px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: .02em;
+    }
+}
+
+.balance-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+
+    .title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #64748b;
+    }
+
+    .amount {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: -.4px;
+        color: #0f172a;
+        line-height: 1.1;
+    }
+}
+
+.balance-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.balance-helper {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* 새로고침 FAB */
+.refresh-fab {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: #e5e7eb;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 10px rgba(17, 24, 39, .08);
+}
+
+.refresh-fab svg {
+    width: 18px;
+    height: 18px;
+    color: #334155;
+}
+
+.refresh-fab svg path {
+    fill: currentColor;
+}
+
+/* ===== 충전/인출 버튼 묶음 ===== */
+.money-actions {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.ma-btn {
+    height: 44px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    border: 1px solid transparent;
+    box-shadow: 0 6px 14px rgba(19, 33, 69, 0.06);
+}
+
+.ma-btn.primary {
+    background: #5c6bff;
+    color: #fff;
+}
+
+.ma-btn.ghost {
+    background: #fff;
+    color: #0f172a;
+    border-color: #e5e7eb;
+}
+
+/* ===== 하단 4 아이콘 ===== */
+:root {
+    --qa-icon-size: clamp(30px, 7.2vw, 44px);
+    --qa-icon-color: #9aa6b2;
+    --qa-text-color: #222a37;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.quick-actions .qa-item {
+    border: none;
+    background: #ffffff;
+    border-radius: 16px;
+
+    /* ✅ 높이 1.2배 & 내부 여백 증가 */
+    padding: 14px 8px;
+    min-height: 100px;
+    /* 기존 84px → 100px */
+    /* aspect-ratio 제거로 세로 여유 확보 */
+    box-shadow: 0 6px 16px rgba(23, 23, 23, 0.06);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-actions .qa-item svg {
+    width: var(--qa-icon-size);
+    height: var(--qa-icon-size);
+    display: block;
+    color: var(--qa-icon-color);
+}
+
+.quick-actions .qa-item svg path {
+    fill: currentColor;
+}
+
+.quick-actions .qa-item .qa-text {
+    /* ✅ 아이콘-텍스트 간 여백 증가 */
+    margin-top: 12px;
+    /* 기존 8px → 12px */
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--qa-text-color);
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* ===== 프로모션 섹션 (캐러셀 틀) ===== */
+.promo-section .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 2px 8px;
+}
+
+.promo-section .section-head h2 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.2px;
+}
+
+.promo-card {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 18px rgba(19, 33, 69, 0.06);
+    overflow: hidden;
+    padding: 12px;
+}
+
+/* 인디케이터: 기본은 숨김, 호버/포커스/활성 클래스에서만 보임 */
+.promo-indicator {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.75);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .25s ease, transform .25s ease;
+    pointer-events: none;
+}
+
+.promo-card:hover .promo-indicator,
+.promo-card:focus-within .promo-indicator,
+.promo-card.show-indicator .promo-indicator {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 가로 스크롤 스냅 캐러셀 */
+.promo-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.promo-slide {
+    scroll-snap-align: start;
+
+    /* ✅ 높이 1.5배 (120px → 180px) */
+    min-height: 180px;
+
+    border-radius: 12px;
+    background: #f7f8ff;
+    display: grid;
+    place-items: center;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.promo-slide.is-empty .empty {
+    font-size: 14px;
+}
+
+/* ===== 공지사항(새소식) ===== */
+.notice-section .section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 2px 6px;
+}
+
+.notice-section .section-head h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+/* 리스트 틀 */
+.notice-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 18px rgba(19, 33, 69, 0.06);
+    overflow: hidden;
+}
+
+.notice-item {
+    border-bottom: 1px solid #edeff3;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.notice-link {
+    width: 100%;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: none;
+    text-align: left;
+}
+
+.notice-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.notice-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -.2px;
+}
+
+.notice-date {
+    font-size: 12px;
+    color: #9aa6b2;
+}
+
+.chevron {
+    font-size: 20px;
+    color: #c4c9d1;
+}
+
+.notice-item.empty {
+    padding: 18px 16px;
+
+    .notice-title {
+        color: #9aa6b2;
+        font-weight: 600;
+    }
+
+    .notice-date {
+        display: none;
+    }
+}
+
+.notice-more {
+    display: grid;
+    place-items: center;
+    padding: 12px 0 2px;
+}
+
+.more-btn {
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* 로딩 템플릿 */
+.skeleton-amount {
+    width: 120px;
+    height: 30px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 37%, #e5e7eb 63%);
+    background-size: 400% 100%;
+    animation: shine 1.2s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
