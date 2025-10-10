@@ -1,0 +1,55 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<ion-content>
+    <app-container>
+        <div class="title-row">
+      <div class="page-title">새소식</div>
+      <button class="btn-primary" (click)="goCreate()">작성하기</button>
+    </div>
+
+        <!-- 중요 공지 (핀) -->
+        <section class="section pinned" *ngIf="!loadingPinned && pinned.length > 0">
+            <div class="section-title"></div>
+            <ul class="notice-list">
+                <li class="notice-item pinned" *ngFor="let n of pinned; trackBy: trackById" (click)="goDetail(n)">
+                    <div class="row1">
+                        <span class="badge">중요</span>
+                        <span class="title">{{ n.title }}</span>
+                    </div>
+                    <div class="row2">
+                        <span class="date">{{ n.created_at | date:'yyyy.MM.dd' }}</span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <app-divider></app-divider>
+
+        <!-- 일반 공지 -->
+        <section class="section regular">
+            <div class="section-title"></div>
+            <ng-container *ngIf="regular.length > 0; else emptyTpl">
+                <ul class="notice-list">
+                    <li class="notice-item" *ngFor="let n of regular; trackBy: trackById" (click)="goDetail(n)">
+                        <div class="row1">
+                            <span class="title">{{ n.title }}</span>
+                        </div>
+                        <div class="row2">
+                            <span class="date">{{ n.created_at | date:'yyyy.MM.dd' }}</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- 더보기 (일반 공지만) -->
+                <div class="more-wrap" *ngIf="hasMore">
+                    <button class="btn btn-outline-secondary w-100" (click)="loadMore()">더보기 +</button>
+                </div>
+            </ng-container>
+
+            <ng-template #emptyTpl>
+                <div class="empty">표시할 공지사항이 없습니다.</div>
+            </ng-template>
+        </section>
+    </app-container>
+</ion-content>
