@@ -80,5 +80,7 @@ export class GiftCardCreatePage {
                 this.errorMsg = err?.error?.message || '생성에 실패했습니다.';
             },
         });
+
+        this.router.navigate(['/gift-card-stroe']);
     }
 }
