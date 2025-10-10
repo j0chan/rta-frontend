@@ -1,0 +1,28 @@
+<section class="home-section notice notice--v2">
+    <div class="body" *ngIf="!loading && items.length > 0; else stateTpl">
+        <ul class="notice-list">
+            <li class="notice-item" *ngFor="let n of items; trackBy: trackById">
+                <button class="notice-link" (click)="goDetail(n)" [attr.aria-label]="n.title">
+                    <div class="notice-main">
+                        <div class="notice-title">{{ n.title }}</div>
+                        <div class="notice-date">{{ n.created_at | date:'yyyy.MM.dd' }}</div>
+                    </div>
+                    <!-- 우측 꺽쇠 -->
+                    <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M6.5 3.5a1 1 0 0 1 1.6-.8l4 3a1 1 0 0 1 0 1.6l-4 3a1 1 0 1 1-1.2-1.6l2.7-2-2.7-2a1 1 0 0 1-.4-.8z" />
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer" *ngIf="showMore">
+        <button class="more" (click)="goMore()">더보기 <span aria-hidden="true">+</span></button>
+    </div>
+
+    <ng-template #stateTpl>
+        <div class="state" *ngIf="loading">불러오는 중…</div>
+        <div class="state" *ngIf="!loading && items.length === 0">등록된 공지사항이 없습니다.</div>
+    </ng-template>
+</section>
