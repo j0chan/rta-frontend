@@ -1,0 +1,26 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<app-container>
+    <header class="page-header">
+        <h2 class="page-title">프로모션 관리</h2>
+        <button type="button" class="btn-sejong" (click)="goCreate()">작성하기</button>
+    </header>
+
+    <section class="content-scroll">
+        <div class="grid">
+            <div class="promo-card" *ngFor="let p of items">
+                <button class="delete-btn" (click)="remove(p.promotion_id)" aria-label="삭제">×</button>
+
+                <div class="meta">
+                    #{{ p.promotion_id }} • {{ p.placement }}
+                    <span class="date">{{ p.created_at | date:'yyyy.MM.dd HH:mm' }}</span>
+                </div>
+
+                <div class="thumb">
+                    <img [src]="p.image_url" alt="promotion" (error)="onImgError($event)"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</app-container>
