@@ -1,108 +1,120 @@
-<app-header-bar></app-header-bar>
-<app-divider></app-divider>
-<!-- 본문 -->
-<app-container>
-    <div class="page-wrap">
-        <!-- 여민전 잔액 카드 -->
-        <section class="section" (click)="goTransactionPage()">
-            <button class="balance-card" (click)="gotoCashDetail()" [disabled]="loading$ | async">
-                <div class="balance-top">
-                    <span class="brand">여민전</span>
+<header class="app-header">
+    <app-header-bar></app-header-bar>
+    <app-divider></app-divider>
+</header>
+
+<main class="app-main">
+    <app-container>
+        <div class="page-wrap">
+            <!-- 여민전 잔액 카드 -->
+            <section class="section">
+                <!-- button 중첩 방지: 바깥은 role="button" -->
+                <div class="balance-card" role="button" tabindex="0" (click)="goTransactionPage()"
+                    (keydown.enter)="goTransactionPage()" (keydown.space)="goTransactionPage()">
+
+                    <div class="balance-top">
+                        <span class="brand">여민전</span>
+                    </div>
+
+                    <div class="balance-row">
+                        <span class="title">보유 금액</span>
+                        <span class="amount">
+                            <ng-container *ngIf="!(loading$ | async); else loadingTpl">
+                                {{ formatKRW(balance$ | async) }}
+                            </ng-container>
+                        </span>
+                    </div>
+
+                    <div class="balance-bottom">
+                        <span class="balance-helper">탭하여 상세보기</span>
+                    </div>
+
+                    <!-- 우측 하단: 회색 원형 새로고침 -->
+                    <button type="button" class="refresh-fab" (click)="$event.stopPropagation(); fetchBalance()"
+                        aria-label="새로고침">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                            <path
+                                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                        </svg>
+                    </button>
                 </div>
-                <div class="balance-row">
-                    <span class="title">보유 금액</span>
-                    <span class="amount">
-                        <ng-container *ngIf="!(loading$ | async); else loadingTpl"> {{ formatKRW(balance$ | async) }}
-                        </ng-container>
-                    </span>
-                </div> <!-- 금액 카드 하단: 보조 텍스트 -->
-                <div class="balance-bottom">
-                    <span class="balance-helper">탭하여 상세보기</span>
+
+                <!-- 충전/인출 -->
+                <div class="money-actions" aria-label="여민전 자금 액션">
+                    <button class="ma-btn primary" type="button" (click)="goDepositPage()">충전하기</button>
+                    <button class="ma-btn ghost" type="button" (click)="goWithdrawPage()">인출하기</button>
                 </div>
-                <!-- 우측 하단: 회색 원형 새로고침 -->
-                <button type="button" class="refresh-fab" (click)="$event.stopPropagation(); fetchBalance()"
-                    aria-label="새로고침">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+            </section>
+
+            <!-- 하단 바로가기 4개 -->
+            <nav class="quick-actions">
+                <button class="qa-item" type="button" (click)="goTo('/gift-card-store')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                         <path
-                            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
-                    </svg> </button>
-            </button>
-            <!-- ⬇️ 충전/인출 버튼 묶음 (URL은 네가 연결) (click)="/* go to top-up page */ null"-->
-            <div class="money-actions" aria-label="여민전 자금 액션">
-                <button class="ma-btn primary" type="button" (click)="goDepositPage()">충전하기</button>
-                <button class="ma-btn ghost" type="button" (click)="goWithdrawPage()">인출하기</button>
-            </div>
-        </section>
-        <!-- 하단 바로가기 4개 -->
-        <nav class="quick-actions"> <button class="qa-item" (click)="goTo('/gift-card-store')">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                    <path
-                        d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z" />
-                </svg>
-                <div class="qa-text">상품권 구매</div>
-            </button> <button class="qa-item" (click)="goTo('/transaction')"> <svg xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
-                    <path
-                        d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
-                </svg>
-                <div class="qa-text">이용내역</div>
-            </button>
-            <button class="qa-item" (click)="goTo('/home')"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                    <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                </svg>
-                <div class="qa-text">가맹점 찾기</div>
-            </button>
-            <button class="qa-item" (click)="goTo('/point')"> <svg xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a.5.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" />
-                </svg>
-                <div class="qa-text">포인트</div>
-            </button>
-        </nav> <!-- 프로모션 캐러셀 (틀) (scroll)="/* optional: onPromoInteracted() */ null"-->
-        <section class="section promo-section">
-            <div class="section-head">
-                <h2>프로모션</h2>
-            </div>
-            <div class="promo-card" tabindex="0"> <!-- 인디케이터: 호버/포커스/활성시만 노출 -->
-                <div class="promo-indicator">1/3</div> <!-- 가로 스크롤 스냅 캐러셀 (빈칸만 표시) -->
-                <div class="promo-track" aria-label="프로모션 목록 (캐러셀)">
-                    <article class="promo-slide is-empty" aria-roledescription="slide" aria-label="1 / 3">
-                        <div class="empty">빈칸</div>
-                    </article> <!-- 필요 시 슬라이드 추가: .promo-slide 를 복제해 넣으면 됨 -->
-                    <article class="promo-slide" aria-roledescription="slide" aria-label="2 / 3"></article>
-                    <article class="promo-slide" aria-roledescription="slide" aria-label="3 / 3"></article>
+                            d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h-0 3v-5H4zM9 10a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z" />
+                    </svg>
+                    <div class="qa-text">상품권 구매</div>
+                </button>
+
+                <button class="qa-item" type="button" (click)="goTo('/transaction')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path
+                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
+                        <path
+                            d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
+                    </svg>
+                    <div class="qa-text">이용내역</div>
+                </button>
+
+                <button class="qa-item" type="button" (click)="goTo('/home')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg>
+                    <div class="qa-text">가맹점 찾기</div>
+                </button>
+
+                <button class="qa-item" type="button" (click)="goTo('/point')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <path
+                            d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a.5.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" />
+                    </svg>
+                    <div class="qa-text">포인트</div>
+                </button>
+            </nav>
+
+            <!-- 프로모션 캐러셀 -->
+            <section class="section promo-section" *ngIf="promos.length">
+                <div class="section-head">
+                    <h2>프로모션</h2>
                 </div>
-            </div>
-        </section> <!-- 공지사항(새소식) 리스트 (틀) -->
-        <section class="section notice-section">
-            <div class="section-head">
-                <h2>새소식</h2>
-            </div>
-            <ul class="notice-list" role="list"> <!-- 비어있는 상태 틀 -->
-                <li class="notice-item empty">
-                    <div class="notice-title">등록된 공지사항이 없습니다</div>
-                    <div class="notice-date">-</div>
-                </li> <!-- 실제 데이터가 생기면 아래 아이템 템플릿을 반복 -->
-                <!-- <li class="notice-item"> 
-                    <button class="notice-link" type="button"> 
-                        <div class="notice-main"> <div class="notice-title">(신)서울형키즈카페머니 발행 안내</div> 
-                        <div class="notice-date">2025.09.18</div> </div> <span class="chevron" aria-hidden="true">
-                        </span> 
-                    </button> 
-                </li> -->
-            </ul>
-            <div class="notice-more">
-                <button class="more-btn" type="button">더보기 +</button>
-            </div>
-        </section>
-    </div>
-</app-container>
-<!-- 로딩 템플릿 -->
-<ng-template #loadingTpl>
-    <div class="skeleton-amount"></div>
-</ng-template>
+
+                <div class="promo-touch" (pointerdown)="onPromoPointerDown($event)"
+                    (pointerup)="onPromoPointerUp($event)" (pointercancel)="onPromoPointerCancel()"
+                    (touchstart)="onPromoTouchStart($event)" (touchend)="onPromoTouchEnd($event)"
+                    (mousedown)="onPromoMouseDown($event)" (mouseup)="onPromoMouseUp($event)"
+                    (mouseleave)="onPromoMouseLeave()" (contextmenu)="$event.preventDefault()">
+                    <app-promo-banner [promotion]="promos[promoIndex]" [index]="promoIndex" [total]="promos.length"
+                        [emphasize]="promoEmph" (clicked)="onPromoClick()">
+                    </app-promo-banner>
+                </div>
+
+            </section>
+
+            <!-- 공지사항(새소식) -->
+            <section class="section notice-section">
+                <div class="section-head">
+                    <h2>새소식</h2>
+                </div>
+                <app-home-notice-list></app-home-notice-list>
+            </section>
+        </div>
+    </app-container>
+
+    <!-- 로딩 템플릿 -->
+    <ng-template #loadingTpl>
+        <div class="skeleton-amount"></div>
+    </ng-template>
+</main>

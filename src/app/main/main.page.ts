@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { CashService } from '../shared/services/cash.service';
+import { Promotion } from '../shared/model/promotion/promotion.model';
+import { PromotionService } from '../shared/services/promotion.service';
 
 @Component({
     selector: 'app-main-page',
@@ -12,62 +14,61 @@ import { CashService } from '../shared/services/cash.service';
 export class MainPage implements OnInit, AfterViewInit, OnDestroy {
     /** 여민전 잔액 */
     balance$ = new BehaviorSubject<number>(0);
-
     /** 로딩/에러 표시용 */
     loading$ = new BehaviorSubject<boolean>(false);
     error$ = new BehaviorSubject<string | null>(null);
 
-    /** 프로모션 인디케이터 값 */
-    promoIndex = 1;
-    promoTotal = 0;
-
-    /** 프로모션 트랙/슬라이드 참조 */
-    @ViewChild('promoTrack', { static: false }) promoTrack?: ElementRef<HTMLDivElement>;
-    @ViewChildren('promoSlide') promoSlides?: QueryList<ElementRef<HTMLElement>>;
-
-    /** 페이지 내 안내 문구 */
-    readonly title = '여민동행';
-    readonly subtitle = '총 보유금액';
+    /** 프로모션 데이터 */
+    promos: Promotion[] = [];
+    promoIndex = 0;            // 0-based
+    promoEmph = false;         // 슬라이드 직후 2초 강조
+    private promoTimer?: any;  // 자동 순환
+    private promoEmphTimer?: any;
 
     private destroy$ = new Subject<void>();
+    private dragStartX: number | null = null;
+    private dragging = false;
+    private readonly THRESHOLD = 40; // px
 
     constructor(
         private readonly router: Router,
         private readonly cashService: CashService,
+        private readonly promotionService: PromotionService,
     ) { }
 
     ngOnInit(): void {
         this.fetchBalance();
-    }
 
-    ngAfterViewInit(): void {
-        // 슬라이드 개수 계산 및 변화 감지
-        this.updatePromoTotal();
-        this.promoSlides?.changes
+        // 프로모션 로드
+        this.promotionService.listActive('MAIN')
             .pipe(takeUntil(this.destroy$))
-            .subscribe(() => this.updatePromoTotal());
-
-        // 첫 렌더 후 현재 인덱스 보정
-        queueMicrotask(() => this.updatePromoIndex());
+            .subscribe({
+                next: (list) => {
+                    this.promos = list ?? [];
+                    this.promoIndex = 0;
+                    this.startAuto();
+                    this.flashEmphasis();
+                },
+                error: (err) => { console.error('[MainPage] promotions load error', err); }
+            });
     }
+
+    ngAfterViewInit(): void { /* 필요 시 */ }
 
     ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
+        this.destroy$.next(); this.destroy$.complete();
+        clearInterval(this.promoTimer);
+        clearTimeout(this.promoEmphTimer);
     }
 
     /** 잔액 조회 */
     fetchBalance(): void {
         this.loading$.next(true);
         this.error$.next(null);
-
         this.cashService.getMyBalance()
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (balance) => {
-                    this.balance$.next(balance ?? 0);
-                    this.loading$.next(false);
-                },
+                next: (balance) => { this.balance$.next(balance ?? 0); this.loading$.next(false); },
                 error: (err) => {
                     console.error('[MainPage] getMyBalance error', err);
                     this.error$.next('잔액을 불러오지 못했습니다.');
@@ -76,18 +77,67 @@ export class MainPage implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
-    /** 카드 전체 탭 → 여민전 상세로 이동 */
-    gotoCashDetail(): void {
-        this.router.navigateByUrl('/cash');
-    }
-
-    /** 숫자 포맷 (₩, 천단위 콤마) */
+    /** 통화 포맷 */
     formatKRW(v: number | null | undefined): string {
         try {
-            return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(v ?? 0);
+            return new Intl.NumberFormat('ko-KR', {
+                style: 'currency', currency: 'KRW', maximumFractionDigits: 0
+            }).format(v ?? 0);
         } catch {
             return `${(v ?? 0).toLocaleString('ko-KR')}원`;
         }
+    }
+
+    /** 자동 순환 (끝→처음 루프) */
+    private startAuto() {
+        clearInterval(this.promoTimer);
+        if (!this.promos.length) return;
+        this.promoTimer = setInterval(() => this.next(), 4500);
+    }
+
+    private flashEmphasis() {
+        this.promoEmph = true;
+        clearTimeout(this.promoEmphTimer);
+        this.promoEmphTimer = setTimeout(() => (this.promoEmph = false), 2000);
+    }
+
+    private next() {
+        if (!this.promos.length) return;
+        this.promoIndex = (this.promoIndex + 1) % this.promos.length;
+        this.flashEmphasis();
+    }
+
+    private prev() {
+        if (!this.promos.length) return;
+        this.promoIndex = (this.promoIndex - 1 + this.promos.length) % this.promos.length;
+        this.flashEmphasis();
+    }
+
+    /** 드래그 후 작동(드래그 중에는 화면 고정) */
+    onPromoPointerDown(ev: PointerEvent) {
+        clearInterval(this.promoTimer);
+        this.dragging = true;
+        this.dragStartX = ev.clientX;
+    }
+    onPromoPointerUp(ev: PointerEvent) {
+        if (!this.dragging || this.dragStartX == null) { this.dragging = false; return; }
+        const dx = ev.clientX - this.dragStartX;
+        if (Math.abs(dx) > this.THRESHOLD) {
+            dx < 0 ? this.next() : this.prev();
+        }
+        this.dragging = false;
+        this.dragStartX = null;
+        this.startAuto();
+    }
+    onPromoPointerCancel() {
+        this.dragging = false;
+        this.dragStartX = null;
+        this.startAuto();
+    }
+
+    /** 배너 클릭: 운영자면 프로모션 리스트 이동 */
+    onPromoClick() {
+        this.router.navigate(['/promotion/list']);
     }
 
     /** 하단 바로가기 */
@@ -95,53 +145,44 @@ export class MainPage implements OnInit, AfterViewInit, OnDestroy {
         this.router.navigateByUrl(path);
     }
 
-    /** 프로모션 트랙 스크롤 시 인덱스 갱신 */
-    onPromoScroll(): void {
-        this.updatePromoIndex();
-    }
-
-    @HostListener('window:resize')
-    onResize(): void {
-        this.updatePromoIndex();
-    }
-
-    /** 현재 인덱스 계산 */
-    private updatePromoIndex(): void {
-        const track = this.promoTrack?.nativeElement;
-        if (!track) return;
-
-        const w = track.clientWidth || 1;
-        const idx = Math.round(track.scrollLeft / w) + 1;
-        this.promoIndex = Math.min(Math.max(idx, 1), Math.max(this.promoTotal, 1));
-    }
-
-    /** 전체 슬라이드 개수 계산 */
-    private updatePromoTotal(): void {
-        this.promoTotal = this.promoSlides?.length ?? 0;
-        if (this.promoTotal === 0) {
-            this.promoIndex = 0;
-        } else if (this.promoIndex < 1) {
-            this.promoIndex = 1;
-        }
-    }
-
     goDepositPage() {
-        console.log('go deposit page')
-        this.router.navigate(['/deposit'])
+        this.router.navigate(['/deposit']);
     }
 
     goWithdrawPage() {
-        console.log('go withdraw page')
-        this.router.navigate(['/withdraw'])
+        this.router.navigate(['/withdraw']);
     }
 
     goTransactionPage() {
-        console.log('go transaction page')
-        this.router.navigate(['/transaction'])
+        this.router.navigate(['/transaction']);
     }
-    // ===== 추후 기능 연결용 예시 핸들러 (지금은 사용 안 함) =====
-    // onTopUp() { /* 충전 페이지로 이동 로직 */ }
-    // onWithdraw() { /* 인출 페이지로 이동 로직 */ }
-    // onOpenPromotion(promoId: number) { /* 프로모션 상세로 이동 */ }
-    // onNoticeMore() { /* 공지 더보기 이동 */ }
+
+    private beginDrag(clientX: number) {
+        clearInterval(this.promoTimer);
+        this.dragging = true;
+        this.dragStartX = clientX;
+    }
+    private endDrag(clientX?: number) {
+        if (!this.dragging || this.dragStartX == null) { this.dragging = false; return; }
+        const dx = (clientX ?? this.dragStartX) - this.dragStartX;
+        if (Math.abs(dx) > this.THRESHOLD) dx < 0 ? this.next() : this.prev();
+        this.dragging = false;
+        this.dragStartX = null;
+        this.startAuto();
+    }
+
+
+    /** ----- Touch (iOS/Safari 호환) ----- */
+    onPromoTouchStart(ev: TouchEvent) {
+        if (ev.touches && ev.touches.length) this.beginDrag(ev.touches[0].clientX);
+    }
+    onPromoTouchEnd(ev: TouchEvent) {
+        const t = ev.changedTouches && ev.changedTouches[0];
+        this.endDrag(t ? t.clientX : undefined);
+    }
+
+    /** ----- Mouse (데스크톱 보강) ----- */
+    onPromoMouseDown(ev: MouseEvent) { this.beginDrag(ev.clientX); }
+    onPromoMouseUp(ev: MouseEvent) { this.endDrag(ev.clientX); }
+    onPromoMouseLeave() { this.endDrag(); }
 }
