@@ -1,0 +1,15 @@
+<div class="promo-card" (click)="onClick()"
+    style="position:relative;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.08);">
+    <img [src]="promotion.image_url" alt="promotion" [attr.draggable]="false"
+        style="display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;user-select:none;-webkit-user-drag:none;" />
+
+
+    <div class="page-indicator" [class.emph]="emphasize" style="position:absolute;top:8px;right:8px;padding:4px 8px;border-radius:12px;
+              background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:700;">
+        {{ index + 1 }} / {{ total }}
+    </div>
+
+    <!-- (선택) 관리자 뱃지 -->
+    <div *ngIf="isAdmin" style="position:absolute;bottom:8px;right:8px;padding:3px 8px;border-radius:12px;
+              background:rgba(0,0,0,.4);color:#fff;font-size:11px;">ADMIN</div>
+</div>
