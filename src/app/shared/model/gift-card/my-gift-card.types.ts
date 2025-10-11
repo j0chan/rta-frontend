@@ -5,20 +5,19 @@ export type GiftCategoryCode =
     | 'COFFEE_DRINK'
     | 'BAKERY_DESSERT'
     | 'APPAREL'
-    | 'ETC'
+    | 'ETC';
 
 export interface GiftCard {
-    gift_card_id: number
-    name: string
-    type: GiftCardType
-    amount: number
-    category: GiftCategoryCode
-    image_url?: string | null
-    // 필요시 확장 필드 (브랜드/설명 등)
-    brand?: string
-    title?: string
-    shortDesc?: string
-    longDesc?: string
+    gift_card_id: number;
+    name: string;
+    type: GiftCardType;
+    amount: number;
+    category: GiftCategoryCode;
+    image_url?: string | null;
+    brand?: string;
+    title?: string;
+    shortDesc?: string;
+    longDesc?: string;
 }
 
 export interface GiftCardPocket {
@@ -47,16 +46,17 @@ export interface GiftCardUsageHistory {
 }
 
 export interface ApiResponseDTO<T> {
-    success: boolean
-    statusCode: number
-    message: string
-    data: T
+    success: boolean;
+    statusCode: number;
+    message: string;
+    data: T;
 }
 
+/** 참고용 DTO: 파일 업로드 흐름에서는 FormData를 사용합니다. */
 export interface CreateGiftCardDTO {
-    name: string
-    type: GiftCardType
-    amount: number
-    category: GiftCategoryCode
-    image_url?: string
+    name: string;
+    type: GiftCardType;
+    amount: number;
+    category: GiftCategoryCode;
+    // image_url?: string; // ← URL 입력 방식이 아니라면 제거해도 됩니다.
 }

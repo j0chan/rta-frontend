@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import { Promotion } from 'src/app/shared/model/promotion/promotion.model';
+import { Promotion, PromotionPlacement } from 'src/app/shared/model/promotion/promotion.model';
 import { PromotionService } from 'src/app/shared/services/promotion.service';
 
 @Component({
@@ -11,63 +9,78 @@ import { PromotionService } from 'src/app/shared/services/promotion.service';
     styleUrls: ['./promotion-create.page.scss'],
     standalone: false,
 })
-export class PromotionCreatePage implements OnInit, OnDestroy {
-    form = this.fb.group({
-        image_url: ['', [Validators.required]],
-        placement: ['MAIN' as 'MAIN' | 'GIFT_CARD', [Validators.required]], // ✅ 기본 메인
-    });
+export class PromotionCreatePage {
 
-    preview: Promotion | null = null;
-    saving = false;
+    placement: PromotionPlacement | '' = '';
+    selectedFile: File | null = null;
+    preview: string | null = null;                   // <img> 미리보기
+    previewPromotion: Promotion | null = null;       // <app-promo-banner> 바인딩용
+    submitting = false;
+    errorMsg = '';
 
-    private destroy$ = new Subject<void>();
+    placementOptions: { label: string; value: PromotionPlacement }[] = [
+        { label: '홈', value: 'HOME' },
+        { label: '기프트카드', value: 'GIFT_CARD' },
+    ];
 
-    constructor(
-        private fb: FormBuilder,
-        private promoSvc: PromotionService,
-        private router: Router,
-    ) { }
+    constructor(private promo: PromotionService, private router: Router) { }
 
-    ngOnInit(): void {
-        // 입력값 변경 → 미리보기 즉시 반영
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            const url = (v.image_url || '').trim();
-            this.preview = url
-                ? ({ promotion_id: 0, image_url: url, placement: v.placement || 'MAIN' } as Promotion)
-                : null;
-        });
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next(); this.destroy$.complete();
-    }
-
-    setPlacement(p: 'MAIN' | 'GIFT_CARD') {
-        if (this.form.value.placement === p) return;
-        this.form.patchValue({ placement: p });
-    }
-
-    onSubmit() {
-        if (this.form.invalid || this.saving) {
-            this.form.markAllAsTouched();
-            return;
+    setPlacement(p: PromotionPlacement) {
+        this.placement = p;
+        if (this.previewPromotion) {
+            this.previewPromotion = { ...this.previewPromotion, placement: p };
         }
-        const payload = {
-            image_url: this.form.value.image_url!.trim(),
-            placement: this.form.value.placement!,
-        };
+    }
 
-        this.saving = true;
-        this.promoSvc.create(payload).subscribe({
+    onFileChange(e: Event) {
+        const f = (e.target as HTMLInputElement).files?.[0] ?? null;
+        this.selectedFile = f;
+
+        if (f) {
+            const r = new FileReader();
+            r.onload = () => {
+                this.preview = String(r.result);
+                // 배너 컴포넌트가 Promotion 타입을 요구 → 더미 객체 생성
+                const normalizedPlacement = (this.placement || 'HOME') as PromotionPlacement;
+                this.previewPromotion = {
+                    promotion_id: 0,
+                    image_url: this.preview || undefined,
+                    placement: normalizedPlacement,
+                    created_at: new Date().toISOString(),
+                };
+            };
+            r.readAsDataURL(f);
+        } else {
+            this.preview = null;
+            this.previewPromotion = null;
+        }
+    }
+
+    isValid() {
+        return !!this.placement && !!this.selectedFile;
+    }
+
+    onSubmit() { this.submit(); } // 템플릿 호환용
+
+    submit() {
+        if (this.submitting || !this.isValid()) return;
+        this.submitting = true; this.errorMsg = '';
+
+        const fd = new FormData();
+        fd.append('placement', this.placement as PromotionPlacement);   // 'MAIN'도 그대로 전달 → 서비스에서 HOME으로 매핑됨
+        if (this.selectedFile) fd.append('image', this.selectedFile); // 백엔드 필드명: image
+
+        this.promo.create(fd).subscribe({
             next: () => {
-                this.saving = false;
+                this.submitting = false;
+                alert('프로모션이 생성되었습니다.');
                 this.router.navigate(['/promotion/list']);
             },
             error: (err) => {
-                console.error('[PromotionCreate] create failed', err);
-                this.saving = false;
-                alert('저장에 실패했습니다. 다시 시도해 주세요.');
-            }
+                this.submitting = false;
+                console.error(err);
+                this.errorMsg = err?.error?.message || '생성 실패';
+            },
         });
     }
 }

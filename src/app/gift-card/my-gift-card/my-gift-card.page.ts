@@ -176,4 +176,23 @@ export class MyGiftCardPage implements AfterViewInit, OnDestroy {
             this.scrollToIndex(this.currentIndex);
         }
     };
+    private readonly fallbackImage = 'assets/images/giftcard-placeholder.png';
+
+    // ...생명주기/기존 메서드 유지
+
+    /** 카드 이미지 URL 결정 (없으면 null) */
+    getCardImage(p: GiftCardPocket): string | null {
+        // 서버가 절대 URL(S3 등)을 내려주면 그대로 사용.
+        // 만약 상대경로를 내린다면 여기서 baseUrl을 붙이는 로직을 추가해도 됨.
+        const url = p?.giftCard?.image_url?.trim();
+        return url && url.length > 0 ? url : null;
+    }
+
+    /** 이미지 에러 시 자동 대체 */
+    onImgError(e: Event) {
+        const img = e.target as HTMLImageElement;
+        if (img && img.src !== this.fallbackImage) {
+            img.src = this.fallbackImage;
+        }
+    }
 }

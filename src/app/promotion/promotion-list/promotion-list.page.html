@@ -2,15 +2,39 @@
 <app-divider></app-divider>
 
 <app-container>
+    <!-- 타이틀 -->
     <header class="page-header">
         <h2 class="page-title">프로모션 관리</h2>
-        <button type="button" class="btn-sejong" (click)="goCreate()">작성하기</button>
     </header>
 
+    <!-- 액션 버튼 (타이틀 아래) -->
+    <section class="action-row">
+        <div class="actions">
+            <button type="button" class="btn-sejong ghost" (click)="refresh()">새로고침</button>
+            <button type="button" class="btn-sejong" routerLink="/promotion/create">작성하기</button>
+        </div>
+    </section>
+
+    <!-- 세그먼트 필터 -->
+    <section class="section">
+        <div class="segmented" role="tablist" aria-label="노출 위치 필터">
+            <button class="seg-btn" [class.active]="uiFilter==='ALL'" role="tab" (click)="setFilter('ALL')"
+                [attr.aria-selected]="uiFilter==='ALL'">전체</button>
+            <button class="seg-btn" [class.active]="uiFilter==='HOME'" role="tab" (click)="setFilter('HOME')"
+                [attr.aria-selected]="uiFilter==='HOME'">메인페이지</button>
+            <button class="seg-btn" [class.active]="uiFilter==='GIFT_CARD'" role="tab" (click)="setFilter('GIFT_CARD')"
+                [attr.aria-selected]="uiFilter==='GIFT_CARD'">기프트 스토어</button>
+        </div>
+    </section>
+
+    <!-- 본문 -->
     <section class="content-scroll">
-        <div class="grid">
+        <div class="section" *ngIf="loading">불러오는 중…</div>
+        <div class="section state error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+        <div class="grid" *ngIf="!loading && items.length">
             <div class="promo-card" *ngFor="let p of items">
-                <button class="delete-btn" (click)="remove(p.promotion_id)" aria-label="삭제">×</button>
+                <button class="delete-btn" (click)="remove(p)" aria-label="삭제">×</button>
 
                 <div class="meta">
                     #{{ p.promotion_id }} • {{ p.placement }}
@@ -18,9 +42,14 @@
                 </div>
 
                 <div class="thumb">
-                    <img [src]="p.image_url" alt="promotion" (error)="onImgError($event)"/>
+                    <img [src]="p.image_url" alt="promotion" loading="lazy" decoding="async"
+                        (error)="onImgError($event)" />
                 </div>
             </div>
+        </div>
+
+        <div class="section" *ngIf="!loading && !items.length">
+            등록된 프로모션이 없습니다.
         </div>
     </section>
 </app-container>

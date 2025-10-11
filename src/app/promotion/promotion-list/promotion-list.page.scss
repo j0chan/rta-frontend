@@ -107,3 +107,44 @@
     aspect-ratio: 16 / 9;
     object-fit: cover;
 }
+
+.action-row {
+    padding: 8px 0 4px;
+    border-bottom: 1px solid var(--border);
+
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+}
+
+/* 세그먼트 버튼 */
+.segmented {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.seg-btn {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.seg-btn.active {
+    border-color: var(--sejong-blue);
+    box-shadow: 0 4px 12px rgba(31, 76, 213, .15);
+    color: var(--sejong-blue);
+}
+
+/* 고스트 버튼 스타일 (새로고침) */
+.btn-sejong.ghost {
+    background: #fff;
+    color: var(--sejong-blue);
+    border: 1px solid var(--sejong-blue);
+    box-shadow: none;
+}

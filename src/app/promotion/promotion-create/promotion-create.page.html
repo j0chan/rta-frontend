@@ -2,53 +2,66 @@
 <app-divider></app-divider>
 
 <app-container>
-    <!-- ✅ 미리보기: 페이지 가장 위 -->
-    <section class="preview">
-        <ng-container *ngIf="preview; else emptyPreview">
-            <app-promo-banner [promotion]="preview" [index]="0" [total]="1" [isAdmin]="true">
-            </app-promo-banner>
-        </ng-container>
-        <ng-template #emptyPreview>
-            <div class="preview-empty">이미지 URL을 입력하면 미리보기가 보여요</div>
-        </ng-template>
-    </section>
+    <!-- 상단 고정 헤더 (예전 스타일) -->
+    <header class="page-header">
+        <h2 class="page-title">프로모션 등록</h2>
+        <!-- 우측 버튼 필요 없으면 제거 가능 -->
+        <!-- <button type="button" class="btn-sejong" (click)="router.navigate(['/promotion/list'])">목록</button> -->
+    </header>
 
-    <!-- ✅ 입력 폼 -->
-    <section class="form">
-        <div class="field">
-            <label class="label">이미지 URL</label>
-            <input class="input" type="url" placeholder="https://example.com/banner.jpg"
-                [formControl]="form.controls.image_url">
-            <div class="help" *ngIf="form.controls.image_url.invalid && form.controls.image_url.touched">
-                올바른 URL을 입력해 주세요.
+    <!-- 스크롤 되는 본문 -->
+    <section class="content-scroll">
+        <!-- 미리보기 카드 -->
+        <div class="promo-card" style="margin-bottom:12px;">
+            <div class="meta" *ngIf="previewPromotion">
+                미리보기
+                <span class="date">{{ previewPromotion?.created_at | date:'yyyy.MM.dd HH:mm' }}</span>
+            </div>
+
+            <div class="thumb" [class.placeholder]="!previewPromotion">
+                <ng-container *ngIf="previewPromotion; else emptyPreview">
+                    <app-promo-banner [promotion]="previewPromotion" [index]="0" [total]="1" [isAdmin]="true">
+                    </app-promo-banner>
+                </ng-container>
+                <ng-template #emptyPreview>
+                    <div style="display:grid;place-items:center;height:160px;color:#9aa3b2;">이미지를 업로드하면 미리보기가 보여요</div>
+                </ng-template>
             </div>
         </div>
 
-        <!-- ✅ 게시 위치: 버튼 토글 (메인/스토어 중 택1) -->
-        <div class="field">
-            <label class="label">게시 위치</label>
-            <div class="toggle-group" role="tablist" aria-label="게시 위치 선택">
-                <button type="button" class="toggle" [class.active]="form.value.placement === 'MAIN'"
-                    (click)="setPlacement('MAIN')" role="tab" [attr.aria-selected]="form.value.placement === 'MAIN'">
-                    메인 페이지
-                </button>
-                <button type="button" class="toggle" [class.active]="form.value.placement === 'GIFT_CARD'"
-                    (click)="setPlacement('GIFT_CARD')" role="tab"
-                    [attr.aria-selected]="form.value.placement === 'GIFT_CARD'">
-                    스토어
-                </button>
+        <!-- 입력 폼 (예전 구성의 필드 레이아웃) -->
+        <div class="promo-card">
+            <div class="field" style="margin-bottom:12px;">
+                <span class="label">이미지 업로드</span>
+                <input type="file" accept="image/*" (change)="onFileChange($event)" />
+            </div>
+
+            <div class="field" style="margin-bottom:4px;">
+                <span class="label">노출 위치</span>
+                <div class="toggle-group" role="tablist" aria-label="노출 위치 선택">
+                    <button type="button" class="toggle" [class.active]="placement === 'HOME'"
+                        (click)="setPlacement('HOME')" role="tab" [attr.aria-selected]="placement === 'HOME'">
+                        홈
+                    </button>
+                    <button type="button" class="toggle" [class.active]="placement === 'GIFT_CARD'"
+                        (click)="setPlacement('GIFT_CARD')" role="tab" [attr.aria-selected]="placement === 'GIFT_CARD'">
+                        기프트카드
+                    </button>
+                </div>
+            </div>
+
+            <div class="state error" *ngIf="errorMsg" style="margin-top:6px;">
+                {{ errorMsg }}
             </div>
         </div>
     </section>
-
-    <!-- 아래 공간 확보(고정 버튼과 겹치지 않도록) -->
-    <div class="bottom-spacer"></div>
 </app-container>
 
+<!-- 하단 제출 바 (예전 스타일) -->
 <footer class="submit-bar">
     <app-container>
-        <button class="btn-primary" (click)="onSubmit()" [disabled]="form.invalid || saving">
-            {{ saving ? '저장 중…' : '작성하기' }}
+        <button class="btn-primary" (click)="onSubmit()" [disabled]="!isValid() || submitting">
+            {{ submitting ? '저장 중…' : '작성하기' }}
         </button>
     </app-container>
 </footer>
