@@ -10,7 +10,17 @@
           {{ displayIndex }}
         </div>
 
-        <div class="image-box">모바일</div>
+        <!-- ✅ 이미지 박스 -->
+        <figure class="image-box" [class.placeholder]="!getCardImage(p)">
+          <img *ngIf="getCardImage(p); else noImageTpl" [src]="getCardImage(p)!" [alt]="p.giftCard?.name || '기프트카드'"
+            loading="lazy" decoding="async" (error)="onImgError($event)" />
+        </figure>
+        <ng-template #noImageTpl>
+          <div class="image-fallback">
+            <span class="emoji">🎁</span>
+            <span class="text">이미지 없음</span>
+          </div>
+        </ng-template>
 
         <div class="info">
           <div class="title">{{ p.giftCard.name }}</div>

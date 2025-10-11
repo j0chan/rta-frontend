@@ -1,0 +1,52 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<app-container>
+    <div class="write-wrap">
+        <!-- 입력 카드 -->
+        <section class="section">
+            <div class="page-title">공지사항 작성</div>
+            <div class="card">
+                <div class="card-body pad2">
+                    <!-- 중요 토글 (검은 테두리 칩) -->
+                    <div class="pill-row">
+                        <button type="button" class="chip-important" [class.active]="model.is_pinned"
+                            (click)="model.is_pinned = !model.is_pinned"
+                            [attr.aria-pressed]="model.is_pinned ? 'true' : 'false'">
+                            중요
+                        </button>
+                    </div>
+
+                    <!-- 제목 -->
+                    <label class="field">
+                        <span class="label">제목</span>
+                        <input type="text" name="title" [(ngModel)]="model.title" placeholder="제목을 입력해주세요"
+                            maxlength="120" />
+                    </label>
+
+                    <!-- 본문 -->
+                    <label class="field">
+                        <span class="label">내용</span>
+                        <textarea name="content" [(ngModel)]="model.content" rows="16"
+                            placeholder="내용을 입력해주세요"></textarea>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- (선택) 에러 메시지 -->
+        <section class="section" *ngIf="errorMsg">
+            <div class="state error">{{ errorMsg }}</div>
+        </section>
+    </div>
+
+    <!-- 하단 고정: 취소 / 작성 버튼 -->
+    <div class="write-bar">
+        <div class="row-2">
+            <button type="button" class="btn-outline" (click)="cancel()">취소하기</button>
+            <button type="button" class="btn-primary" [disabled]="saving || !isValid()" (click)="submit()">
+                {{ saving ? '작성 중…' : '작성하기' }}
+            </button>
+        </div>
+    </div>
+</app-container>

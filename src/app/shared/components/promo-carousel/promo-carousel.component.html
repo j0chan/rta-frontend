@@ -1,0 +1,15 @@
+<div class="promo-carousel" (pointerdown)="onPointerDown($event)" (pointerup)="onPointerUp($event)"
+    (pointercancel)="onPointerCancel()" style="position:relative;width:100%;touch-action:pan-y;user-select:none;">
+    <ng-container *ngIf="promotions?.length; else empty">
+        <app-promo-banner [promotion]="promotions[current]" [index]="current" [total]="promotions.length"
+            [emphasize]="emphasize" [isAdmin]="isAdmin" (clicked)="onBannerClick()">
+        </app-promo-banner>
+    </ng-container>
+
+    <ng-template #empty>
+        <div style="width:100%;aspect-ratio:16/9;border-radius:16px;background:#f5f7fb;
+                display:grid;place-items:center;color:#98a0af;font-weight:700;">
+            프로모션 없음
+        </div>
+    </ng-template>
+</div>

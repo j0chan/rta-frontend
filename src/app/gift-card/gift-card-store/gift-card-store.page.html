@@ -1,23 +1,19 @@
 <app-header-bar></app-header-bar>
 <app-divider></app-divider>
 
-<!-- Divider 바로 아래: 컨테이너 안에 요소 직접 배치 -->
 <app-container>
-    <!-- ✅ 추천 캐러셀 (섹션이 컨테이너) -->
-    <section class="section section-reco reco-carousel" *ngIf="recoItems?.length" #recoCarousel
-        (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd($event)"
-        aria-label="추천 캐러셀">
-        <div #recoCard class="reco-card" *ngFor="let r of recoItems; let i = index" role="img"
-            [attr.aria-label]="'추천 이미지 ' + (i+1)">
-            <img *ngIf="r.image_url" [src]="r.image_url" alt="" />
-            <div class="placeholder" *ngIf="!r.image_url">{{ r.imageText || '이미지' }}</div>
+    <section class="section promo-section" *ngIf="promos.length">
+        <div class="promo-touch" (pointerdown)="onPromoPointerDown($event)" (pointerup)="onPromoPointerUp($event)"
+            (pointercancel)="onPromoPointerCancel()" (touchstart)="onPromoTouchStart($event)"
+            (touchend)="onPromoTouchEnd($event)" (mousedown)="onPromoMouseDown($event)"
+            (mouseup)="onPromoMouseUp($event)" (mouseleave)="onPromoMouseLeave()"
+            (contextmenu)="$event.preventDefault()">
+            <app-promo-banner [promotion]="promos[promoIndex]" [index]="promoIndex" [total]="promos.length"
+                [emphasize]="promoEmph" (clicked)="onPromoClick()">
+            </app-promo-banner>
         </div>
-    </section>
 
-    <!-- ✅ 캐러셀 ‘밖’에 두고 섹션을 기준으로 우측 상단 고정 -->
-    <div class="reco-counter" *ngIf="showRecoCounter">
-        {{ recoIndex + 1 }}/{{ recoItems.length }}
-    </div>
+    </section>
 
     <!-- 카테고리 -->
     <section class="section section-categories">
@@ -56,15 +52,11 @@
                     <h3 class="title" [title]="item.name">{{ item.name }}</h3>
 
                     <div class="price-row">
-                        <div class="price">
-                            {{ item.amount | number: '1.0-0' }}<span class="won">원</span>
-                        </div>
+                        <div class="price">{{ item.amount | number: '1.0-0' }}<span class="won">원</span></div>
                         <div class="cta">자세히</div>
                     </div>
 
-                    <p class="desc" *ngIf="item.shortDesc" [title]="item.shortDesc">
-                        {{ item.shortDesc }}
-                    </p>
+                    <p class="desc" *ngIf="item.shortDesc" [title]="item.shortDesc">{{ item.shortDesc }}</p>
                 </div>
             </article>
         </div>

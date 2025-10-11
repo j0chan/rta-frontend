@@ -283,3 +283,22 @@
         padding: 8px 10px 18px;
     }
 }
+
+.promo-touch {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    touch-action: pan-y;
+    /* 수직 스크롤만 브라우저가 처리, 가로 제스처는 우리가 처리 */
+    cursor: grab;
+}
+
+.promo-touch:active {
+    cursor: grabbing;
+}
+
+.promo-touch img {
+    pointer-events: none;
+}
+
+/* 내부 이미지가 포인터 이벤트 먹지 않게 */
