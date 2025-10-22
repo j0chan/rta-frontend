@@ -1,5 +1,146 @@
-ion-content {
-    ion-list {
-      margin-top: 10px;
-    }
+.container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 12px 16px 28px;
+}
+
+.page-title {
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+/* 상단 툴바를 카드 형태로 */
+.toolbar--flat {
+  --background: #ffffff;
+  --border-color: transparent;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+
+/* ===== 세그먼트(토글) ===== */
+.view-toggle {
+  // --background: #eef2f7;
+  border-radius: 12px;
+  padding: 4px;
+  margin: 8px 0 6px;
+
+  ion-segment-button {
+    --color: #6b7280;
+    --color-checked: #ffffff;
+    --indicator-color: #1560BD;
+    --background-checked: #1560BD;
+    border-radius: 10px;
+    min-height: 40px;
+    font-weight: 700;
   }
+}
+
+/* ===== 검색창 ===== */
+.searchbar {
+  --background: #f1f5f9;
+  --box-shadow: none;
+  --border-radius: 12px;
+  margin: 10px 0 4px;
+}
+
+/* ===== 카드 ===== */
+.fav-card {
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(16,24,40,0.06);
+  overflow: hidden;
+
+  &__header {
+    padding: 14px 16px 6px;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    margin-right: 28px;
+  }
+
+  &__heart {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    font-size: 20px;
+  }
+
+  &__content {
+    padding: 6px 16px 16px;
+  }
+}
+
+/* 라벨/값 형태 */
+.info-row {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: start;
+  gap: 8px;
+  padding: 8px 0;
+
+  .info-label {
+    color: #111827;
+    font-weight: 700;
+  }
+  .info-text {
+    color: #4b5563;
+  }
+}
+
+/* ===== 버튼 ===== */
+/* 기본 파란 버튼 */
+.btn-primary {
+  --background: #1560BD; /* 버튼 배경색 */
+  --background-hover: #0f4a93; /* 마우스 오버 또는 터치 시 색상 */
+  --background-activated: #0f4a93;
+  --border-radius: 10px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  width: 100%;
+  color: #ffffff; /* 텍스트 색상 */
+}
+
+/* 연한 회색 보조 버튼 */
+.btn-secondary {
+  --background: #e5e7eb;
+  --background-activated: #d1d5db;
+  --color: #1f2937;
+  --border-radius: 10px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 800;
+  width: 100%;
+}
+
+.btn-group {
+  margin-top: 8px;
+
+  ion-button + ion-button {
+    margin-top: 8px;
+  }
+}
+
+/* 빈 상태 */
+.empty-state {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* 지도 화면 */
+.back-link {
+  margin-top: 8px;
+}
+
+.map-cta {
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* 리스트 여백 */
+.fav-grid {
+  ion-col { padding: 8px 0; }
+}

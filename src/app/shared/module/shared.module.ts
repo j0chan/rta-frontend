@@ -22,6 +22,7 @@ import { DividerComponent } from '../components/divider/divider.component'
 import { ContainerComponent } from '../components/container/container.component'
 import { UserRolePipe } from '../pipes/user-role.pipe'
 import { MapPreviewComponent } from 'src/app/map/components/map-preview/map-preview.component'
+import { FavoriteButtonComponent } from 'src/app/favorite/components/favorite-button.component'
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MapPreviewComponent } from 'src/app/map/components/map-preview/map-prev
     ContainerComponent,
     UserRolePipe,
     MapPreviewComponent,
+    FavoriteButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -68,6 +70,7 @@ import { MapPreviewComponent } from 'src/app/map/components/map-preview/map-prev
     ContainerComponent,
     UserRolePipe,
     MapPreviewComponent,
+    FavoriteButtonComponent
   ],
   providers: [
     {

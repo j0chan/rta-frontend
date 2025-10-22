@@ -32,7 +32,7 @@ export class MapPreviewComponent implements AfterViewInit {
       next: (res) => {
         const script = document.createElement('script')
         script.id = 'naver-map-script-preview'
-        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${res.clientId}`
+        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${res.clientId}`
         script.onload = () => this.initMap()
         document.body.appendChild(script)
       },
