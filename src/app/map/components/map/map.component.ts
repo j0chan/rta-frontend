@@ -4,7 +4,13 @@ import { MapsService } from 'src/app/shared/services/maps.service'
 import { ToastController } from '@ionic/angular'
 import { OpenaiService } from 'src/app/shared/services/openai.service'
 import { NaverPlace } from 'src/app/shared/model/maps/naver-place.interface'
+import { FavoriteService } from 'src/app/shared/services/favorite.service'
+import { AuthService } from 'src/app/shared/services/auth.service'
+import { Router } from '@angular/router'
 
+interface Favorite {
+  store_id: number
+}
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -15,6 +21,8 @@ import { NaverPlace } from 'src/app/shared/model/maps/naver-place.interface'
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   stores: ReadStore[] = []
   filteredStores: ReadStore[] = []
+  favorites: number[] = []
+
   searchQuery: string = ''
   currentLat: number | null = null
   currentLng: number | null = null
@@ -42,10 +50,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private mapsService: MapsService,
     private toastController: ToastController,
-    private openaiService: OpenaiService
+    private openaiService: OpenaiService,
+    private favoriteService: FavoriteService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.loadFavorites()
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => this.handlePositionChange(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy),
@@ -80,6 +92,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.watchId) navigator.geolocation.clearWatch(this.watchId)
+  }
+
+  private loadFavorites(): void {
+    const token = localStorage.getItem('accessToken')
+    if (!token) return
+
+    const payload = JSON.parse(atob(token.split('.')[1]))
+    const userId = payload.user_id
+
+    this.favoriteService.readFavoritesById(userId).subscribe({
+      next: (res) => {
+        // data가 있을 때만 map 실행
+        if (res.data) {
+          this.favorites = res.data.map((f: any) => f.store_id);
+        } else {
+          console.warn('즐겨찾기 목록이 비어있습니다.')
+          this.favorites = []
+        }
+      },
+      error: (err) => console.error('즐겨찾기 불러오기 실패:', err)
+    })
   }
 
   loadMapScript(): void {
@@ -329,41 +362,98 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.markers.forEach(m => m.setMap(null))
     this.markers = []
+    this.infoWindows.forEach(iw => iw.close())
+    this.infoWindows = []
 
-    stores.forEach(store => {
-      const lat = store.latitude
-      const lng = store.longitude
-    
-      if (isNaN(lat) || isNaN(lng)) return
-    
-      const pos = new naver.maps.LatLng(lat, lng)
-      const marker = new naver.maps.Marker({ position: pos, map: this.map, title: store.store_name })
-    
-      const infoWindow = new naver.maps.InfoWindow({
-        content: this.createInfoWindowHtml(store),
-        borderWidth: 0,
-        backgroundColor: 'transparent',
-        disableAnchor: false,
-        disableAutoPan: false
-      })
-      
-      this.infoWindows.push(infoWindow)
+    const token = localStorage.getItem('accessToken')
+    if (!token) {
+      console.warn('로그인 정보가 없습니다.')
+      return
+    }
 
-      naver.maps.Event.addListener(marker, 'click', () => {
-        infoWindow.open(this.map, marker)
+    const base64Url = token.split('.')[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(atob(base64))
+    const userId = payload.user_id
 
-        // InfoWindow 내부 닫기 버튼 이벤트 바인딩
-        const closeBtn = document.querySelector('.info-close')
-        if (closeBtn) {
-          closeBtn.addEventListener('click', () => {
-            infoWindow.close()
+    this.favoriteService.readFavoritesById(userId).subscribe({
+      next: (res) => {
+        const favoriteStoreIds = res.data?.map(f => f.store_id) ?? []
+
+        stores.forEach(store => {
+          const pos = new naver.maps.LatLng(store.latitude, store.longitude)
+          const marker = new naver.maps.Marker({
+            position: pos,
+            map: this.map,
+            title: store.store_name
           })
-        }
-      })
-    
-      this.markers.push(marker)
+
+          const isFavorite = favoriteStoreIds.includes(store.store_id)
+          const heart = isFavorite ? '🩷' : '🤍'
+
+          let infoHtml = this.createInfoWindowHtml(store)
+
+          infoHtml = infoHtml.replace(
+            `<strong>${store.store_name}</strong>`,
+            `<strong>${store.store_name}</strong>
+            <button class="favorite-btn" 
+              data-store-id="${store.store_id}"
+              style="border:none; background:none; font-size:20px; cursor:pointer; margin-left:8px;">
+              ${heart}
+            </button>`
+          )
+
+          const infoWindow = new naver.maps.InfoWindow({
+            content: infoHtml,
+            borderWidth: 0,
+            backgroundColor: 'transparent'
+          })
+
+          naver.maps.Event.addListener(marker, 'click', () => {
+            this.infoWindows.forEach(win => win.close())
+            infoWindow.open(this.map, marker)
+            this.infoWindows = [infoWindow]
+
+            // 닫기 버튼
+            const closeBtn = document.querySelector('.info-close')
+            closeBtn?.addEventListener('click', () => infoWindow.close())
+
+            // 즐겨찾기 버튼
+            const favBtn = document.querySelector(`.favorite-btn[data-store-id="${store.store_id}"]`)
+            let isFav = isFavorite
+
+            favBtn?.addEventListener('click', () => {
+              if (!isFav) {
+                this.favoriteService.createFavorite(userId, store.store_id).subscribe({
+                  next: () => {
+                    isFav = true
+                    favBtn.textContent = '🩷'
+                  },
+                  error: err => console.error(err)
+                })
+              } else {
+                this.favoriteService.deleteFavorite(userId, store.store_id).subscribe({
+                  next: () => {
+                    isFav = false
+                    favBtn.textContent = '🤍'
+                  },
+                  error: err => console.error(err)
+                })
+              }
+            })
+          })
+
+          this.markers.push(marker)
+          this.infoWindows.push(infoWindow)
+        })
+      },
+      error: (err) => console.error('즐겨찾기 목록 불러오기 실패:', err)
     })
   }
+
+
+
+
 
   focusStoreOnMap(store: ReadStore): void {
     const lat = store.latitude
@@ -434,17 +524,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           font-size: 16px;
           cursor: pointer;
         ">❌</button>
-  
+
+        <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <strong>${store.store_name}</strong>
+        </div>
+        <hr>
         <div style="margin-top: 8px;">
-          <strong style="font-size: 18px; color: #333;">${store.store_name}</strong><br>
-          <hr style="border: none; border-top: 1px solid #eee; margin: 8px 0;">
+          <hr style="border: none; border-top: 1px solid #eee; margin: 12px 0;">
           <p style="margin: 4px 0; font-size: 14px;">📌 카테고리: ${store.category.category_name || '정보 없음'}</p>
           <p style="margin: 4px 0; font-size: 14px;">🏠 주소: ${store.address}</p>
           <p style="margin: 4px 0; font-size: 14px;">📞 전화번호: ${store.contact_number || '전화번호 없음'}</p>
           <p style="margin: 4px 0; font-size: 14px;">ℹ️ 설명: ${store.description || '설명 없음'}</p>
         </div>
   
-        <a href="http://localhost:4200/stores/${store.store_id}" target="_self" style="display: block; margin-top: 12px; text-align: center; text-decoration: none;">
+        <a href="http://localhost:4200/stores/${store.store_id}" target="_self" style="display: block; margin-top: 20px; text-align: center; text-decoration: none;">
           <button style="
             background-color: #4CAF50;
             color: #fff;
@@ -751,6 +844,46 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log("개발 모드 OFF: 실제 위치 추적 재개")
       this.refreshCurrentLocation()
     }
+  }
+
+  addToFavorites(storeId: number) {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+      console.warn('로그인 정보가 없습니다.');
+      return;
+    }
+
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(atob(base64));
+    const userId = payload.user_id; //임시
+
+    this.favoriteService.createFavorite(userId, storeId).subscribe({
+      next: async () => {
+        const toast = await this.toastController.create({
+          message: '즐겨찾기에 추가되었습니다.',
+          duration: 2000,
+          position: 'top',
+          color: 'success'
+        });
+        toast.present();
+      },
+      error: async (err) => {
+        console.error('즐겨찾기 추가 실패:', err);
+        const toast = await this.toastController.create({
+          message: '이미 즐겨찾기에 등록된 가게입니다.',
+          duration: 2000,
+          position: 'top',
+          color: 'warning'
+        });
+        toast.present();
+      }
+    });
+  }
+
+  goToFavorite() {
+    this.router.navigate(['/favorite']);
   }
 
 }

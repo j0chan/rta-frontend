@@ -22,6 +22,7 @@ import { DividerComponent } from '../components/divider/divider.component'
 import { ContainerComponent } from '../components/container/container.component'
 import { UserRolePipe } from '../pipes/user-role.pipe'
 import { MapPreviewComponent } from 'src/app/map/components/map-preview/map-preview.component'
+import { FavoriteButtonComponent } from 'src/app/favorite/components/favorite-button.component'
 import { PromoBannerComponent } from '../components/promo-banner/promo-banner.component'
 import { PromoCarouselComponent } from '../components/promo-carousel/promo-carousel.component'
 
@@ -45,6 +46,7 @@ import { PromoCarouselComponent } from '../components/promo-carousel/promo-carou
     ContainerComponent,
     UserRolePipe,
     MapPreviewComponent,
+    FavoriteButtonComponent,
     PromoBannerComponent,
     PromoCarouselComponent,
   ],
@@ -71,6 +73,7 @@ import { PromoCarouselComponent } from '../components/promo-carousel/promo-carou
     DividerComponent,
     ContainerComponent,
     MapPreviewComponent,
+    FavoriteButtonComponent,
     PromoBannerComponent,
     PromoCarouselComponent,
   ],
