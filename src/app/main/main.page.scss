@@ -1,26 +1,42 @@
+/* ===== 레이아웃: 헤더는 보이고, 본문만 스크롤 ===== */
+.app-header {
+    position: sticky;
+    /* 스크롤해도 상단 유지 */
+    top: 0;
+    z-index: 1000;
+    background: #fff;
+}
+
+.app-main {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    /* ✅ 세로 스크롤 */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
 /* 기본 래퍼 */
 .page-wrap {
     padding: 12px 12px 24px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-}
-
-/* ✅ 첫 번째 섹션(잔액+충전/인출)과 바로 아래 요소(4개 메뉴) 사이 간격을 2배로 */
-.section:first-of-type {
-    margin-bottom: 12px;
-    /* 기존 page-wrap gap 12px + 여기 12px = 총 24px */
+    padding-bottom: 80px;
+    /* 끝부분 잘림 방지 */
 }
 
 .section {
     margin: 0;
 }
 
+.section:first-of-type {
+    margin-bottom: 12px;
+}
+
 /* ===== 잔액 카드 ===== */
 .balance-card {
     position: relative;
     width: 100%;
-    border: none;
     border-radius: 16px;
     padding: 14px 16px;
     background: #f7f8ff;
@@ -30,10 +46,12 @@
     row-gap: 6px;
     min-height: 148px;
     text-align: left;
+    outline: none;
+    cursor: pointer;
+}
 
-    &:disabled {
-        opacity: .88;
-    }
+.balance-card:focus-visible {
+    box-shadow: 0 0 0 2px rgba(92, 107, 255, 0.5), 0 8px 18px rgba(19, 33, 69, 0.06);
 }
 
 .balance-top {
@@ -107,7 +125,7 @@
     fill: currentColor;
 }
 
-/* ===== 충전/인출 버튼 묶음 ===== */
+/* ===== 충전/인출 버튼 ===== */
 .money-actions {
     margin-top: 10px;
     display: grid;
@@ -153,14 +171,9 @@
     border: none;
     background: #ffffff;
     border-radius: 16px;
-
-    /* ✅ 높이 1.2배 & 내부 여백 증가 */
     padding: 14px 8px;
     min-height: 100px;
-    /* 기존 84px → 100px */
-    /* aspect-ratio 제거로 세로 여유 확보 */
     box-shadow: 0 6px 16px rgba(23, 23, 23, 0.06);
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,8 +183,8 @@
 .quick-actions .qa-item svg {
     width: var(--qa-icon-size);
     height: var(--qa-icon-size);
-    display: block;
     color: var(--qa-icon-color);
+    display: block;
 }
 
 .quick-actions .qa-item svg path {
@@ -179,9 +192,7 @@
 }
 
 .quick-actions .qa-item .qa-text {
-    /* ✅ 아이콘-텍스트 간 여백 증가 */
     margin-top: 12px;
-    /* 기존 8px → 12px */
     font-size: 13px;
     font-weight: 700;
     color: var(--qa-text-color);
@@ -190,7 +201,7 @@
     white-space: nowrap;
 }
 
-/* ===== 프로모션 섹션 (캐러셀 틀) ===== */
+/* ===== 프로모션 캐러셀 ===== */
 .promo-section .section-head {
     display: flex;
     align-items: center;
@@ -214,7 +225,7 @@
     padding: 12px;
 }
 
-/* 인디케이터: 기본은 숨김, 호버/포커스/활성 클래스에서만 보임 */
+/* 인디케이터 */
 .promo-indicator {
     position: absolute;
     right: 10px;
@@ -238,23 +249,21 @@
     transform: translateY(0);
 }
 
-/* 가로 스크롤 스냅 캐러셀 */
+/* 가로 스크롤 스냅 */
 .promo-track {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 100%;
     gap: 12px;
     overflow-x: auto;
+    overflow-y: visible;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
 }
 
 .promo-slide {
     scroll-snap-align: start;
-
-    /* ✅ 높이 1.5배 (120px → 180px) */
     min-height: 180px;
-
     border-radius: 12px;
     background: #f7f8ff;
     display: grid;
@@ -281,7 +290,6 @@
     color: #0f172a;
 }
 
-/* 리스트 틀 */
 .notice-list {
     margin: 0;
     padding: 0;
@@ -294,10 +302,10 @@
 
 .notice-item {
     border-bottom: 1px solid #edeff3;
+}
 
-    &:last-child {
-        border-bottom: none;
-    }
+.notice-item:last-child {
+    border-bottom: none;
 }
 
 .notice-link {
@@ -336,15 +344,15 @@
 
 .notice-item.empty {
     padding: 18px 16px;
+}
 
-    .notice-title {
-        color: #9aa6b2;
-        font-weight: 600;
-    }
+.notice-item.empty .notice-title {
+    color: #9aa6b2;
+    font-weight: 600;
+}
 
-    .notice-date {
-        display: none;
-    }
+.notice-item.empty .notice-date {
+    display: none;
 }
 
 .notice-more {
@@ -380,3 +388,24 @@
         background-position: 0 0;
     }
 }
+
+.promo-touch {
+    position: relative;
+    z-index: 1;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    touch-action: pan-y;
+    /* 수직 스크롤만 브라우저가 처리, 가로 제스처는 우리가 처리 */
+    cursor: grab;
+}
+
+.promo-touch:active {
+    cursor: grabbing;
+}
+
+.promo-touch img {
+    pointer-events: none;
+}
+
+/* 내부 이미지가 포인터 이벤트 먹지 않게 */

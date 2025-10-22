@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GiftCard } from 'src/app/shared/model/gift-card/my-gift-card.types';
 import { GiftCardStoreService, GiftCategoryCode } from 'src/app/shared/services/gift-card-store.service';
+import { Promotion } from 'src/app/shared/model/promotion/promotion.model';
+import { PromotionService } from 'src/app/shared/services/promotion.service';
 
 type UiCategory = { id: GiftCategoryCode | 'ALL'; label: string };
 
@@ -27,43 +29,48 @@ export class GiftCardStorePage implements OnInit, AfterViewInit, OnDestroy {
     errorMsg = '';
     items: GiftCard[] = [];
 
-    /* ===== 추천 캐러셀 ===== */
-    @ViewChild('recoCarousel', { static: false }) recoCarouselRef?: ElementRef<HTMLDivElement>;
-    @ViewChildren('recoCard') recoCardRefs?: QueryList<ElementRef<HTMLDivElement>>;
-
-    // 이미지 전용
-    recoItems = [
-        { image_url: '', imageText: '추천 1' },
-        { image_url: '', imageText: '추천 2' },
-        { image_url: '', imageText: '추천 3' },
-    ];
-    recoIndex = 0;
-
-    // 카운터는 항상 표시
-    showRecoCounter = true;
-
-    private recoTimer?: any;     // setInterval 핸들
-    private recoTouching = false;
-    private startX = 0;
-    private lastX = 0;
+    /* ===== 프로모션 캐러셀 (GIFT_CARD) ===== */
+    promos: Promotion[] = [];
+    promoIndex = 0;            // 0-based
+    promoEmph = false;         // 슬라이드 직후 강조
+    private promoTimer?: any;
 
     private subList?: Subscription;
     private subLoad?: Subscription;
 
+    private dragStartX: number | null = null;
+    private dragging = false;
+    private readonly THRESHOLD = 40;
+
     constructor(
         private storeSvc: GiftCardStoreService,
+        private promoSvc: PromotionService,
         private router: Router
     ) { }
 
     ngOnInit(): void {
+        // 프로모션 로드
+        this.promoSvc.listActive('GIFT_CARD').subscribe({
+            next: (list) => {
+                this.promos = list ?? [];
+                this.promoIndex = 0;
+                this.startAuto();
+                this.flashEmphasis();
+            },
+            error: (err) => console.error('[GiftCardStore] promotions load error', err),
+        });
+
+        // 상품 리스트 구독
         this.subList = this.storeSvc.getCatalog().subscribe((list) => this.items = list ?? []);
         this.fetch();
     }
-    ngAfterViewInit(): void { this.startAutoSlide(); }
+
+    ngAfterViewInit(): void { /* 필요 시 */ }
+
     ngOnDestroy(): void {
         this.subList?.unsubscribe();
         this.subLoad?.unsubscribe();
-        this.stopAutoSlide();
+        clearInterval(this.promoTimer);
     }
 
     /* ===== 데이터 로드 ===== */
@@ -72,6 +79,7 @@ export class GiftCardStorePage implements OnInit, AfterViewInit, OnDestroy {
         this.selectedCategory = id;
         this.fetch();
     }
+
     private fetch() {
         this.loading = true;
         this.errorMsg = '';
@@ -88,61 +96,83 @@ export class GiftCardStorePage implements OnInit, AfterViewInit, OnDestroy {
     goDetail(item: GiftCard) { this.router.navigate(['/gift-card-store-detail', item.gift_card_id]); }
     onImgError(e: Event) { (e.target as HTMLImageElement).style.display = 'none'; }
 
-    /* ===== 캐러셀 로직 ===== */
-    private startAutoSlide() {
-        this.stopAutoSlide();
-        this.recoTimer = setInterval(() => this.slideTo(this.recoIndex + 1), 4000);
-    }
-    private stopAutoSlide() {
-        if (this.recoTimer) clearInterval(this.recoTimer);
-        this.recoTimer = undefined;
-    }
-    private getCardGap(): number {
-        const el = this.recoCarouselRef?.nativeElement;
-        if (!el) return 12;
-        const gap = getComputedStyle(el).gap || '12px';
-        const n = parseFloat(gap);
-        return isNaN(n) ? 12 : n;
-    }
-    /** index로 이동 (마지막→첫, 첫→마지막 루프) */
-    private slideTo(idx: number) {
-        const el = this.recoCarouselRef?.nativeElement;
-        const card = this.recoCardRefs?.get(0)?.nativeElement;
-        if (!el || !card || this.recoItems.length === 0) return;
-
-        const last = this.recoItems.length - 1;
-        if (idx > last) idx = 0;
-        if (idx < 0) idx = last;
-
-        this.recoIndex = idx;
-
-        const offset = idx * (card.offsetWidth + this.getCardGap());
-        el.scrollTo({ left: offset, behavior: 'smooth' });
+    /* ===== 프로모션 캐러셀: 한 번에 1장, 드래그 후 이동 ===== */
+    private startAuto() {
+        clearInterval(this.promoTimer);
+        if (!this.promos.length) return;
+        this.promoTimer = setInterval(() => this.next(), 4500);
     }
 
-    // 수동 스와이프 (템플릿 바인딩용 public)
-    public onTouchStart = (e: TouchEvent) => {
-        this.stopAutoSlide();
-        this.recoTouching = true;
-        this.startX = e.touches[0].clientX;
-        this.lastX = this.startX;
-    };
-    public onTouchMove = (e: TouchEvent) => {
-        if (!this.recoTouching) return;
-        e.preventDefault();
-        this.lastX = e.touches[0].clientX;
-    };
-    public onTouchEnd = (_e: TouchEvent) => {
-        if (!this.recoTouching) return;
-        this.recoTouching = false;
+    private flashEmphasis() {
+        this.promoEmph = true;
+        setTimeout(() => (this.promoEmph = false), 2000);
+    }
 
-        const dx = this.startX - this.lastX;
-        const THRESH_PX = 40;
+    private next() {
+        if (!this.promos.length) return;
+        this.promoIndex = (this.promoIndex + 1) % this.promos.length;
+        this.flashEmphasis();
+    }
 
-        let target = this.recoIndex;
-        if (Math.abs(dx) > THRESH_PX) target = this.recoIndex + (dx > 0 ? 1 : -1);
+    private prev() {
+        if (!this.promos.length) return;
+        this.promoIndex = (this.promoIndex - 1 + this.promos.length) % this.promos.length;
+        this.flashEmphasis();
+    }
 
-        this.slideTo(target);
-        this.startAutoSlide();
-    };
+    onPromoPointerDown(ev: PointerEvent) {
+        clearInterval(this.promoTimer);
+        this.dragging = true;
+        this.dragStartX = ev.clientX;
+    }
+
+    onPromoPointerUp(ev: PointerEvent) {
+        if (!this.dragging || this.dragStartX == null) { this.dragging = false; return; }
+        const dx = ev.clientX - this.dragStartX;
+        if (Math.abs(dx) > this.THRESHOLD) {
+            dx < 0 ? this.next() : this.prev();
+        }
+        this.dragging = false;
+        this.dragStartX = null;
+        this.startAuto();
+    }
+
+    onPromoPointerCancel() {
+        this.dragging = false;
+        this.dragStartX = null;
+        this.startAuto();
+    }
+
+    /** 배너 클릭: 운영자면 리스트 이동 */
+    onPromoClick() {
+        this.router.navigate(['/promotion/list']);
+    }
+
+    private beginDrag(clientX: number) {
+        clearInterval(this.promoTimer);
+        this.dragging = true;
+        this.dragStartX = clientX;
+    }
+    private endDrag(clientX?: number) {
+        if (!this.dragging || this.dragStartX == null) { this.dragging = false; return; }
+        const dx = (clientX ?? this.dragStartX) - this.dragStartX;
+        if (Math.abs(dx) > this.THRESHOLD) dx < 0 ? this.next() : this.prev();
+        this.dragging = false;
+        this.dragStartX = null;
+        this.startAuto();
+    }
+
+    /** Touch */
+    onPromoTouchStart(ev: TouchEvent) {
+        if (ev.touches && ev.touches.length) this.beginDrag(ev.touches[0].clientX);
+    }
+    onPromoTouchEnd(ev: TouchEvent) {
+        const t = ev.changedTouches && ev.changedTouches[0];
+        this.endDrag(t ? t.clientX : undefined);
+    }
+
+    /** Mouse */
+    onPromoMouseDown(ev: MouseEvent) { this.beginDrag(ev.clientX); }
+    onPromoMouseUp(ev: MouseEvent) { this.endDrag(ev.clientX); }
+    onPromoMouseLeave() { this.endDrag(); }
 }

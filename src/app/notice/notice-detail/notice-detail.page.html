@@ -1,0 +1,40 @@
+<app-header-bar></app-header-bar>
+<app-divider></app-divider>
+
+<main class="notice-detail" *ngIf="notice as n">
+    <!-- ===== 히어로 ===== -->
+    <section class="hero">
+        <app-container>
+            <div class="hero__inner">
+                <div class="hero__head">
+                    <h1 class="title">{{ n.title }}</h1>
+                    <div class="meta">
+                        <span class="date">{{ n.created_at | date: 'yyyy.MM.dd' }}</span>
+                        <span class="sep">|</span>
+                        <span class="pin" *ngIf="n.is_pinned">상단고정</span>
+                    </div>
+                </div>
+
+                <!-- 관리자 액션: 수정 + 삭제(빨강) 나란히 -->
+                <div class="actions" *ngIf="role === 'ADMIN'">
+                    <button class="btn-outline" type="button" (click)="goEdit()">수정</button>
+                    <button class="btn-outline danger" type="button" (click)="onDelete(n.notice_id)"
+                        [disabled]="deleting || loading">
+                        삭제
+                    </button>
+                </div>
+            </div>
+        </app-container>
+    </section>
+
+    <!-- ===== 본문 ===== -->
+    <section class="body">
+        <app-container>
+            <div class="content" [innerHTML]="n.content"></div>
+
+            <div class="footer">
+                <button type="button" class="back-btn" (click)="goList()">목록</button>
+            </div>
+        </app-container>
+    </section>
+</main>

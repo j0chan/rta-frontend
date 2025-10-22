@@ -23,6 +23,8 @@ import { ContainerComponent } from '../components/container/container.component'
 import { UserRolePipe } from '../pipes/user-role.pipe'
 import { MapPreviewComponent } from 'src/app/map/components/map-preview/map-preview.component'
 import { FavoriteButtonComponent } from 'src/app/favorite/components/favorite-button.component'
+import { PromoBannerComponent } from '../components/promo-banner/promo-banner.component'
+import { PromoCarouselComponent } from '../components/promo-carousel/promo-carousel.component'
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { FavoriteButtonComponent } from 'src/app/favorite/components/favorite-bu
     UserRolePipe,
     MapPreviewComponent,
     FavoriteButtonComponent,
+    PromoBannerComponent,
+    PromoCarouselComponent,
   ],
   imports: [
     CommonModule,
@@ -68,9 +72,10 @@ import { FavoriteButtonComponent } from 'src/app/favorite/components/favorite-bu
     StripHtmlPipe,
     DividerComponent,
     ContainerComponent,
-    UserRolePipe,
     MapPreviewComponent,
-    FavoriteButtonComponent
+    FavoriteButtonComponent,
+    PromoBannerComponent,
+    PromoCarouselComponent,
   ],
   providers: [
     {

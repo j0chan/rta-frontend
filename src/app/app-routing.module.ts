@@ -97,7 +97,20 @@ const routes: Routes = [
     path: 'transaction',
     loadChildren: () => import('./cash/transaction/transaction.module').then(m => m.CashTransactionModule)
   },
-
+  {
+    path: 'notice',
+    loadChildren: () => import('./notice/notice.module').then(m => m.NoticeModule)
+  },
+  {
+    path: 'promotion/list',
+    loadChildren: () => import('./promotion/promotion-list/promotion-list.module').then(m => m.PromotionListModule),
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'promotion/create',
+    loadChildren: () => import('./promotion/promotion-create/promotion-create.module').then(m => m.PromotionCreateModule),
+    canActivate: [AdminGuard],
+  },
 ]
 
 @NgModule({

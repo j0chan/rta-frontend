@@ -41,7 +41,7 @@ export class GiftCardStoreService {
     }): Observable<GiftCard[]> {
         let params = new HttpParams();
         if (opts?.category) params = params.set('category', opts.category);
-        if (opts?.sort) params = params.set('sort', opts.sort); // 백엔드에선 기본 최신순
+        if (opts?.sort) params = params.set('sort', opts.sort);
 
         return this.http
             .get<ApiResponseDTO<GiftCard[]>>(`${this.giftCardApiUrl}catalog`, { ...this.authOptions(), params })

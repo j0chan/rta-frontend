@@ -1,0 +1,199 @@
+/* ===== 색상/치수 토큰 ===== */
+$page-padding: 16px;
+$radius-card: 12px;
+
+$bg-page: #f6f7fb;
+$bg-card: #ffffff;
+$border: #e6e8ef;
+
+$text-strong: #1f2430;
+$text-muted: #6b7280;
+
+$primary: #4F6BFF; // 세종 블루
+$primary-hover: #435ce6;
+$primary-disabled: #A8B6FF; // 비활성 시 연한 블루
+$danger: #e03131;
+
+:host ::ng-deep app-container {
+    flex: 1;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--bg);
+    padding: 10px 12px 20px;
+}
+
+.page-title {
+    font-weight: 800;
+    font-size: 20px;
+    margin: 4px 0 12px;
+}
+
+/* ===== 상단 전체 래퍼 (헤더와 겹치지 않게 일반 흐름으로) ===== */
+.write-wrap {
+    min-height: 100%;
+    background: $bg-page;
+    padding: $page-padding;
+    padding-bottom: 110px; // 하단 고정 바 높이만큼 여유
+}
+
+/* 여백 섹션 */
+.section {
+    margin-bottom: 16px;
+}
+
+/* 카드 컨테이너 */
+.card {
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: $radius-card;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .04);
+
+    .card-body.pad2 {
+        padding: 12px;
+    }
+}
+
+/* 중요 칩: 검은 테두리, 활성 시 옅은 빨강 배경 */
+.pill-row {
+    margin-bottom: 10px;
+}
+
+.chip-important {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 0.5px solid #e03131;
+    background: #fff;
+    color: $danger;
+    font-weight: 800;
+    letter-spacing: .02em;
+    transition: transform .06s ease, background .15s ease, color .15s ease;
+
+    &:active {
+        transform: translateY(1px);
+    }
+
+    &.active {
+        background: #ffefef;
+        color: darken($danger, 10%);
+    }
+}
+
+/* 레이블 + 입력 필드 */
+.field {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+
+    .label {
+        font-size: 13px;
+        color: $text-muted;
+        font-weight: 700;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        border: 1px solid $border;
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 14px;
+        background: #fff;
+    }
+
+    textarea {
+        min-height: 420px;
+        line-height: 1.6;
+        resize: vertical;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR",
+            "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+    }
+
+    .hint {
+        font-size: 12px;
+        color: $text-muted;
+    }
+}
+
+/* 상태 표시 */
+.state {
+    text-align: center;
+    color: $text-muted;
+
+    &.error {
+        color: #d93025;
+    }
+}
+
+/* ===== 하단 고정 바: 버튼 2개 나란히 ===== */
+.write-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid $border;
+    padding: 12px 16px;
+
+    .row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+}
+
+/* 취소 버튼: 빨간 테두리 */
+.btn-outline {
+    width: 100%;
+    border: 1.5px solid $danger;
+    color: $danger;
+    background: #fff;
+    border-radius: 10px;
+    font-weight: 800;
+    padding: 14px 16px;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+        background: #fff5f5;
+    }
+}
+
+/* 작성 버튼: 세종 블루(비활성 시 연해짐) */
+.btn-primary {
+    width: 100%;
+    border: 1.5px solid $primary;
+    border-radius: 10px;
+    background: $primary;
+    color: #fff;
+    font-weight: 800;
+    padding: 14px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(79, 107, 255, .25);
+    transition: transform .08s ease, box-shadow .12s ease, background .12s ease, opacity .12s ease;
+
+    &:hover {
+        background: $primary-hover;
+        border-color: $primary-hover;
+    }
+
+    &:active {
+        transform: translateY(1px);
+        box-shadow: 0 4px 10px rgba(79, 107, 255, .2);
+    }
+
+    &:disabled {
+        background: $primary-disabled;
+        border-color: $primary-disabled;
+        opacity: 1; // 흐림을 색으로 처리하므로 opacity 고정
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+}

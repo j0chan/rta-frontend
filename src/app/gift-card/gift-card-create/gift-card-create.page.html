@@ -7,9 +7,9 @@
         <section class="section">
             <div class="card">
                 <div class="card-body pad2">
-                    <div class="hero" [class.placeholder]="!form.image_url">
-                        <img *ngIf="form.image_url" [src]="form.image_url" alt="gift" (error)="onImgError($event)" />
-                        <span *ngIf="!form.image_url">이미지</span>
+                    <div class="hero" [class.placeholder]="!previewDataUrl">
+                        <img *ngIf="previewDataUrl" [src]="previewDataUrl" alt="gift" />
+                        <span *ngIf="!previewDataUrl">이미지</span>
                     </div>
                 </div>
             </div>
@@ -28,8 +28,8 @@
         <!-- 입력 폼 -->
         <section class="section form">
             <label class="field">
-                <span class="label">이미지 URL</span>
-                <input type="url" [(ngModel)]="form.image_url" placeholder="https://...">
+                <span class="label">이미지 업로드</span>
+                <input type="file" accept="image/*" (change)="onFileChange($event)">
             </label>
 
             <label class="field">

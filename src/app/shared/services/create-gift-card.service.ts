@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs'
-import { ApiResponseDTO, GiftCard, CreateGiftCardDTO, } from '../model/gift-card/my-gift-card.types'
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { ApiResponseDTO, GiftCard } from '../model/gift-card/my-gift-card.types';
 
 @Injectable({ providedIn: 'root' })
 export class CreateGiftCardService {
@@ -10,26 +10,17 @@ export class CreateGiftCardService {
 
     constructor(private http: HttpClient) { }
 
-    /** 팀 컨벤션: 토큰 키 혼용 대응 */
+    /** 토큰 헤더만 추가 (FormData는 Content-Type 자동 세팅) */
     private authOptions() {
-        const token =
-            localStorage.getItem('access_token') ||
-            localStorage.getItem('accessToken') ||
-            '';
-        const headers = token
-            ? new HttpHeaders({ Authorization: `Bearer ${token}` })
-            : new HttpHeaders();
+        const token = localStorage.getItem('access_token') || localStorage.getItem('accessToken') || '';
+        const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : new HttpHeaders();
         return { headers, withCredentials: false };
     }
 
-    /** 관리자 전용: 상품권 생성 */
-    create(dto: CreateGiftCardDTO): Observable<GiftCard> {
+    /** 관리자 전용: 상품권 생성 (multipart/form-data) */
+    createWithFile(fd: FormData): Observable<GiftCard> {
         return this.http
-            .post<ApiResponseDTO<GiftCard>>(
-                `${this.giftCardApiUrl}create`,
-                dto,
-                this.authOptions()
-            )
-            .pipe(map((res) => res.data));
+            .post<ApiResponseDTO<GiftCard>>(`${this.giftCardApiUrl}create`, fd, this.authOptions())
+            .pipe(map(res => res.data));
     }
 }

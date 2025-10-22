@@ -1,7 +1,7 @@
-import { Component } from '@angular/core'
-import { Router } from '@angular/router'
-import { CreateGiftCardDTO, GiftCardType, GiftCategoryCode, } from 'src/app/shared/model/gift-card/my-gift-card.types'
-import { CreateGiftCardService } from 'src/app/shared/services/create-gift-card.service'
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { GiftCardType, GiftCategoryCode } from 'src/app/shared/model/gift-card/my-gift-card.types';
+import { CreateGiftCardService } from 'src/app/shared/services/create-gift-card.service';
 
 type Option<T extends string> = { label: string; value: T };
 
@@ -29,17 +29,19 @@ export class GiftCardCreatePage {
         type: GiftCardType | '';
         amount: number | null;
         category: GiftCategoryCode | '';
-        image_url: string;
     } = {
             name: '',
             type: '',
             amount: null,
             category: '',
-            image_url: '',
         };
 
     submitting = false;
     errorMsg = '';
+
+    // 파일 업로드 상태
+    selectedFile: File | null = null;
+    previewDataUrl: string | null = null;
 
     constructor(private api: CreateGiftCardService, private router: Router) { }
 
@@ -54,25 +56,38 @@ export class GiftCardCreatePage {
         return Number.isFinite(amt) && amt >= 0;
     }
 
-    onImgError(e: Event) { (e.target as HTMLImageElement).style.display = 'none'; }
+    onFileChange(e: Event) {
+        const input = e.target as HTMLInputElement;
+        const file = input.files && input.files[0];
+        this.selectedFile = file ?? null;
+
+        // 미리보기
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => this.previewDataUrl = String(reader.result);
+            reader.readAsDataURL(file);
+        } else {
+            this.previewDataUrl = null;
+        }
+    }
 
     create() {
         if (this.submitting || !this.isValid()) return;
         this.submitting = true; this.errorMsg = '';
 
-        const payload: CreateGiftCardDTO = {
-            name: this.form.name.trim(),
-            type: this.form.type as GiftCardType,
-            amount: Number(this.form.amount),
-            category: this.form.category as GiftCategoryCode,
-            image_url: this.form.image_url?.trim() || undefined,
-        };
+        // multipart/form-data 구성
+        const fd = new FormData();
+        fd.append('name', this.form.name.trim());
+        fd.append('type', this.form.type as GiftCardType);
+        fd.append('amount', String(Number(this.form.amount)));
+        fd.append('category', this.form.category as GiftCategoryCode);
+        if (this.selectedFile) fd.append('image', this.selectedFile); // ★ 백엔드 FileInterceptor('image')와 일치
 
-        this.api.create(payload).subscribe({
+        this.api.createWithFile(fd).subscribe({
             next: () => {
                 this.submitting = false;
                 alert('상품권이 생성되었습니다.');
-                this.router.navigate(['/gift-card-store']);
+                this.router.navigate(['/gift-card-store']); // 성공 시에만 이동
             },
             error: (err) => {
                 console.error(err);
