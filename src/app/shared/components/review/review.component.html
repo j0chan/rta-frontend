@@ -17,7 +17,7 @@
   <div class="review-bottom-bar">
     <!-- 도음돼요 버튼 -->
     <span>
-      <app-button label="{{ review.helpful_count }}" variant="tinted-gray" size="symbol"></app-button>
+      <app-button label="{{ review.helpful_count }}" variant="tinted-gray" size="symbol" (click)="toggleHelpful(review)"></app-button>
     </span>
 
     <!-- 로그인한 유저가 작성한 리뷰인 경우 삭제 버튼 출력 -->

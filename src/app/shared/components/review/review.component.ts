@@ -68,4 +68,27 @@ export class ReviewComponent implements OnInit {
       }
     })
   }
+
+  toggleHelpful(review: ReadReview): void {
+    if (!this.store_id) {
+      console.error('store_id가 없습니다.')
+      return
+    }
+
+    this.reviewsService.toggleHelpful(this.store_id, review.review_id).subscribe({
+      next: (res) => {
+        // helpful_count 즉시 반영
+        if (review.isHelpful) {
+          review.helpful_count -= 1
+        } else {
+          review.helpful_count += 1
+        }
+        review.isHelpful = !review.isHelpful
+      },
+      error: (err) => {
+        console.error('도움돼요 토글 실패:', err)
+      },
+    })
+  }
+
 }

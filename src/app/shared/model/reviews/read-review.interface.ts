@@ -20,4 +20,5 @@ export interface ReadReview {
     date: Date
     isModified: Boolean
     files: File[]
+    isHelpful?: boolean
 }
