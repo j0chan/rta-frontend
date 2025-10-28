@@ -29,4 +29,13 @@ export class ReviewsService {
     return this.http.delete<ApiResponseDTO<void>>(`${this.apiUrl}/${store_id}/reviews/${review_id}`, { headers: this.getAuthHeaders() }
     )
   }
+
+  toggleHelpful(store_id: number, review_id: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/${store_id}/reviews/${review_id}/helpful`,
+      {},
+      { headers: this.getAuthHeaders() }
+    )
+  }
+
 }
