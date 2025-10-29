@@ -886,4 +886,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/favorite']);
   }
 
+  goToRecommendedStores() {
+    this.router.navigate(['/recommended-stores']);
+  }
+
 }
