@@ -11,6 +11,7 @@ import { ReviewsModule } from './reviews/reviews.module'
 import { AdminModule } from './admin/admin.module'
 import { FormsModule } from '@angular/forms'
 import { SharedModule } from './shared/module/shared.module'
+import { RecommendationsComponent } from './recommendations/recommendations.component'
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { SharedModule } from './shared/module/shared.module'
     AdminModule,
     FormsModule,
     SharedModule,
+    RecommendationsComponent,
   ],
   providers: [
     {

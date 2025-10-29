@@ -1,0 +1,12 @@
+<div class="recommendations-container">
+  <h2>추천 상점 ID</h2>
+  <div *ngIf="recommendedStoreIds.length > 0; else noRecommendations">
+    <ul>
+      <li *ngFor="let storeId of recommendedStoreIds">{{ storeId }}</li>
+    </ul>
+  </div>
+  <ng-template #noRecommendations>
+    <p *ngIf="!errorMessage">추천 상점 ID를 불러오는 중...</p>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </ng-template>
+</div>
