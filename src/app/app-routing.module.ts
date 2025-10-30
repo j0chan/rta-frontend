@@ -113,7 +113,7 @@ const routes: Routes = [
   },
   {
     path: 'recommended-stores',
-    loadComponent: () => import('./recommended-stores/recommended-stores.page').then(m => m.RecommendedStoresPage)
+    loadChildren: () => import('./recommended-stores/recommended-stores.module').then(m => m.RecommendedStoresModule)
   }
 ]
 

@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { RecommendationsService } from '../shared/services/recommendations.service';
-import { StoresService } from '../shared/services/stores.service';
-import { ReadStore } from '../shared/model/stores/read-store.interface';
+import { RecommendationsService } from '../../shared/services/recommendations.service';
+import { StoresService } from '../../shared/services/stores.service';
+import { ReadStore } from '../../shared/model/stores/read-store.interface';
 import { forkJoin } from 'rxjs';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recommended-stores',
   templateUrl: './recommended-stores.page.html',
   styleUrls: ['./recommended-stores.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule]
+  standalone: false
 })
 export class RecommendedStoresPage implements OnInit {
   recommendedStores: ReadStore[] = [];
