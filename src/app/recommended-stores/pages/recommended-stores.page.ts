@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { RecommendationsService } from '../../shared/services/recommendations.service';
-import { StoresService } from '../../shared/services/stores.service';
-import { ReadStore } from '../../shared/model/stores/read-store.interface';
-import { forkJoin } from 'rxjs';
-import { AuthService } from '../../shared/services/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { RecommendationsService } from '../../shared/services/recommendations.service'
+import { StoresService } from '../../shared/services/stores.service'
+import { ReadStore } from '../../shared/model/stores/read-store.interface'
+import { forkJoin } from 'rxjs'
+import { AuthService } from '../../shared/services/auth.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-recommended-stores',
@@ -13,10 +13,10 @@ import { Router } from '@angular/router';
   standalone: false
 })
 export class RecommendedStoresPage implements OnInit {
-  recommendedStores: ReadStore[] = [];
-  isLoading: boolean = true;
-  errorMessage: string = '';
-  userNickname: string | null = null;
+  recommendedStores: ReadStore[] = []
+  isLoading: boolean = true
+  errorMessage: string = ''
+  userNickname: string | null = null
 
   constructor(
     private recommendationsService: RecommendationsService,
@@ -27,7 +27,7 @@ export class RecommendedStoresPage implements OnInit {
 
   ngOnInit() {
     this.userNickname = this.authService.getLogginedUserName();
-    this.getRecommendedStores();
+    this.getRecommendedStores()
   }
 
   getRecommendedStores() {
@@ -39,25 +39,25 @@ export class RecommendedStoresPage implements OnInit {
           forkJoin(storeRequests).subscribe({
             next: (storeResponses) => {
               this.recommendedStores = storeResponses.map(res => res.data).filter((store): store is ReadStore => store !== undefined);
-              this.isLoading = false;
+              this.isLoading = false
             },
             error: (error) => {
-              this.errorMessage = '추천 상점 정보를 가져오는 데 실패했습니다.';
-              this.isLoading = false;
-              console.error('Error fetching store details:', error);
+              this.errorMessage = '추천 상점 정보를 가져오는 데 실패했습니다.'
+              this.isLoading = false
+              console.error('Error fetching store details:', error)
             }
-          });
+          })
         } else {
-          this.errorMessage = '추천 상점이 없습니다.';
-          this.isLoading = false;
+          this.errorMessage = '추천 상점이 없습니다.'
+          this.isLoading = false
         }
       },
       error: (error) => {
-        this.errorMessage = '추천 ID를 가져오는 데 실패했습니다.';
-        this.isLoading = false;
-        console.error('Error fetching recommended IDs:', error);
+        this.errorMessage = '추천 ID를 가져오는 데 실패했습니다.'
+        this.isLoading = false
+        console.error('Error fetching recommended IDs:', error)
       }
-    });
+    })
   }
 
   goToStoreDetails(storeId: number) {
