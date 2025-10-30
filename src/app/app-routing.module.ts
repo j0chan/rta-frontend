@@ -111,6 +111,10 @@ const routes: Routes = [
     loadChildren: () => import('./promotion/promotion-create/promotion-create.module').then(m => m.PromotionCreateModule),
     canActivate: [AdminGuard],
   },
+  {
+    path: 'recommended-stores',
+    loadChildren: () => import('./recommended-stores/recommended-stores.module').then(m => m.RecommendedStoresModule)
+  }
 ]
 
 @NgModule({

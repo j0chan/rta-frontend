@@ -1,6 +1,6 @@
 import { EventsService } from 'src/app/shared/services/event.services'
 import { ToastController } from '@ionic/angular'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { filter, Subscription } from 'rxjs'
 import { ApiResponseDTO } from 'src/app/shared/model/common/api-response.interface'
@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/shared/services/auth.service'
   templateUrl: './store.page.html',
   standalone: false,
 })
-export class StorePage implements OnInit {
+export class StorePage implements OnInit, OnDestroy {
   isLoggedIn = false
 
   private store_id: number | null = null

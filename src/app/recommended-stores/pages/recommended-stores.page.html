@@ -1,0 +1,13 @@
+<ion-header [translucent]="false">
+  <app-header-bar></app-header-bar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-recommended-stores-list
+    [userNickname]="userNickname"
+    [errorMessage]="errorMessage"
+    [isLoading]="isLoading"
+    [recommendedStores]="recommendedStores"
+    (storeClick)="goToStoreDetails($event)">
+  </app-recommended-stores-list>
+</ion-content>
