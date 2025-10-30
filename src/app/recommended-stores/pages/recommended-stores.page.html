@@ -5,8 +5,8 @@
 <ion-content [fullscreen]="true">
   <app-recommended-stores-list
     [userNickname]="userNickname"
-    [isLoading]="isLoading"
     [errorMessage]="errorMessage"
+    [isLoading]="isLoading"
     [recommendedStores]="recommendedStores"
     (storeClick)="goToStoreDetails($event)">
   </app-recommended-stores-list>
