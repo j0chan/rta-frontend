@@ -20,6 +20,7 @@
 ion-item {
   --padding-start: 0;
   --inner-padding-end: 0;
+  margin-bottom: 8px;
 }
 
 ion-label h2 {
@@ -30,4 +31,25 @@ ion-label h2 {
 ion-label p {
   color: var(--ion-color-medium);
   font-size: 0.9em;
+}
+
+ion-list {
+  padding: 0 10px;
+}
+
+ion-item:last-child {
+  margin-bottom: 0;
+}
+
+.list-h2 {
+  padding-bottom: 5px
+}
+
+.description {
+  background: var(--card);
+  border: 20px solid var(--line);
+  border-radius: 16px;
+  padding: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 8px 24px rgba(0, 0, 0, .04);
 }

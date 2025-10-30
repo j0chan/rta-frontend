@@ -1,24 +1,22 @@
 <div class="ion-padding">
-  <p *ngIf="userNickname" class="recommendation-message">{{ userNickname }}님이 좋아할 만한 가게 목록입니다.</p>
-  <div *ngIf="isLoading" class="loading-message">
-    <ion-spinner name="crescent"></ion-spinner>
-  </div>
-
+  <section class="description">
+    <p *ngIf="userNickname" class="recommendation-message">{{ userNickname }} 님 맞춤 추천 가게 목록</p>
+  </section>
+  <div *ngIf="isLoading" class="loading-message"></div>
   <div *ngIf="!isLoading && errorMessage" class="error-message">
     <p>{{ errorMessage }}</p>
   </div>
-
+  
   <ion-list *ngIf="!isLoading && !errorMessage && recommendedStores.length > 0">
     <ion-item *ngFor="let store of recommendedStores" (click)="onStoreClick(store.store_id)" button detail>
       <ion-label>
-        <h2>{{ store.store_name }}</h2>
+        <h2 class="list-h2">{{ store.store_name }}</h2>
         <p>{{ store.address }}</p>
-        <p>카테고리: {{ store.category.category_name }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
   <div *ngIf="!isLoading && !errorMessage && recommendedStores.length === 0" class="no-recommendations">
-    <p>현재 추천할 상점이 없습니다.</p>
+    <p>현재 추천할 상점이 없습니다.<br>리뷰를 작성하여 추천을 받아보세요!</p>
   </div>
 </div>
