@@ -93,7 +93,7 @@ export class GiftCardStorePage implements OnInit, AfterViewInit, OnDestroy {
     }
 
     trackById(_: number, item: GiftCard) { return item.gift_card_id; }
-    goDetail(item: GiftCard) { this.router.navigate(['/gift-card-store-detail', item.gift_card_id]); }
+    goDetail(item: GiftCard) { this.router.navigate(['/gift-card/detail', item.gift_card_id]); }
     onImgError(e: Event) { (e.target as HTMLImageElement).style.display = 'none'; }
 
     /* ===== 프로모션 캐러셀: 한 번에 1장, 드래그 후 이동 ===== */
