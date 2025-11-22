@@ -57,29 +57,9 @@ const routes: Routes = [
     loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
   },
   {
-    path: 'my-gift-card',
-    loadChildren: () => import('./gift-card/my-gift-card/my-gift-card.module').then(m => m.MyGiftCardModule)
-  },
-  {
-    path: 'gift-card-store',
+    path: 'gift-card',
     loadChildren: () =>
-      import('./gift-card/gift-card-store/gift-card-store.module').then(m => m.GiftCardStoreModule),
-  },
-  {
-    path: 'gift-card-store-detail/:id',
-    loadChildren: () =>
-      import('./gift-card/gift-card-store-detail/gift-card-store-detail.module').then(m => m.GiftCardStoreDetailModule),
-  },
-  {
-    path: 'gift-card-create',
-    loadChildren: () =>
-      import('./gift-card/gift-card-create/gift-card-create.module').then(m => m.GiftCardCreateModule),
-    canMatch: [AdminGuard],
-  },
-  {
-    path: 'gift-card-used',
-    loadChildren: () =>
-      import('./gift-card/gift-card-used/gift-card-used.module').then(m => m.GiftCardUsedModule),
+      import('./gift-card/gift-card.module').then(m => m.GiftCardModule),
   },
   {
     path: 'point',
@@ -102,14 +82,8 @@ const routes: Routes = [
     loadChildren: () => import('./notice/notice.module').then(m => m.NoticeModule)
   },
   {
-    path: 'promotion/list',
-    loadChildren: () => import('./promotion/promotion-list/promotion-list.module').then(m => m.PromotionListModule),
-    canActivate: [AdminGuard],
-  },
-  {
-    path: 'promotion/create',
-    loadChildren: () => import('./promotion/promotion-create/promotion-create.module').then(m => m.PromotionCreateModule),
-    canActivate: [AdminGuard],
+    path: 'promotion',
+    loadChildren: () => import('./promotion/promotion.module').then(m => m.PromotionModule)
   },
   {
     path: 'recommended-stores',
