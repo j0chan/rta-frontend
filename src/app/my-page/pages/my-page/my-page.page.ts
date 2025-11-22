@@ -21,4 +21,16 @@ export class MyPagePage implements OnInit {
   goToManagerRequestPage() {
     this.router.navigate(['/admin/manager-request-page'])
   }
+
+  goToPromotionListPage() {
+    this.router.navigate(['/promotion'])
+  }
+
+  goToNoticeListPage() {
+    this.router.navigate(['/notice'])
+  }
+
+  goToGiftCardCreatePage() {
+    this.router.navigate(['/gift-card/create'])
+  }
 }

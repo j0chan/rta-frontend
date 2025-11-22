@@ -12,6 +12,24 @@
       매니저 요청 관리
     </ion-button>
   </ng-container>
+  
+  <ng-container *ngIf="role === 'ADMIN'">
+    <ion-button expand="block" (click)="goToNoticeListPage()">
+      공지사항 관리
+    </ion-button>
+  </ng-container>
+  
+  <ng-container *ngIf="role === 'ADMIN'">
+    <ion-button expand="block" (click)="goToPromotionListPage()">
+      프로모션 관리
+    </ion-button>
+  </ng-container>
+
+  <ng-container *ngIf="role === 'ADMIN'">
+    <ion-button expand="block" (click)="goToGiftCardCreatePage()">
+      상품권 관리
+    </ion-button>
+  </ng-container>
 
   <ng-container *ngIf="role !== 'ADMIN'">
     <!-- <hr style="height: 3px; background-color: #ccc; border: none; margin: 16px auto;" /> -->
